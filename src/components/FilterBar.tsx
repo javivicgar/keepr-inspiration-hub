@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Search, Filter } from 'lucide-react';
+import { Search, Filter, ArrowUpDown } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
@@ -12,6 +12,7 @@ interface FilterBarProps {
   folders: string[];
   searchQuery: string;
   onSearchChange: (query: string) => void;
+  onSortClick: () => void;
 }
 
 export const FilterBar = ({
@@ -21,24 +22,26 @@ export const FilterBar = ({
   onFolderChange,
   folders,
   searchQuery,
-  onSearchChange
+  onSearchChange,
+  onSortClick
 }: FilterBarProps) => {
-  const categories = ['all', 'Food Spot', 'Travel Spot', 'Outfit', 'Useful App'];
+  const categories = [
+    'all', 'Food Spots', 'Locations', 'Fashion', 'Useful Apps', 
+    'Tutorials', 'Outdoor', 'Music', 'Home', 'Other'
+  ];
 
   return (
     <div className="space-y-4 mb-6">
-      <div className="relative">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-        <Input
-          className="pl-10"
-          placeholder="Search by title, tags, or creator..."
-          value={searchQuery}
-          onChange={(e) => onSearchChange(e.target.value)}
-        />
-      </div>
-
       <div className="flex items-center space-x-2">
-        <Filter className="h-4 w-4 text-muted-foreground" />
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={onSortClick}
+          className="whitespace-nowrap text-xs font-josefin rounded-xl border-2 hover:border-[#a8a5d0] transition-all duration-200"
+        >
+          <ArrowUpDown className="h-3 w-3 mr-1" />
+          Sort by
+        </Button>
         <div className="flex-1 overflow-x-auto">
           <div className="flex space-x-2 pb-2">
             {categories.map((category) => (
@@ -47,7 +50,11 @@ export const FilterBar = ({
                 variant={selectedCategory === category ? "default" : "outline"}
                 size="sm"
                 onClick={() => onCategoryChange(category)}
-                className="whitespace-nowrap text-xs"
+                className={`whitespace-nowrap text-xs font-josefin rounded-xl border-2 transition-all duration-200 ${
+                  selectedCategory === category
+                    ? 'bg-[#a8a5d0] hover:bg-[#9895c7] text-white border-[#a8a5d0]'
+                    : 'hover:border-[#a8a5d0]'
+                }`}
               >
                 {category === 'all' ? 'All' : category}
               </Button>
@@ -63,7 +70,11 @@ export const FilterBar = ({
               variant={selectedFolder === 'all' ? "default" : "outline"}
               size="sm"
               onClick={() => onFolderChange('all')}
-              className="whitespace-nowrap text-xs"
+              className={`whitespace-nowrap text-xs font-josefin rounded-xl border-2 transition-all duration-200 ${
+                selectedFolder === 'all'
+                  ? 'bg-[#a8a5d0] hover:bg-[#9895c7] text-white border-[#a8a5d0]'
+                  : 'hover:border-[#a8a5d0]'
+              }`}
             >
               All Folders
             </Button>
@@ -73,7 +84,11 @@ export const FilterBar = ({
                 variant={selectedFolder === folder ? "default" : "outline"}
                 size="sm"
                 onClick={() => onFolderChange(folder)}
-                className="whitespace-nowrap text-xs"
+                className={`whitespace-nowrap text-xs font-josefin rounded-xl border-2 transition-all duration-200 ${
+                  selectedFolder === folder
+                    ? 'bg-[#a8a5d0] hover:bg-[#9895c7] text-white border-[#a8a5d0]'
+                    : 'hover:border-[#a8a5d0]'
+                }`}
               >
                 {folder}
               </Button>

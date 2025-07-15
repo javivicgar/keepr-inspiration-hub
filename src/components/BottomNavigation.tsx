@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Home, Map, Plus, Folder, Menu } from 'lucide-react';
+import { Home, Map, Plus, Users, Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface BottomNavigationProps {
@@ -14,24 +14,24 @@ export const BottomNavigation = ({ activeTab, onTabChange, onAddClick }: BottomN
     { id: 'home', label: 'Home', icon: Home },
     { id: 'map', label: 'Map', icon: Map },
     { id: 'add', label: 'Add', icon: Plus, isAdd: true },
-    { id: 'folders', label: 'Folders', icon: Folder },
+    { id: 'community', label: 'Community', icon: Users },
     { id: 'more', label: 'More', icon: Menu },
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-card border-t border-border px-4 py-2 safe-area-pb">
+    <nav className="fixed bottom-0 left-0 right-0 bg-card border-t border-border px-4 py-2 safe-area-pb shadow-lg">
       <div className="flex items-center justify-around max-w-md mx-auto">
         {tabs.map((tab) => (
           <Button
             key={tab.id}
             variant="ghost"
             size="sm"
-            className={`flex flex-col items-center gap-1 h-auto py-2 px-3 ${
+            className={`flex flex-col items-center gap-1 h-auto py-2 px-3 font-josefin transition-all duration-200 ${
               tab.isAdd
-                ? 'bg-[#a8a5d0] hover:bg-[#9895c7] text-white rounded-full w-12 h-12 p-0'
+                ? 'bg-[#a8a5d0] hover:bg-[#9895c7] text-white rounded-full w-12 h-12 p-0 shadow-lg'
                 : activeTab === tab.id
                 ? 'text-[#a8a5d0]'
-                : 'text-muted-foreground'
+                : 'text-muted-foreground hover:text-foreground'
             }`}
             onClick={() => tab.isAdd ? onAddClick() : onTabChange(tab.id)}
           >

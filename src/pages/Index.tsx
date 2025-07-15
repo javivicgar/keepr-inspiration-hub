@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { AuthScreen } from '@/components/AuthScreen';
 import { SplashScreen } from '@/components/SplashScreen';
 import { BottomNavigation } from '@/components/BottomNavigation';
 import { ImprovedSaveModal } from '@/components/ImprovedSaveModal';
@@ -11,13 +12,16 @@ import { FilterBar } from '@/components/FilterBar';
 import { FoldersView } from '@/components/views/FoldersView';
 import { MapView } from '@/components/views/MapView';
 import { MoreView } from '@/components/views/MoreView';
+import { CommunityView } from '@/components/views/CommunityView';
+import { SortModal } from '@/components/SortModal';
+import { AddOptionsModal } from '@/components/AddOptionsModal';
 
 export interface SavedContent {
   id: string;
   title: string;
   creatorName: string;
   link: string;
-  category: 'Food Spot' | 'Travel Spot' | 'Outfit' | 'Useful App';
+  category: 'Food Spots' | 'Locations' | 'Fashion' | 'Useful Apps' | 'Tutorials' | 'Outdoor' | 'Music' | 'Home' | 'Other';
   location?: string;
   mapLink?: string;
   note: string;
@@ -27,13 +31,26 @@ export interface SavedContent {
 }
 
 const Index = () => {
-  const [showSplash, setShowSplash] = useState(true);
+  const [showAuth, setShowAuth] = useState(true);
+  const [showSplash, setShowSplash] = useState(false);
   const [savedContent, setSavedContent] = useState<SavedContent[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAddOptionsOpen, setIsAddOptionsOpen] = useState(false);
+  const [isSortModalOpen, setIsSortModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('home');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedFolder, setSelectedFolder] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [sortBy, setSortBy] = useState('recent');
+
+  const handleAuthComplete = () => {
+    setShowAuth(false);
+    setShowSplash(true);
+  };
+
+  const handleSplashComplete = () => {
+    setShowSplash(false);
+  };
 
   const handleSaveContent = (content: Omit<SavedContent, 'id' | 'createdAt'>) => {
     const newContent: SavedContent = {
@@ -50,7 +67,22 @@ const Index = () => {
     setActiveTab('home');
   };
 
-  const filteredContent = savedContent.filter(item => {
+  const handleSortApply = (newSort: string) => {
+    setSortBy(newSort);
+  };
+
+  const handleAddOptionsSelect = (option: string) => {
+    setIsModalOpen(true);
+  };
+
+  const sortedContent = [...savedContent].sort((a, b) => {
+    if (sortBy === 'alphabetical') {
+      return a.title.localeCompare(b.title);
+    }
+    return b.createdAt.getTime() - a.createdAt.getTime();
+  });
+
+  const filteredContent = sortedContent.filter(item => {
     const matchesCategory = selectedCategory === 'all' || item.category === selectedCategory;
     const matchesFolder = selectedFolder === 'all' || item.folder === selectedFolder;
     const matchesSearch = searchQuery === '' || 
@@ -63,8 +95,12 @@ const Index = () => {
 
   const folders = Array.from(new Set(savedContent.map(item => item.folder)));
 
+  if (showAuth) {
+    return <AuthScreen onComplete={handleAuthComplete} />;
+  }
+
   if (showSplash) {
-    return <SplashScreen onComplete={() => setShowSplash(false)} />;
+    return <SplashScreen onComplete={handleSplashComplete} />;
   }
 
   const renderStatusBar = () => {
@@ -81,8 +117,8 @@ const Index = () => {
     }
     
     return statusMessages.length > 0 ? (
-      <div className="bg-[#a8a5d0]/10 rounded-xl p-3 mb-4">
-        <p className="text-sm text-center font-medium text-[#a8a5d0]">
+      <div className="bg-[#a8a5d0]/10 rounded-2xl p-4 mb-6 shadow-sm">
+        <p className="text-sm text-center font-medium text-[#a8a5d0] font-josefin">
           ✨ {statusMessages.join(' • ')}
         </p>
       </div>
@@ -91,8 +127,8 @@ const Index = () => {
 
   const renderContent = () => {
     switch (activeTab) {
-      case 'folders':
-        return <FoldersView content={savedContent} onFolderClick={handleFolderClick} />;
+      case 'community':
+        return <CommunityView />;
       case 'map':
         return <MapView content={savedContent} />;
       case 'more':
@@ -103,11 +139,11 @@ const Index = () => {
             {renderStatusBar()}
             
             <div className="mb-6">
-              <div className="relative mb-4">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <div className="relative mb-6">
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
-                  className="pl-10 h-12 text-base rounded-2xl"
-                  placeholder="Search your inspiration..."
+                  className="pl-12 h-12 text-base rounded-2xl border-2 focus:border-[#a8a5d0] font-josefin"
+                  placeholder="Search your Keeprs..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
@@ -121,10 +157,14 @@ const Index = () => {
                 folders={folders}
                 searchQuery=""
                 onSearchChange={() => {}}
+                onSortClick={() => setIsSortModalOpen(true)}
               />
             </div>
 
-            <ImprovedContentGrid content={filteredContent} />
+            <ImprovedContentGrid 
+              content={filteredContent}
+              onCreateKeepr={() => setIsAddOptionsOpen(true)}
+            />
           </>
         );
     }
@@ -134,14 +174,14 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-6 max-w-md">
         <header className="mb-6">
-          <h1 className="text-2xl font-bold text-foreground mb-1">
-            {activeTab === 'home' ? 'Your Inspiration' :
-             activeTab === 'folders' ? 'Folders' :
+          <h1 className="text-3xl font-bold text-foreground mb-2 font-josefin tracking-wide">
+            {activeTab === 'home' ? 'Your Keeprs' :
+             activeTab === 'community' ? 'Community' :
              activeTab === 'map' ? 'Map' : 'More'}
           </h1>
           {activeTab === 'home' && (
-            <p className="text-sm text-muted-foreground">
-              {savedContent.length} saved {savedContent.length === 1 ? 'item' : 'items'}
+            <p className="text-sm text-muted-foreground font-josefin">
+              {savedContent.length} saved {savedContent.length === 1 ? 'Keepr' : 'Keeprs'}
             </p>
           )}
         </header>
@@ -153,7 +193,20 @@ const Index = () => {
         <BottomNavigation
           activeTab={activeTab}
           onTabChange={setActiveTab}
-          onAddClick={() => setIsModalOpen(true)}
+          onAddClick={() => setIsAddOptionsOpen(true)}
+        />
+
+        <AddOptionsModal
+          isOpen={isAddOptionsOpen}
+          onClose={() => setIsAddOptionsOpen(false)}
+          onOptionSelect={handleAddOptionsSelect}
+        />
+
+        <SortModal
+          isOpen={isSortModalOpen}
+          onClose={() => setIsSortModalOpen(false)}
+          onApply={handleSortApply}
+          currentSort={sortBy}
         />
 
         <ImprovedSaveModal
