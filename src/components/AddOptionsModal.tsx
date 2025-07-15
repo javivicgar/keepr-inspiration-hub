@@ -13,7 +13,7 @@ export const AddOptionsModal = ({ isOpen, onClose, onOptionSelect }: AddOptionsM
   const options = [
     { id: 'browser', label: 'Browser', icon: Globe, color: 'bg-blue-50 text-blue-600' },
     { id: 'camera', label: 'Camera', icon: Camera, color: 'bg-green-50 text-green-600' },
-    { id: 'paste', label: 'Paste Text', icon: Clipboard, color: 'bg-purple-50 text-purple-600' },
+    { id: 'paste', label: 'Paste Content', icon: Clipboard, color: 'bg-purple-50 text-purple-600' },
     { id: 'scratch', label: 'Write from scratch', icon: Edit3, color: 'bg-orange-50 text-orange-600' },
   ];
 
@@ -21,9 +21,9 @@ export const AddOptionsModal = ({ isOpen, onClose, onOptionSelect }: AddOptionsM
 
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-end">
-      <div className="bg-background rounded-t-3xl w-full">
+      <div className="bg-background rounded-t-3xl w-full animate-slide-up">
         <div className="flex items-center justify-between p-6 border-b border-border">
-          <h2 className="text-xl font-semibold text-foreground font-josefin">Import Keepr</h2>
+          <h2 className="text-xl font-semibold text-foreground font-josefin">Import a Keepr</h2>
           <Button variant="ghost" size="sm" onClick={onClose} className="rounded-full">
             <X className="h-5 w-5" />
           </Button>
@@ -34,7 +34,7 @@ export const AddOptionsModal = ({ isOpen, onClose, onOptionSelect }: AddOptionsM
             {options.map((option) => (
               <button
                 key={option.id}
-                className="flex flex-col items-center p-6 rounded-2xl border-2 border-border hover:border-[#a8a5d0] transition-all font-josefin"
+                className="flex flex-col items-center p-6 rounded-2xl border-2 border-border hover:border-[#a8a5d0] transition-all font-josefin hover:shadow-md"
                 onClick={() => {
                   onOptionSelect(option.id);
                   onClose();

@@ -27,7 +27,7 @@ export const FilterBar = ({
 }: FilterBarProps) => {
   const categories = [
     'all', 'Food Spots', 'Locations', 'Fashion', 'Useful Apps', 
-    'Tutorials', 'Outdoor', 'Music', 'Home', 'Other'
+    'Tutorials', 'Outdoor', 'Music', 'Home', 'Sports', 'Other'
   ];
 
   return (
@@ -37,7 +37,7 @@ export const FilterBar = ({
           variant="outline"
           size="sm"
           onClick={onSortClick}
-          className="whitespace-nowrap text-xs font-josefin rounded-xl border-2 hover:border-[#a8a5d0] transition-all duration-200"
+          className="whitespace-nowrap text-xs font-josefin rounded-xl border-2 hover:border-[#a8a5d0] transition-all duration-200 h-8"
         >
           <ArrowUpDown className="h-3 w-3 mr-1" />
           Sort by
@@ -50,7 +50,7 @@ export const FilterBar = ({
                 variant={selectedCategory === category ? "default" : "outline"}
                 size="sm"
                 onClick={() => onCategoryChange(category)}
-                className={`whitespace-nowrap text-xs font-josefin rounded-xl border-2 transition-all duration-200 ${
+                className={`whitespace-nowrap text-xs font-josefin rounded-xl border-2 transition-all duration-200 h-8 ${
                   selectedCategory === category
                     ? 'bg-[#a8a5d0] hover:bg-[#9895c7] text-white border-[#a8a5d0]'
                     : 'hover:border-[#a8a5d0]'
@@ -70,7 +70,7 @@ export const FilterBar = ({
               variant={selectedFolder === 'all' ? "default" : "outline"}
               size="sm"
               onClick={() => onFolderChange('all')}
-              className={`whitespace-nowrap text-xs font-josefin rounded-xl border-2 transition-all duration-200 ${
+              className={`whitespace-nowrap text-xs font-josefin rounded-xl border-2 transition-all duration-200 h-8 ${
                 selectedFolder === 'all'
                   ? 'bg-[#a8a5d0] hover:bg-[#9895c7] text-white border-[#a8a5d0]'
                   : 'hover:border-[#a8a5d0]'
@@ -84,7 +84,7 @@ export const FilterBar = ({
                 variant={selectedFolder === folder ? "default" : "outline"}
                 size="sm"
                 onClick={() => onFolderChange(folder)}
-                className={`whitespace-nowrap text-xs font-josefin rounded-xl border-2 transition-all duration-200 ${
+                className={`whitespace-nowrap text-xs font-josefin rounded-xl border-2 transition-all duration-200 h-8 ${
                   selectedFolder === folder
                     ? 'bg-[#a8a5d0] hover:bg-[#9895c7] text-white border-[#a8a5d0]'
                     : 'hover:border-[#a8a5d0]'

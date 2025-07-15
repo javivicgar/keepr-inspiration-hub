@@ -13,11 +13,22 @@ interface MoreViewProps {
 export const MoreView = ({ totalContent, totalFolders }: MoreViewProps) => {
   const [darkMode, setDarkMode] = useState(false);
 
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+    if (!darkMode) {
+      document.documentElement.classList.add('dark');
+      document.body.style.backgroundColor = '#2B2737';
+    } else {
+      document.documentElement.classList.remove('dark');
+      document.body.style.backgroundColor = '';
+    }
+  };
+
   const menuItems = [
     { 
       icon: darkMode ? Sun : Moon, 
       label: 'Dark Mode', 
-      action: () => setDarkMode(!darkMode),
+      action: toggleDarkMode,
       hasSwitch: true 
     },
     { 
@@ -27,11 +38,11 @@ export const MoreView = ({ totalContent, totalFolders }: MoreViewProps) => {
     },
     { 
       icon: Share2, 
-      label: 'Share Keepr', 
+      label: 'Share Keepr With Friends', 
       action: () => {
         if (navigator.share) {
           navigator.share({
-            title: 'Keepr - Save Your Inspiration',
+            title: 'Keepr - Save Your Inspirations',
             text: 'Check out this amazing app for saving and organizing inspiration!',
             url: 'https://keepr.app'
           });
@@ -92,7 +103,7 @@ export const MoreView = ({ totalContent, totalFolders }: MoreViewProps) => {
                 {item.hasSwitch && (
                   <Switch 
                     checked={darkMode} 
-                    onCheckedChange={setDarkMode}
+                    onCheckedChange={toggleDarkMode}
                     onClick={(e) => e.stopPropagation()}
                   />
                 )}

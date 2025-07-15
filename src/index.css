@@ -102,6 +102,11 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground font-josefin;
+    transition: background-color 0.3s ease;
+  }
+
+  .dark body {
+    background-color: #2B2737;
   }
 }
 
@@ -129,5 +134,20 @@ All colors MUST be HSL.
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.3s ease-out;
+  }
+
+  @keyframes slideUp {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
   }
 }
