@@ -19,7 +19,7 @@ export const SaveContentModal = ({ isOpen, onClose, onSave }: SaveContentModalPr
     title: '',
     creatorName: '',
     link: '',
-    category: 'Food Spot' as SavedContent['category'],
+    category: 'Food Spots' as SavedContent['category'],
     location: '',
     mapLink: '',
     note: '',
@@ -44,7 +44,7 @@ export const SaveContentModal = ({ isOpen, onClose, onSave }: SaveContentModalPr
       title: '',
       creatorName: '',
       link: '',
-      category: 'Food Spot',
+      category: 'Food Spots',
       location: '',
       mapLink: '',
       note: '',
@@ -113,7 +113,7 @@ export const SaveContentModal = ({ isOpen, onClose, onSave }: SaveContentModalPr
               onValueChange={(value) => setFormData(prev => ({ ...prev, category: value as SavedContent['category'] }))}
               className="grid grid-cols-2 gap-2"
             >
-              {['Food Spot', 'Travel Spot', 'Outfit', 'Useful App'].map((category) => (
+              {['Food Spots', 'Locations', 'Fashion', 'Useful Apps', 'Tutorials', 'Outdoor', 'Music', 'Home', 'Other'].map((category) => (
                 <div key={category} className="flex items-center space-x-2 p-2 border border-border rounded-md">
                   <RadioGroupItem value={category} id={category} />
                   <Label htmlFor={category} className="text-sm">{category}</Label>
@@ -122,7 +122,7 @@ export const SaveContentModal = ({ isOpen, onClose, onSave }: SaveContentModalPr
             </RadioGroup>
           </div>
 
-          {(formData.category === 'Food Spot' || formData.category === 'Travel Spot') && (
+          {(formData.category === 'Food Spots' || formData.category === 'Locations') && (
             <>
               <div className="space-y-2">
                 <Label htmlFor="location">Location</Label>
