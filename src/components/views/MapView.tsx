@@ -1,9 +1,8 @@
-
 import React from 'react';
 import { MapPin, Navigation, Coffee, Camera } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import type { SavedContent } from '@/pages/Index';
+import type { SavedContent } from '@/types/SavedContent';
 
 interface MapViewProps {
   content: SavedContent[];

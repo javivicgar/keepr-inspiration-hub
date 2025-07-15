@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Settings, Heart, Star, Share2, HelpCircle, Mail, Moon, Sun, Chrome, Toggle } from 'lucide-react';
+import { Settings, Heart, Star, Share2, HelpCircle, Mail, Moon, Sun, Chrome } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';

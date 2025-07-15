@@ -1,9 +1,8 @@
-
 import React from 'react';
 import { ExternalLink, MapPin, User, Calendar, Tag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
-import type { SavedContent } from '@/pages/Index';
+import type { SavedContent } from '@/types/SavedContent';
 
 interface ContentGridProps {
   content: SavedContent[];

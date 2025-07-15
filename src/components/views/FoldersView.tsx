@@ -1,8 +1,7 @@
-
 import React from 'react';
 import { Folder, MapPin, Calendar } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
-import type { SavedContent } from '@/pages/Index';
+import type { SavedContent } from '@/types/SavedContent';
 
 interface FoldersViewProps {
   content: SavedContent[];
