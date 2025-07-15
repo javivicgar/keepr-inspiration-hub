@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
@@ -15,20 +14,8 @@ import { MoreView } from '@/components/views/MoreView';
 import { CommunityView } from '@/components/views/CommunityView';
 import { SortModal } from '@/components/SortModal';
 import { AddOptionsModal } from '@/components/AddOptionsModal';
-
-export interface SavedContent {
-  id: string;
-  title: string;
-  creatorName: string;
-  link: string;
-  category: 'Food Spots' | 'Locations' | 'Fashion' | 'Useful Apps' | 'Tutorials' | 'Outdoor' | 'Music' | 'Home' | 'Other';
-  location?: string;
-  mapLink?: string;
-  note: string;
-  tags: string[];
-  folder: string;
-  createdAt: Date;
-}
+import { useToast } from '@/hooks/use-toast';
+import type { SavedContent } from '@/types/SavedContent';
 
 const Index = () => {
   const [showAuth, setShowAuth] = useState(true);
@@ -42,6 +29,8 @@ const Index = () => {
   const [selectedFolder, setSelectedFolder] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('recent');
+  const [importType, setImportType] = useState<string>('');
+  const { toast } = useToast();
 
   const handleAuthComplete = () => {
     setShowAuth(false);
@@ -60,6 +49,13 @@ const Index = () => {
     };
     setSavedContent(prev => [newContent, ...prev]);
     setIsModalOpen(false);
+    
+    // Show success toast
+    toast({
+      title: "✅ Saved successfully!",
+      description: `Saved to '${content.folder}'`,
+      duration: 3000,
+    });
   };
 
   const handleFolderClick = (folder: string) => {
@@ -72,6 +68,7 @@ const Index = () => {
   };
 
   const handleAddOptionsSelect = (option: string) => {
+    setImportType(option);
     setIsModalOpen(true);
   };
 
@@ -213,6 +210,7 @@ const Index = () => {
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
           onSave={handleSaveContent}
+          importType={importType}
         />
       </div>
     </div>

@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { X, Globe, Camera, Clipboard, Edit3, FileText } from 'lucide-react';
+import { X, Globe, Camera, Clipboard, Edit3 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface AddOptionsModalProps {
@@ -47,21 +47,6 @@ export const AddOptionsModal = ({ isOpen, onClose, onOptionSelect }: AddOptionsM
               </button>
             ))}
           </div>
-
-          <div className="text-center py-4">
-            <span className="text-muted-foreground font-josefin">or</span>
-          </div>
-
-          <button
-            className="w-full flex items-center justify-center gap-3 p-4 rounded-xl border-2 border-dashed border-border hover:border-[#a8a5d0] transition-all font-josefin"
-            onClick={() => {
-              onOptionSelect('scratch');
-              onClose();
-            }}
-          >
-            <FileText className="h-5 w-5 text-muted-foreground" />
-            <span className="font-medium text-muted-foreground">Write from scratch</span>
-          </button>
         </div>
       </div>
     </div>

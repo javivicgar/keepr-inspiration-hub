@@ -3,7 +3,7 @@ import React from 'react';
 import { ExternalLink, MapPin, User, Calendar, Tag, Heart, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
-import type { SavedContent } from '@/pages/Index';
+import type { SavedContent } from '@/types/SavedContent';
 
 interface ImprovedContentGridProps {
   content: SavedContent[];
@@ -40,6 +40,7 @@ export const ImprovedContentGrid = ({ content, onCreateKeepr }: ImprovedContentG
       case 'Outdoor': return '🏔️';
       case 'Music': return '🎵';
       case 'Home': return '🏠';
+      case 'Sports': return '🏀';
       case 'Other': return '💡';
       default: return '💡';
     }
@@ -55,6 +56,7 @@ export const ImprovedContentGrid = ({ content, onCreateKeepr }: ImprovedContentG
       case 'Outdoor': return 'bg-emerald-50 text-emerald-700 border-emerald-200';
       case 'Music': return 'bg-violet-50 text-violet-700 border-violet-200';
       case 'Home': return 'bg-amber-50 text-amber-700 border-amber-200';
+      case 'Sports': return 'bg-cyan-50 text-cyan-700 border-cyan-200';
       case 'Other': return 'bg-gray-50 text-gray-700 border-gray-200';
       default: return 'bg-gray-50 text-gray-700 border-gray-200';
     }
