@@ -44,6 +44,9 @@ export const AuthScreen = ({ onComplete }: AuthScreenProps) => {
             <p className="text-sm text-gray-600 mb-3 font-josefin text-center">
               Log in to unlock community features like sharing and connecting with others.
             </p>
+            <p className="text-sm text-gray-500 mb-3 font-josefin text-center">
+              or
+            </p>
             <Button
               onClick={onComplete}
               variant="outline"
@@ -65,16 +68,18 @@ export const AuthScreen = ({ onComplete }: AuthScreenProps) => {
         </div>
         
         <h1 className="text-5xl font-bold text-white mb-3 font-josefin tracking-wide">Keepr</h1>
-        <p className="text-white/90 text-lg mb-12 font-josefin">Save your inspirations</p>
+        <p className="text-white/90 text-lg mb-12 font-josefin">Save your inspirations.</p>
         
         <div className="space-y-4">
           <Button 
             onClick={() => handleSignUpClick('apple')}
             className="w-full bg-black text-white hover:bg-gray-800 font-josefin font-medium py-6 rounded-2xl text-lg shadow-lg transition-all duration-200 flex items-center justify-center gap-3"
           >
-            <div className="w-5 h-5 bg-white rounded-sm flex items-center justify-center">
-              <span className="text-black text-sm font-bold">🍎</span>
-            </div>
+            <img 
+              src="/lovable-uploads/88fccea4-8273-4f19-a655-d7000b52ba19.png" 
+              alt="Apple logo" 
+              className="w-5 h-5"
+            />
             Sign up with Apple
           </Button>
           
@@ -82,9 +87,11 @@ export const AuthScreen = ({ onComplete }: AuthScreenProps) => {
             onClick={() => handleSignUpClick('google')}
             className="w-full bg-white text-gray-700 hover:bg-gray-50 font-josefin font-medium py-6 rounded-2xl text-lg shadow-lg transition-all duration-200 border border-gray-200 flex items-center justify-center gap-3"
           >
-            <div className="w-5 h-5 rounded-full bg-blue-500 flex items-center justify-center">
-              <span className="text-white text-xs font-bold">G</span>
-            </div>
+            <img 
+              src="/lovable-uploads/0e1e7537-0953-4c7c-927a-1d2fa977968a.png" 
+              alt="Google logo" 
+              className="w-5 h-5"
+            />
             Sign up with Google
           </Button>
           

@@ -33,17 +33,17 @@ export const FilterBar = ({
   return (
     <div className="space-y-4 mb-6">
       <div className="flex items-center space-x-2">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={onSortClick}
-          className="whitespace-nowrap text-xs font-josefin rounded-xl border-2 hover:border-[#a8a5d0] transition-all duration-200 h-8"
-        >
-          <ArrowUpDown className="h-3 w-3 mr-1" />
-          Sort by
-        </Button>
         <div className="flex-1 overflow-x-auto">
           <div className="flex space-x-2 pb-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={onSortClick}
+              className="whitespace-nowrap text-xs font-josefin rounded-xl border-2 hover:border-[#a8a5d0] transition-all duration-200 h-8"
+            >
+              <ArrowUpDown className="h-3 w-3 mr-1" />
+              Sort by
+            </Button>
             {categories.map((category) => (
               <Button
                 key={category}
