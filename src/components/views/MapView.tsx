@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { MapPin, Navigation, Coffee, Camera, Filter } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
@@ -14,6 +15,7 @@ export const MapView = ({ content }: MapViewProps) => {
   const [selectedFolder, setSelectedFolder] = useState<string>('all');
   const [map, setMap] = useState<any>(null);
   const [markers, setMarkers] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const locationsContent = content.filter(item => item.location);
   const folders = Array.from(new Set(locationsContent.map(item => item.folder)));
@@ -25,7 +27,6 @@ export const MapView = ({ content }: MapViewProps) => {
   useEffect(() => {
     if (!mapRef.current) return;
 
-    // Initialize Google Maps
     const initMap = () => {
       if (window.google && window.google.maps) {
         const mapInstance = new window.google.maps.Map(mapRef.current, {
@@ -41,11 +42,18 @@ export const MapView = ({ content }: MapViewProps) => {
         });
 
         setMap(mapInstance);
+        setIsLoading(false);
+
+        // Clear existing markers
+        markers.forEach(marker => marker.setMap(null));
 
         // Add markers for filtered content
-        const newMarkers = filteredContent.map(item => {
+        const newMarkers = filteredContent.map((item, index) => {
           const marker = new window.google.maps.Marker({
-            position: { lat: 47.3769 + Math.random() * 0.1, lng: 8.5417 + Math.random() * 0.1 },
+            position: { 
+              lat: 47.3769 + (Math.random() - 0.5) * 0.1, 
+              lng: 8.5417 + (Math.random() - 0.5) * 0.1 
+            },
             map: mapInstance,
             title: item.title,
             icon: {
@@ -81,14 +89,17 @@ export const MapView = ({ content }: MapViewProps) => {
         });
 
         setMarkers(newMarkers);
+      } else {
+        setIsLoading(false);
       }
     };
 
     // Load Google Maps script if not already loaded
-    if (!window.google) {
+    if (!(window as any).google) {
       const script = document.createElement('script');
       script.src = `https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&libraries=places`;
       script.onload = initMap;
+      script.onerror = () => setIsLoading(false);
       document.head.appendChild(script);
     } else {
       initMap();
@@ -141,8 +152,8 @@ export const MapView = ({ content }: MapViewProps) => {
       <div className="relative h-80 bg-gray-100 rounded-2xl overflow-hidden border-2 border-border shadow-lg">
         <div ref={mapRef} className="absolute inset-0" />
         
-        {/* Fallback content if Google Maps fails to load */}
-        {!map && (
+        {/* Loading/Fallback content */}
+        {isLoading && (
           <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-blue-100 to-green-100">
             <div className="text-center">
               <MapPin className="h-12 w-12 text-[#a8a5d0] mx-auto mb-2" />
