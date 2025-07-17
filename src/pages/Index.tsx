@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { AuthScreen } from '@/components/AuthScreen';
 import { SplashScreen } from '@/components/SplashScreen';
+import { OnboardingFlow } from '@/components/onboarding/OnboardingFlow';
 import { BottomNavigation } from '@/components/BottomNavigation';
 import { ImprovedSaveModal } from '@/components/ImprovedSaveModal';
 import { ImprovedContentGrid } from '@/components/ImprovedContentGrid';
@@ -20,6 +21,7 @@ import type { SavedContent } from '@/types/SavedContent';
 const Index = () => {
   const [showAuth, setShowAuth] = useState(true);
   const [showSplash, setShowSplash] = useState(false);
+  const [showOnboarding, setShowOnboarding] = useState(false);
   const [savedContent, setSavedContent] = useState<SavedContent[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAddOptionsOpen, setIsAddOptionsOpen] = useState(false);
@@ -39,6 +41,11 @@ const Index = () => {
 
   const handleSplashComplete = () => {
     setShowSplash(false);
+    setShowOnboarding(true);
+  };
+
+  const handleOnboardingComplete = () => {
+    setShowOnboarding(false);
   };
 
   const handleSaveContent = (content: Omit<SavedContent, 'id' | 'createdAt'>) => {
@@ -98,6 +105,10 @@ const Index = () => {
 
   if (showSplash) {
     return <SplashScreen onComplete={handleSplashComplete} />;
+  }
+
+  if (showOnboarding) {
+    return <OnboardingFlow onComplete={handleOnboardingComplete} />;
   }
 
   const renderStatusBar = () => {
