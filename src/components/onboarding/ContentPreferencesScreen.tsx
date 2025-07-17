@@ -38,7 +38,7 @@ export const ContentPreferencesScreen = ({
   };
 
   return (
-    <div className="animate-fade-in">
+    <div className="animate-fade-in h-full flex flex-col">
       <div className="flex items-center mb-6">
         <Button
           onClick={onBack}
@@ -50,39 +50,41 @@ export const ContentPreferencesScreen = ({
         </Button>
       </div>
       
-      <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold text-white mb-3 font-josefin">
+      <div className="text-center mb-6 md:mb-8 px-2">
+        <h2 className="text-2xl md:text-3xl font-bold text-white mb-3 font-josefin leading-tight">
           What kind of content do you save the most?
         </h2>
-        <p className="text-white/80 text-lg font-josefin">
+        <p className="text-white/80 text-base md:text-lg font-josefin">
           We'll tailor Keepr to your needs.
         </p>
       </div>
       
-      <div className="grid grid-cols-2 gap-4 mb-8">
+      <div className="grid grid-cols-2 gap-3 md:gap-4 mb-6 md:mb-8 flex-1 overflow-auto">
         {contentOptions.map((option) => (
           <button
             key={option.id}
             onClick={() => togglePreference(option.id)}
-            className={`p-4 rounded-2xl border-2 transition-all duration-200 ${
+            className={`p-3 md:p-4 rounded-2xl border-2 transition-all duration-200 ${
               selectedPreferences.includes(option.id)
                 ? 'bg-white text-[#a8a5d0] border-white shadow-lg scale-105'
                 : 'bg-white/10 text-white border-white/20 hover:bg-white/20'
             }`}
           >
-            <div className="text-2xl mb-2">{option.emoji}</div>
-            <div className="text-sm font-josefin font-medium">{option.label}</div>
+            <div className="text-xl md:text-2xl mb-1 md:mb-2">{option.emoji}</div>
+            <div className="text-xs md:text-sm font-josefin font-medium leading-tight">{option.label}</div>
           </button>
         ))}
       </div>
       
-      <Button 
-        onClick={onNext}
-        disabled={selectedPreferences.length === 0}
-        className="w-full bg-white text-[#a8a5d0] hover:bg-white/90 font-josefin font-medium py-6 rounded-2xl text-lg shadow-lg transition-all duration-200 h-14 disabled:opacity-50"
-      >
-        Continue →
-      </Button>
+      <div className="mt-auto">
+        <Button 
+          onClick={onNext}
+          disabled={selectedPreferences.length === 0}
+          className="w-full bg-white text-[#a8a5d0] hover:bg-white/90 font-josefin font-medium py-4 md:py-6 rounded-2xl text-lg shadow-lg transition-all duration-200 h-12 md:h-14 disabled:opacity-50"
+        >
+          Continue →
+        </Button>
+      </div>
     </div>
   );
 };

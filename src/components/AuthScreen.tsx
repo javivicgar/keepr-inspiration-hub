@@ -27,13 +27,33 @@ const funFacts = [
   "Over 90% of smartphone time is spent using apps.",
   "The first iPhone had no App Store.",
   "Google processes over 99,000 searches every second.",
-  "TikTok was the most downloaded app globally in 2021 & 2022."
+  "TikTok was the most downloaded app globally in 2021 & 2022.",
+  "Bananas are berries, but strawberries aren't.",
+  "The Eiffel Tower can grow taller in summer.",
+  "Avocados are fruit, not vegetables.",
+  "Some turtles can breathe through their butts.",
+  "A group of flamingos is called a \"flamboyance.\"",
+  "Wombat poop is cube-shaped.",
+  "Sea otters hold hands while they sleep.",
+  "Honey never spoils.",
+  "There's a basketball court on the top floor of the U.S. Supreme Court building.",
+  "Octopuses have three hearts.",
+  "A shrimp's heart is in its head.",
+  "You can hear rhubarb grow in the dark.",
+  "Elephants can't jump.",
+  "Clouds can weigh over a million pounds.",
+  "Sloths can hold their breath longer than dolphins.",
+  "Peanuts aren't technically nuts.",
+  "Koalas have fingerprints.",
+  "Tomatoes were once considered poisonous.",
+  "There's a species of jellyfish that's immortal.",
+  "Cheese is the most stolen food in the world."
 ];
 
 export const AuthScreen = ({ onComplete }: AuthScreenProps) => {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [loginType, setLoginType] = useState<'google' | 'apple' | null>(null);
-  const [currentFact, setCurrentFact] = useState(0);
+  const [currentFact, setCurrentFact] = useState(() => Math.floor(Math.random() * funFacts.length));
   const [isVisible, setIsVisible] = useState(true);
   const [isAuthenticating, setIsAuthenticating] = useState(false);
 
@@ -41,7 +61,7 @@ export const AuthScreen = ({ onComplete }: AuthScreenProps) => {
     const interval = setInterval(() => {
       setIsVisible(false);
       setTimeout(() => {
-        setCurrentFact((prev) => (prev + 1) % funFacts.length);
+        setCurrentFact(Math.floor(Math.random() * funFacts.length));
         setIsVisible(true);
       }, 500);
     }, 5000);
@@ -109,14 +129,14 @@ export const AuthScreen = ({ onComplete }: AuthScreenProps) => {
   );
 
   return (
-    <div className="fixed inset-0 bg-gradient-to-b from-[#a8a5d0] to-[#9895c7] flex items-center justify-center p-6">
+    <div className="fixed inset-0 bg-gradient-to-b from-[#a8a5d0] to-[#9895c7] flex items-center justify-center p-4 md:p-6">
       <div className="text-center w-full max-w-md">
         <div className="bg-white rounded-3xl p-8 mb-8 inline-block shadow-xl">
           <Heart className="h-16 w-16 text-[#a8a5d0] fill-current" />
         </div>
         
-        <h1 className="text-5xl font-bold text-white mb-3 font-josefin tracking-wide">Keepr</h1>
-        <p className="text-white/90 text-lg mb-12 font-josefin">Save your inspirations.</p>
+        <h1 className="text-4xl md:text-5xl font-bold text-white mb-3 font-josefin tracking-wide">Keepr</h1>
+        <p className="text-white/90 text-lg mb-8 md:mb-12 font-josefin">Save your inspirations.</p>
         
         <div className="space-y-4 mb-8">
           <Button 

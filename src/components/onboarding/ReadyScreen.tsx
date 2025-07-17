@@ -23,7 +23,7 @@ export const ReadyScreen = ({ onComplete, onBack }: ReadyScreenProps) => {
   }, []);
 
   return (
-    <div className="animate-fade-in">
+    <div className="animate-fade-in h-full flex flex-col">
       <div className="flex items-center mb-6">
         <Button
           onClick={onBack}
@@ -35,31 +35,33 @@ export const ReadyScreen = ({ onComplete, onBack }: ReadyScreenProps) => {
         </Button>
       </div>
       
-      <div className="text-center">
+      <div className="text-center flex-1 flex flex-col justify-center">
         <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <div className="relative mb-6">
-            <h1 className="text-5xl font-bold text-white mb-4 font-josefin tracking-wide">
+            <h1 className="text-3xl md:text-5xl font-bold text-white mb-4 font-josefin tracking-wide leading-tight px-4">
               Keepr is ready for you
             </h1>
-            <div className={`absolute -top-4 -right-4 transition-all duration-500 ${sparkleVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-0'}`}>
-              <Sparkles className="h-8 w-8 text-white animate-pulse" />
+            <div className={`absolute -top-2 -right-2 md:-top-4 md:-right-4 transition-all duration-500 ${sparkleVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-0'}`}>
+              <Sparkles className="h-6 w-6 md:h-8 md:w-8 text-white animate-pulse" />
             </div>
           </div>
           
-          <p className="text-white/90 text-xl mb-12 font-josefin">
+          <p className="text-white/90 text-lg md:text-xl mb-8 md:mb-12 font-josefin px-4">
             Let's explore your Keeprs.
           </p>
         </div>
         
-        <div className="bg-white/10 rounded-2xl p-6 mb-8 backdrop-blur-sm">
+        <div className="bg-white/10 rounded-2xl p-4 md:p-6 mb-6 md:mb-8 backdrop-blur-sm mx-2">
           <p className="text-white/80 text-sm font-josefin">
             🎉 Your personalized Keepr experience is ready! Start saving your inspirations and organize them your way.
           </p>
         </div>
-        
+      </div>
+      
+      <div className="mt-auto">
         <Button 
           onClick={onComplete}
-          className="w-full bg-white text-[#a8a5d0] hover:bg-white/90 font-josefin font-medium py-6 rounded-2xl text-lg shadow-lg transition-all duration-200 h-14"
+          className="w-full bg-white text-[#a8a5d0] hover:bg-white/90 font-josefin font-medium py-4 md:py-6 rounded-2xl text-lg shadow-lg transition-all duration-200 h-12 md:h-14"
         >
           Enter Keepr →
         </Button>
