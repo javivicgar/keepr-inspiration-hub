@@ -1,229 +1,322 @@
-import React, { useState } from 'react';
-import { Search } from 'lucide-react';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { AuthScreen } from '@/components/AuthScreen';
+import React, { useState, useEffect } from 'react';
 import { SplashScreen } from '@/components/SplashScreen';
+import { AuthScreen } from '@/components/AuthScreen';
 import { OnboardingFlow } from '@/components/onboarding/OnboardingFlow';
+import { Header } from '@/components/Header';
 import { BottomNavigation } from '@/components/BottomNavigation';
-import { ImprovedSaveModal } from '@/components/ImprovedSaveModal';
 import { ImprovedContentGrid } from '@/components/ImprovedContentGrid';
-import { FilterBar } from '@/components/FilterBar';
 import { FoldersView } from '@/components/views/FoldersView';
+import { FolderContentView } from '@/components/FolderContentView';
+import { KeeprDetailView } from '@/components/KeeprDetailView';
 import { MapView } from '@/components/views/MapView';
-import { MoreView } from '@/components/views/MoreView';
 import { CommunityView } from '@/components/views/CommunityView';
+import { MoreView } from '@/components/views/MoreView';
+import { SaveContentModal } from '@/components/SaveContentModal';
+import { FilterBar } from '@/components/FilterBar';
 import { SortModal } from '@/components/SortModal';
-import { AddOptionsModal } from '@/components/AddOptionsModal';
-import { useToast } from '@/hooks/use-toast';
-import type { SavedContent } from '@/types/SavedContent';
+import { SavedContent } from '@/types/SavedContent';
 
 const Index = () => {
-  const [showAuth, setShowAuth] = useState(true);
-  const [showSplash, setShowSplash] = useState(false);
-  const [showOnboarding, setShowOnboarding] = useState(false);
-  const [savedContent, setSavedContent] = useState<SavedContent[]>([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isAddOptionsOpen, setIsAddOptionsOpen] = useState(false);
-  const [isSortModalOpen, setIsSortModalOpen] = useState(false);
+  const [showSplash, setShowSplash] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [hasCompletedOnboarding, setHasCompletedOnboarding] = useState(false);
   const [activeTab, setActiveTab] = useState('home');
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [selectedFolder, setSelectedFolder] = useState<string>('all');
+  const [showSaveModal, setShowSaveModal] = useState(false);
+  const [content, setContent] = useState<SavedContent[]>([]);
+  const [filteredContent, setFilteredContent] = useState<SavedContent[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedFolder, setSelectedFolder] = useState('All Folders');
+  const [showSortModal, setShowSortModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [sortBy, setSortBy] = useState('recent');
-  const [importType, setImportType] = useState<string>('');
-  const { toast } = useToast();
+  const [sortBy, setSortBy] = useState('newest');
 
-  const handleAuthComplete = () => {
-    setShowAuth(false);
-    setShowSplash(true);
-  };
+  // New state for navigation
+  const [currentView, setCurrentView] = useState<'home' | 'folder-content' | 'keepr-detail'>('home');
+  const [selectedFolderName, setSelectedFolderName] = useState<string>('');
+  const [selectedKeepr, setSelectedKeepr] = useState<SavedContent | null>(null);
 
-  const handleSplashComplete = () => {
-    setShowSplash(false);
-    setShowOnboarding(true);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowSplash(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    const mockContent: SavedContent[] = [
+      {
+        id: '1',
+        title: 'Basketball court in Röti',
+        creatorName: 'sports_enthusiast',
+        category: 'Sports',
+        folder: 'Sport Courts',
+        location: 'Röti, Switzerland',
+        image: '',
+        createdAt: new Date('2024-01-15'),
+        googleMapsRating: 4.5
+      },
+      {
+        id: '2',
+        title: 'Basketball court in Enge',
+        creatorName: 'city_explorer',
+        category: 'Sports',
+        folder: 'Sport Courts',
+        location: 'Enge, Zurich',
+        image: '',
+        createdAt: new Date('2024-01-10'),
+        googleMapsRating: 4.2
+      },
+      {
+        id: '3',
+        title: 'Amazing Pasta Place',
+        creatorName: 'foodie_lover',
+        category: 'Food Spots',
+        folder: 'Italian Food',
+        location: 'Rome, Italy',
+        image: '',
+        createdAt: new Date('2024-01-20')
+      },
+      {
+        id: '4',
+        title: 'Vintage Bookstore',
+        creatorName: 'book_worm',
+        category: 'Locations',
+        folder: 'Bookstores',
+        location: 'Paris, France',
+        image: '',
+        createdAt: new Date('2024-01-18')
+      }
+    ];
+    
+    setContent(mockContent);
+    setFilteredContent(mockContent);
+  }, []);
+
+  useEffect(() => {
+    let filtered = content;
+
+    if (selectedCategory !== 'All') {
+      filtered = filtered.filter(item => item.category === selectedCategory);
+    }
+
+    if (selectedFolder !== 'All Folders') {
+      filtered = filtered.filter(item => item.folder === selectedFolder);
+    }
+
+    if (searchQuery) {
+      filtered = filtered.filter(item =>
+        item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.creatorName.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+
+    const sortedContent = [...filtered].sort((a, b) => {
+      switch (sortBy) {
+        case 'newest':
+          return b.createdAt.getTime() - a.createdAt.getTime();
+        case 'oldest':
+          return a.createdAt.getTime() - b.createdAt.getTime();
+        case 'alphabetical':
+          return a.title.localeCompare(b.title);
+        default:
+          return 0;
+      }
+    });
+
+    setFilteredContent(sortedContent);
+  }, [content, selectedCategory, selectedFolder, searchQuery, sortBy]);
+
+  const handleAuthentication = () => {
+    setIsAuthenticated(true);
   };
 
   const handleOnboardingComplete = () => {
-    setShowOnboarding(false);
+    setHasCompletedOnboarding(true);
   };
 
-  const handleSaveContent = (content: Omit<SavedContent, 'id' | 'createdAt'>) => {
-    const newContent: SavedContent = {
-      ...content,
+  const handleAddContent = (newContent: Omit<SavedContent, 'id' | 'createdAt'>) => {
+    const contentWithId: SavedContent = {
+      ...newContent,
       id: Date.now().toString(),
       createdAt: new Date()
     };
-    setSavedContent(prev => [newContent, ...prev]);
-    setIsModalOpen(false);
-    
-    // Show success toast
-    toast({
-      title: "✅ Saved successfully!",
-      description: `Saved to '${content.folder}'`,
-      duration: 3000,
-    });
+    setContent(prev => [contentWithId, ...prev]);
+    setShowSaveModal(false);
   };
 
-  const handleFolderClick = (folder: string) => {
-    setSelectedFolder(folder);
-    setActiveTab('home');
+  const handleSortChange = (newSortBy: string) => {
+    setSortBy(newSortBy);
+    setShowSortModal(false);
   };
 
-  const handleSortApply = (newSort: string) => {
-    setSortBy(newSort);
+  // New navigation handlers
+  const handleFolderClick = (folderName: string) => {
+    setSelectedFolderName(folderName);
+    setCurrentView('folder-content');
   };
 
-  const handleAddOptionsSelect = (option: string) => {
-    setImportType(option);
-    setIsModalOpen(true);
+  const handleKeeprClick = (keepr: SavedContent) => {
+    setSelectedKeepr(keepr);
+    setCurrentView('keepr-detail');
   };
 
-  const sortedContent = [...savedContent].sort((a, b) => {
-    if (sortBy === 'alphabetical') {
-      return a.title.localeCompare(b.title);
-    }
-    return b.createdAt.getTime() - a.createdAt.getTime();
-  });
+  const handleBackToHome = () => {
+    setCurrentView('home');
+    setSelectedFolderName('');
+    setSelectedKeepr(null);
+  };
 
-  const filteredContent = sortedContent.filter(item => {
-    const matchesCategory = selectedCategory === 'all' || item.category === selectedCategory;
-    const matchesFolder = selectedFolder === 'all' || item.folder === selectedFolder;
-    const matchesSearch = searchQuery === '' || 
-      item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())) ||
-      item.creatorName.toLowerCase().includes(searchQuery.toLowerCase());
-    
-    return matchesCategory && matchesFolder && matchesSearch;
-  });
-
-  const folders = Array.from(new Set(savedContent.map(item => item.folder)));
-
-  if (showAuth) {
-    return <AuthScreen onComplete={handleAuthComplete} />;
-  }
+  const handleBackToFolder = () => {
+    setCurrentView('folder-content');
+    setSelectedKeepr(null);
+  };
 
   if (showSplash) {
-    return <SplashScreen onComplete={handleSplashComplete} />;
+    return <SplashScreen />;
   }
 
-  if (showOnboarding) {
+  if (!isAuthenticated) {
+    return <AuthScreen onAuthenticate={handleAuthentication} />;
+  }
+
+  if (!hasCompletedOnboarding) {
     return <OnboardingFlow onComplete={handleOnboardingComplete} />;
   }
 
-  const renderStatusBar = () => {
-    if (savedContent.length === 0) return null;
-    
-    const locationContent = savedContent.filter(item => item.location);
-    const statusMessages = [];
-    
-    if (locationContent.length > 0) {
-      statusMessages.push(`${locationContent.length} places to explore`);
+  const renderHomeContent = () => {
+    if (currentView === 'keepr-detail' && selectedKeepr) {
+      return (
+        <KeeprDetailView 
+          keepr={selectedKeepr} 
+          onBack={selectedFolderName ? handleBackToFolder : handleBackToHome} 
+        />
+      );
     }
-    if (folders.length > 0) {
-      statusMessages.push(`${folders.length} folders`);
+
+    if (currentView === 'folder-content' && selectedFolderName) {
+      const folderContent = content.filter(item => item.folder === selectedFolderName);
+      return (
+        <FolderContentView
+          folderName={selectedFolderName}
+          content={folderContent}
+          onBack={handleBackToHome}
+          onKeeprClick={handleKeeprClick}
+        />
+      );
     }
-    
-    return statusMessages.length > 0 ? (
-      <div className="bg-[#a8a5d0]/10 rounded-2xl p-4 mb-6 shadow-sm">
-        <p className="text-sm text-center font-medium text-[#a8a5d0] font-josefin">
-          ✨ {statusMessages.join(' • ')}
-        </p>
-      </div>
-    ) : null;
-  };
 
-  const renderContent = () => {
-    switch (activeTab) {
-      case 'community':
-        return <CommunityView />;
-      case 'map':
-        return <MapView content={savedContent} />;
-      case 'more':
-        return <MoreView totalContent={savedContent.length} totalFolders={folders.length} />;
-      default: // home
-        return (
-          <>
-            {renderStatusBar()}
-            
-            <div className="mb-6">
-              <div className="relative mb-6">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  className="pl-12 h-12 text-base rounded-2xl border-2 focus:border-[#a8a5d0] font-josefin"
-                  placeholder="Search your Keeprs..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-              </div>
+    if (activeTab === 'folders') {
+      return (
+        <FoldersView 
+          content={content} 
+          onFolderClick={handleFolderClick}
+        />
+      );
+    }
 
-              <FilterBar
-                selectedCategory={selectedCategory}
-                onCategoryChange={setSelectedCategory}
-                selectedFolder={selectedFolder}
-                onFolderChange={setSelectedFolder}
-                folders={folders}
-                searchQuery=""
-                onSearchChange={() => {}}
-                onSortClick={() => setIsSortModalOpen(true)}
-              />
+    // Show folders section in home if user has folders
+    const folders = Array.from(new Set(content.map(item => item.folder)));
+    if (folders.length > 0 && activeTab === 'home') {
+      return (
+        <div className="space-y-6">
+          <div className="mb-6">
+            <h2 className="text-xl font-bold mb-2 font-josefin">Your Folders</h2>
+            <div className="grid grid-cols-2 gap-3">
+              {folders.map(folderName => {
+                const folderContent = content.filter(item => item.folder === folderName);
+                return (
+                  <div
+                    key={folderName}
+                    onClick={() => handleFolderClick(folderName)}
+                    className="p-4 bg-gradient-to-br from-[#a8a5d0]/10 to-[#9895c7]/20 rounded-2xl border-2 border-[#a8a5d0]/20 hover:border-[#a8a5d0]/40 transition-all cursor-pointer"
+                  >
+                    <div className="text-2xl mb-2">📁</div>
+                    <h3 className="font-semibold text-sm font-josefin line-clamp-1">{folderName}</h3>
+                    <p className="text-xs text-gray-600 font-josefin">
+                      {folderContent.length} {folderContent.length === 1 ? 'Keepr' : 'Keeprs'}
+                    </p>
+                  </div>
+                );
+              })}
             </div>
-
+          </div>
+          
+          <div className="mb-6">
+            <h2 className="text-xl font-bold mb-4 font-josefin">All Keeprs</h2>
             <ImprovedContentGrid 
-              content={filteredContent}
-              onCreateKeepr={() => setIsAddOptionsOpen(true)}
+              content={filteredContent} 
+              onCreateKeepr={() => setShowSaveModal(true)} 
             />
-          </>
-        );
+          </div>
+        </div>
+      );
     }
+
+    return (
+      <ImprovedContentGrid 
+        content={filteredContent} 
+        onCreateKeepr={() => setShowSaveModal(true)} 
+      />
+    );
   };
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-6 max-w-md">
-        <header className="mb-6">
-          <h1 className="text-3xl font-bold text-foreground mb-2 font-josefin tracking-wide">
-            {activeTab === 'home' ? 'Your Keeprs' :
-             activeTab === 'community' ? 'Community' :
-             activeTab === 'map' ? 'Map' : 'More'}
-          </h1>
-          {activeTab === 'home' && (
-            <p className="text-sm text-muted-foreground font-josefin">
-              {savedContent.length} saved {savedContent.length === 1 ? 'Keepr' : 'Keeprs'}
-            </p>
-          )}
-        </header>
+      <Header 
+        onCreateKeepr={() => setShowSaveModal(true)}
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+      />
+      
+      <main className="container mx-auto px-4 pt-20">
+        {activeTab === 'home' && (
+          <>
+            {currentView === 'home' && (
+              <FilterBar
+                selectedCategory={selectedCategory}
+                selectedFolder={selectedFolder}
+                onCategoryChange={setSelectedCategory}
+                onFolderChange={setSelectedFolder}
+                onSortClick={() => setShowSortModal(true)}
+                folders={Array.from(new Set(content.map(item => item.folder)))}
+              />
+            )}
+            {renderHomeContent()}
+          </>
+        )}
+        
+        {activeTab === 'folders' && (
+          <FoldersView 
+            content={content} 
+            onFolderClick={handleFolderClick}
+          />
+        )}
+        
+        {activeTab === 'map' && <MapView content={content} />}
+        {activeTab === 'community' && <CommunityView />}
+        {activeTab === 'more' && <MoreView />}
+      </main>
 
-        <main>
-          {renderContent()}
-        </main>
+      <BottomNavigation activeTab={activeTab} onTabChange={setActiveTab} />
 
-        <BottomNavigation
-          activeTab={activeTab}
-          onTabChange={setActiveTab}
-          onAddClick={() => setIsAddOptionsOpen(true)}
+      {showSaveModal && (
+        <SaveContentModal
+          isOpen={showSaveModal}
+          onClose={() => setShowSaveModal(false)}
+          onSave={handleAddContent}
+          existingFolders={Array.from(new Set(content.map(item => item.folder)))}
         />
+      )}
 
-        <AddOptionsModal
-          isOpen={isAddOptionsOpen}
-          onClose={() => setIsAddOptionsOpen(false)}
-          onOptionSelect={handleAddOptionsSelect}
-        />
-
+      {showSortModal && (
         <SortModal
-          isOpen={isSortModalOpen}
-          onClose={() => setIsSortModalOpen(false)}
-          onApply={handleSortApply}
+          isOpen={showSortModal}
+          onClose={() => setShowSortModal(false)}
           currentSort={sortBy}
+          onSortChange={handleSortChange}
         />
-
-        <ImprovedSaveModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          onSave={handleSaveContent}
-          importType={importType}
-        />
-      </div>
+      )}
     </div>
   );
 };

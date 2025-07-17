@@ -1,9 +1,12 @@
-import React from 'react';
-import { Users, Heart, Star, TrendingUp, ThumbsUp, Eye, ArrowRight, UserPlus, MapPin } from 'lucide-react';
+import React, { useState } from 'react';
+import { Search, Heart, MessageCircle, Repeat, UserPlus, Star, TrendingUp, ThumbsUp, Eye, ArrowRight, MapPin } from 'lucide-react';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 export const CommunityView = () => {
+  const [searchQuery, setSearchQuery] = useState('');
+
   const sharedKeepr = [
     {
       id: 1,
@@ -15,7 +18,8 @@ export const CommunityView = () => {
       visitedWith: ["@sarah_kim", "@mike_chen"],
       status: "visited",
       likes: 124,
-      saves: 89
+      saves: 89,
+      comments: 12
     },
     {
       id: 2,
@@ -27,7 +31,8 @@ export const CommunityView = () => {
       visitedWith: ["@hiking_buddy"],
       status: "visited",
       likes: 89,
-      saves: 67
+      saves: 67,
+      comments: 8
     },
     {
       id: 3,
@@ -39,129 +44,158 @@ export const CommunityView = () => {
       visitedWith: [],
       status: "visited",
       likes: 156,
-      saves: 134
+      saves: 134,
+      comments: 23
     }
   ];
 
-  const recentFromFriends = [
+  const friendSuggestions = [
+    { username: "@alex_travels", mutualFriends: 3, sharedInterests: ["Travel", "Food"] },
+    { username: "@maria_foodie", mutualFriends: 5, sharedInterests: ["Food", "Fashion"] },
+    { username: "@jake_outdoors", mutualFriends: 2, sharedInterests: ["Outdoor", "Sports"] }
+  ];
+
+  const sharedWithMe = [
     {
       id: 1,
-      friend: "@sarah_kim",
-      action: "saved",
-      title: "Cozy Bookstore Café",
+      title: "Best Coffee Shop Downtown",
       category: "Food Spots",
-      emoji: "📚",
+      emoji: "☕",
+      sharedBy: "@sarah_kim",
       timeAgo: "2h ago"
     },
     {
       id: 2,
-      friend: "@mike_chen",
-      action: "visited",
-      title: "Modern Art Gallery",
+      title: "Cool Art Exhibition",
       category: "Locations",
       emoji: "🎨",
+      sharedBy: "@mike_chen",
       timeAgo: "1d ago"
     }
   ];
 
-  const curatedCollections = [
-    {
-      id: 1,
-      title: "Best Brunch Spots in Paris",
-      description: "Curated by local food experts",
-      items: 12,
-      rating: 4.8,
-      tags: ["brunch", "paris", "food"]
-    },
-    {
-      id: 2,
-      title: "AI Tools 2024",
-      description: "Essential productivity apps",
-      items: 8,
-      rating: 4.9,
-      tags: ["ai", "productivity", "tools"]
-    },
-    {
-      id: 3,
-      title: "Sustainable Fashion Brands",
-      description: "Eco-friendly style choices",
-      items: 15,
-      rating: 4.7,
-      tags: ["sustainable", "fashion", "eco"]
-    }
+  const topKeeprSharers = [
+    { username: "@foodie_tokyo", shares: 45, avatar: "🍜" },
+    { username: "@adventure_alex", shares: 38, avatar: "🏔️" },
+    { username: "@vintage_lover", shares: 32, avatar: "🛍️" }
   ];
 
   return (
     <div className="space-y-6 pb-20">
-      {/* Header */}
+      {/* Header with Search */}
       <div className="mb-6">
-        <h2 className="text-2xl font-bold mb-2 font-josefin tracking-wide">Community</h2>
-        <p className="text-muted-foreground font-josefin">Share your Keepr experiences with friends</p>
+        <h2 className="text-2xl font-bold mb-4 font-josefin tracking-wide">Community</h2>
+        
+        {/* Friend Search */}
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+          <Input
+            placeholder="Find friends by username or email..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-10 rounded-xl border-2 font-josefin"
+          />
+        </div>
+      </div>
+
+      {/* Friend Suggestions */}
+      <div className="space-y-4">
+        <h3 className="text-lg font-semibold font-josefin">Suggested Friends</h3>
+        <div className="grid gap-3">
+          {friendSuggestions.map((friend, index) => (
+            <Card key={index} className="hover:shadow-md transition-shadow rounded-2xl">
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-[#a8a5d0]/20 rounded-full flex items-center justify-center">
+                      <span className="font-bold text-[#a8a5d0] font-josefin">
+                        {friend.username[1].toUpperCase()}
+                      </span>
+                    </div>
+                    <div>
+                      <p className="font-semibold font-josefin">{friend.username}</p>
+                      <p className="text-xs text-gray-600 font-josefin">
+                        {friend.mutualFriends} mutual friends • {friend.sharedInterests.join(', ')}
+                      </p>
+                    </div>
+                  </div>
+                  <Button size="sm" className="bg-[#a8a5d0] hover:bg-[#9895c7] font-josefin rounded-xl">
+                    <UserPlus className="h-3 w-3 mr-1" />
+                    Follow
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+
+      {/* Shared With Me */}
+      <div className="space-y-4">
+        <h3 className="text-lg font-semibold font-josefin">Shared With Me</h3>
+        <div className="space-y-3">
+          {sharedWithMe.map((item) => (
+            <Card key={item.id} className="hover:shadow-md transition-shadow rounded-2xl">
+              <CardContent className="p-4">
+                <div className="flex items-start space-x-3">
+                  <div className="text-2xl">{item.emoji}</div>
+                  <div className="flex-1">
+                    <h4 className="font-semibold font-josefin line-clamp-1">{item.title}</h4>
+                    <p className="text-sm text-[#a8a5d0] font-josefin">
+                      Shared by {item.sharedBy} • {item.timeAgo}
+                    </p>
+                  </div>
+                  <Button variant="outline" size="sm" className="font-josefin rounded-xl">
+                    Save
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
       </div>
 
       {/* Shared Keeprs */}
       <div className="space-y-4">
-        <h3 className="text-lg font-semibold font-josefin">Shared Keeprs</h3>
+        <h3 className="text-lg font-semibold font-josefin">Community Keeprs</h3>
         <div className="space-y-3">
           {sharedKeepr.map((keepr) => (
-            <Card key={keepr.id} className="hover:shadow-md transition-shadow">
+            <Card key={keepr.id} className="hover:shadow-md transition-shadow rounded-2xl">
               <CardContent className="p-4">
                 <div className="flex items-start space-x-3">
                   <div className="text-2xl">{keepr.emoji}</div>
                   <div className="flex-1">
                     <h4 className="font-semibold font-josefin line-clamp-1">{keepr.title}</h4>
-                    <p className="text-sm text-muted-foreground font-josefin">{keepr.creator}</p>
+                    <button className="text-sm text-[#a8a5d0] font-josefin hover:underline">
+                      {keepr.creator}
+                    </button>
                     <div className="flex items-center text-xs text-muted-foreground font-josefin mb-2">
                       <MapPin className="h-3 w-3 mr-1" />
                       {keepr.location}
                     </div>
                     
                     {keepr.visitedWith.length > 0 && (
-                      <div className="flex items-center text-xs text-[#a8a5d0] font-josefin mb-2">
+                      <div className="flex items-center text-xs text-[#a8a5d0] font-josefin mb-3">
                         <UserPlus className="h-3 w-3 mr-1" />
                         Visited with {keepr.visitedWith.join(', ')}
                       </div>
                     )}
                     
-                    <div className="flex items-center space-x-4 mt-2">
-                      <div className="flex items-center space-x-1">
-                        <Heart className="h-3 w-3 text-red-500" />
-                        <span className="text-xs font-josefin">{keepr.likes}</span>
-                      </div>
-                      <div className="flex items-center space-x-1">
-                        <Star className="h-3 w-3 text-yellow-500" />
-                        <span className="text-xs font-josefin">{keepr.saves}</span>
-                      </div>
-                      <span className="text-xs text-green-600 font-josefin bg-green-50 px-2 py-1 rounded-full">
-                        ✓ Visited
-                      </span>
+                    {/* Interaction Buttons */}
+                    <div className="flex items-center gap-4">
+                      <Button variant="ghost" size="sm" className="h-8 px-2 font-josefin">
+                        <Heart className="h-4 w-4 mr-1" />
+                        {keepr.likes}
+                      </Button>
+                      <Button variant="ghost" size="sm" className="h-8 px-2 font-josefin">
+                        <MessageCircle className="h-4 w-4 mr-1" />
+                        {keepr.comments}
+                      </Button>
+                      <Button variant="ghost" size="sm" className="h-8 px-2 font-josefin">
+                        <Repeat className="h-4 w-4 mr-1" />
+                        Re-Keep
+                      </Button>
                     </div>
-                  </div>
-                  <Button variant="ghost" size="sm" className="font-josefin">
-                    <ThumbsUp className="h-4 w-4" />
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </div>
-
-      {/* Recent from Friends */}
-      <div className="space-y-4">
-        <h3 className="text-lg font-semibold font-josefin">Recent from Friends</h3>
-        <div className="space-y-3">
-          {recentFromFriends.map((activity) => (
-            <Card key={activity.id} className="hover:shadow-md transition-shadow">
-              <CardContent className="p-4">
-                <div className="flex items-start space-x-3">
-                  <div className="text-2xl">{activity.emoji}</div>
-                  <div className="flex-1">
-                    <p className="text-sm font-josefin">
-                      <span className="font-semibold text-[#a8a5d0]">{activity.friend}</span> {activity.action} 
-                      <span className="font-semibold"> "{activity.title}"</span>
-                    </p>
-                    <p className="text-xs text-muted-foreground font-josefin">{activity.timeAgo}</p>
                   </div>
                 </div>
               </CardContent>
@@ -170,67 +204,38 @@ export const CommunityView = () => {
         </div>
       </div>
 
-      {/* Curated Collections */}
-      <div className="space-y-4">
-        <h3 className="text-lg font-semibold font-josefin">Curated Collections</h3>
-        <div className="space-y-3">
-          {curatedCollections.map((collection) => (
-            <Card key={collection.id} className="hover:shadow-md transition-shadow">
-              <CardContent className="p-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex-1">
-                    <h4 className="font-semibold font-josefin">{collection.title}</h4>
-                    <p className="text-sm text-muted-foreground font-josefin">{collection.description}</p>
-                    <div className="flex items-center space-x-4 mt-2">
-                      <div className="flex items-center space-x-1">
-                        <Eye className="h-3 w-3 text-muted-foreground" />
-                        <span className="text-xs font-josefin">{collection.items} items</span>
-                      </div>
-                      <div className="flex items-center space-x-1">
-                        <Star className="h-3 w-3 text-yellow-500 fill-current" />
-                        <span className="text-xs font-josefin">{collection.rating}</span>
-                      </div>
-                    </div>
-                    <div className="flex flex-wrap gap-1 mt-2">
-                      {collection.tags.map((tag) => (
-                        <span key={tag} className="px-2 py-1 bg-muted rounded-full text-xs font-josefin">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
+      {/* Top Keepr Sharers */}
+      <Card className="bg-gradient-to-r from-[#a8a5d0]/10 to-[#9895c7]/10 border-[#a8a5d0]/20 rounded-2xl">
+        <CardContent className="p-6">
+          <h3 className="font-semibold mb-4 font-josefin flex items-center">
+            <TrendingUp className="h-5 w-5 mr-2 text-[#a8a5d0]" />
+            Top Keepr Sharers This Week
+          </h3>
+          <div className="space-y-3">
+            {topKeeprSharers.map((user, index) => (
+              <div key={index} className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
+                    <span className="text-sm">{user.avatar}</span>
                   </div>
-                  <Button variant="ghost" size="sm" className="font-josefin">
-                    <ArrowRight className="h-4 w-4" />
-                  </Button>
+                  <div>
+                    <p className="font-semibold text-sm font-josefin">{user.username}</p>
+                    <p className="text-xs text-gray-600 font-josefin">{user.shares} shares</p>
+                  </div>
                 </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </div>
-
-      {/* Community Stats */}
-      <Card className="bg-gradient-to-r from-[#a8a5d0]/10 to-[#9895c7]/10 border-[#a8a5d0]/20">
-        <CardContent className="p-6 text-center">
-          <Users className="h-12 w-12 text-[#a8a5d0] mx-auto mb-4" />
-          <h3 className="font-semibold mb-2 font-josefin">Join the Community</h3>
-          <p className="text-sm text-muted-foreground font-josefin mb-4">
-            Share your experiences and discover amazing places with friends
-          </p>
-          <div className="grid grid-cols-3 gap-4 text-center">
-            <div>
-              <div className="text-lg font-bold text-[#a8a5d0] font-josefin">1.2K</div>
-              <div className="text-xs text-muted-foreground font-josefin">Users</div>
-            </div>
-            <div>
-              <div className="text-lg font-bold text-[#a8a5d0] font-josefin">5.8K</div>
-              <div className="text-xs text-muted-foreground font-josefin">Shared</div>
-            </div>
-            <div>
-              <div className="text-lg font-bold text-[#a8a5d0] font-josefin">324</div>
-              <div className="text-xs text-muted-foreground font-josefin">Collections</div>
-            </div>
+                <span className="text-lg font-bold text-[#a8a5d0] font-josefin">#{index + 1}</span>
+              </div>
+            ))}
           </div>
+        </CardContent>
+      </Card>
+
+      {/* Daily Stats Banner */}
+      <Card className="bg-gradient-to-r from-green-50 to-blue-50 border-0 rounded-2xl">
+        <CardContent className="p-4 text-center">
+          <p className="font-semibold text-[#a8a5d0] font-josefin">
+            🎉 Today: 183 new food spots saved across the community!
+          </p>
         </CardContent>
       </Card>
     </div>

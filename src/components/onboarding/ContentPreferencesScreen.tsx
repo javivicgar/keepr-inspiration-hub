@@ -38,49 +38,51 @@ export const ContentPreferencesScreen = ({
   };
 
   return (
-    <div className="animate-fade-in h-full flex flex-col">
-      <div className="flex items-center mb-6">
+    <div className="animate-fade-in h-full flex flex-col min-h-0">
+      <div className="flex items-center mb-4 md:mb-6 flex-shrink-0">
         <Button
           onClick={onBack}
           variant="ghost"
           size="sm"
           className="text-white hover:bg-white/10 p-2 rounded-full"
         >
-          <ChevronLeft className="h-5 w-5" />
+          <ChevronLeft className="h-4 w-4 md:h-5 md:w-5" />
         </Button>
       </div>
       
-      <div className="text-center mb-6 md:mb-8 px-2">
-        <h2 className="text-2xl md:text-3xl font-bold text-white mb-3 font-josefin leading-tight">
+      <div className="text-center mb-4 md:mb-6 px-2 flex-shrink-0">
+        <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2 md:mb-3 font-josefin leading-tight">
           What kind of content do you save the most?
         </h2>
-        <p className="text-white/80 text-base md:text-lg font-josefin">
+        <p className="text-white/80 text-sm md:text-base lg:text-lg font-josefin">
           We'll tailor Keepr to your needs.
         </p>
       </div>
       
-      <div className="grid grid-cols-2 gap-3 md:gap-4 mb-6 md:mb-8 flex-1 overflow-auto">
-        {contentOptions.map((option) => (
-          <button
-            key={option.id}
-            onClick={() => togglePreference(option.id)}
-            className={`p-3 md:p-4 rounded-2xl border-2 transition-all duration-200 ${
-              selectedPreferences.includes(option.id)
-                ? 'bg-white text-[#a8a5d0] border-white shadow-lg scale-105'
-                : 'bg-white/10 text-white border-white/20 hover:bg-white/20'
-            }`}
-          >
-            <div className="text-xl md:text-2xl mb-1 md:mb-2">{option.emoji}</div>
-            <div className="text-xs md:text-sm font-josefin font-medium leading-tight">{option.label}</div>
-          </button>
-        ))}
+      <div className="flex-1 overflow-y-auto min-h-0 mb-4 md:mb-6">
+        <div className="grid grid-cols-2 gap-2 md:gap-3 px-1">
+          {contentOptions.map((option) => (
+            <button
+              key={option.id}
+              onClick={() => togglePreference(option.id)}
+              className={`p-2 md:p-3 lg:p-4 rounded-xl md:rounded-2xl border-2 transition-all duration-200 ${
+                selectedPreferences.includes(option.id)
+                  ? 'bg-white text-[#a8a5d0] border-white shadow-lg transform scale-[0.98]'
+                  : 'bg-white/10 text-white border-white/20 hover:bg-white/20'
+              }`}
+            >
+              <div className="text-base md:text-lg lg:text-xl mb-1">{option.emoji}</div>
+              <div className="text-xs md:text-sm font-josefin font-medium leading-tight">{option.label}</div>
+            </button>
+          ))}
+        </div>
       </div>
       
-      <div className="mt-auto">
+      <div className="flex-shrink-0">
         <Button 
           onClick={onNext}
           disabled={selectedPreferences.length === 0}
-          className="w-full bg-white text-[#a8a5d0] hover:bg-white/90 font-josefin font-medium py-4 md:py-6 rounded-2xl text-lg shadow-lg transition-all duration-200 h-12 md:h-14 disabled:opacity-50"
+          className="w-full bg-white text-[#a8a5d0] hover:bg-white/90 font-josefin font-medium py-3 md:py-4 lg:py-6 rounded-xl md:rounded-2xl text-sm md:text-lg shadow-lg transition-all duration-200 h-10 md:h-12 lg:h-14 disabled:opacity-50"
         >
           Continue →
         </Button>
