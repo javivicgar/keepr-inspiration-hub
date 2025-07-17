@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { SplashScreen } from '@/components/SplashScreen';
 import { AuthScreen } from '@/components/AuthScreen';
 import { OnboardingFlow } from '@/components/onboarding/OnboardingFlow';
 import { Header } from '@/components/Header';
@@ -14,14 +13,17 @@ import { MoreView } from '@/components/views/MoreView';
 import { SaveContentModal } from '@/components/SaveContentModal';
 import { FilterBar } from '@/components/FilterBar';
 import { SortModal } from '@/components/SortModal';
+import { AddOptionsModal } from '@/components/AddOptionsModal';
 import { SavedContent } from '@/types/SavedContent';
 
 const Index = () => {
-  const [showSplash, setShowSplash] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [hasCompletedOnboarding, setHasCompletedOnboarding] = useState(false);
+  const [showPersonalizing, setShowPersonalizing] = useState(false);
+  const [userPreferences, setUserPreferences] = useState<string[]>([]);
   const [activeTab, setActiveTab] = useState('home');
   const [showSaveModal, setShowSaveModal] = useState(false);
+  const [showAddOptions, setShowAddOptions] = useState(false);
   const [content, setContent] = useState<SavedContent[]>([]);
   const [filteredContent, setFilteredContent] = useState<SavedContent[]>([]);
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -35,13 +37,7 @@ const Index = () => {
   const [selectedFolderName, setSelectedFolderName] = useState<string>('');
   const [selectedKeepr, setSelectedKeepr] = useState<SavedContent | null>(null);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowSplash(false);
-    }, 2000);
-
-    return () => clearTimeout(timer);
-  }, []);
+  // Remove splash screen - load directly to auth
 
   useEffect(() => {
     const mockContent: SavedContent[] = [];
@@ -88,8 +84,15 @@ const Index = () => {
     setIsAuthenticated(true);
   };
 
-  const handleOnboardingComplete = () => {
-    setHasCompletedOnboarding(true);
+  const handleOnboardingComplete = (preferences: string[]) => {
+    setUserPreferences(preferences);
+    setShowPersonalizing(true);
+    
+    // Show personalizing for 2 seconds, then complete onboarding
+    setTimeout(() => {
+      setShowPersonalizing(false);
+      setHasCompletedOnboarding(true);
+    }, 2000);
   };
 
   const handleAddContent = (newContent: Omit<SavedContent, 'id' | 'createdAt'>) => {
@@ -129,16 +132,23 @@ const Index = () => {
     setSelectedKeepr(null);
   };
 
-  if (showSplash) {
-    return <SplashScreen onComplete={() => setShowSplash(false)} />;
-  }
-
   if (!isAuthenticated) {
     return <AuthScreen onAuthenticate={handleAuthentication} />;
   }
 
   if (!hasCompletedOnboarding) {
     return <OnboardingFlow onComplete={handleOnboardingComplete} />;
+  }
+
+  if (showPersonalizing) {
+    return (
+      <div className="fixed inset-0 bg-gradient-to-b from-[#a8a5d0] to-[#9895c7] flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-4 border-white border-t-transparent mx-auto mb-4"></div>
+          <p className="text-white text-lg font-josefin">Personalizing your Keepr experience...</p>
+        </div>
+      </div>
+    );
   }
 
   const renderHomeContent = () => {
@@ -220,13 +230,15 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header 
-        onCreateKeepr={() => setShowSaveModal(true)}
-        searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
-      />
+      {activeTab === 'home' && (
+        <Header 
+          onCreateKeepr={() => setShowSaveModal(true)}
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
+        />
+      )}
       
-      <main className="container mx-auto px-4 pt-20">
+      <main className="container mx-auto px-4 pt-16">
         {activeTab === 'home' && (
           <>
             {currentView === 'home' && (
@@ -237,8 +249,6 @@ const Index = () => {
                 onFolderChange={setSelectedFolder}
                 onSortClick={() => setShowSortModal(true)}
                 folders={Array.from(new Set(content.map(item => item.folder)))}
-                searchQuery={searchQuery}
-                onSearchChange={setSearchQuery}
               />
             )}
             {renderHomeContent()}
@@ -252,12 +262,26 @@ const Index = () => {
           />
         )}
         
-        {activeTab === 'map' && <MapView content={content} />}
-        {activeTab === 'community' && <CommunityView />}
-        {activeTab === 'more' && <MoreView totalContent={content.length} totalFolders={Array.from(new Set(content.map(item => item.folder))).length} />}
+        {activeTab === 'map' && (
+          <div className="relative">
+            <MapView content={content} />
+          </div>
+        )}
+        {activeTab === 'community' && (
+          <div className="py-4">
+            <h2 className="text-xl font-bold mb-4 font-josefin">Community</h2>
+            <CommunityView />
+          </div>
+        )}
+        {activeTab === 'more' && (
+          <div className="py-4">
+            <h2 className="text-xl font-bold mb-4 font-josefin">More</h2>
+            <MoreView totalContent={content.length} totalFolders={Array.from(new Set(content.map(item => item.folder))).length} />
+          </div>
+        )}
       </main>
 
-      <BottomNavigation activeTab={activeTab} onTabChange={setActiveTab} onAddClick={() => setShowSaveModal(true)} />
+      <BottomNavigation activeTab={activeTab} onTabChange={setActiveTab} onAddClick={() => setShowAddOptions(true)} />
 
       {showSaveModal && (
         <SaveContentModal
@@ -274,6 +298,14 @@ const Index = () => {
           onClose={() => setShowSortModal(false)}
           currentSort={sortBy}
           onSortChange={handleSortChange}
+        />
+      )}
+
+      {showAddOptions && (
+        <AddOptionsModal
+          isOpen={showAddOptions}
+          onClose={() => setShowAddOptions(false)}
+          onOptionSelect={() => setShowSaveModal(true)}
         />
       )}
     </div>

@@ -38,15 +38,6 @@ export const ImprovedContentGrid = ({ content, onCreateKeepr }: ImprovedContentG
             <p className="text-xs md:text-sm font-medium text-[#a8a5d0] font-josefin">Create your first Keepr</p>
           </CardContent>
         </Card>
-        
-        <Card className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl border-0">
-          <CardContent className="p-4 md:p-6 flex flex-col items-center justify-center text-center h-32 md:h-40">
-            <div className="w-8 h-8 md:w-10 md:h-10 bg-gray-200 rounded-full flex items-center justify-center mb-2 md:mb-3">
-              <Heart className="h-4 w-4 md:h-5 md:w-5 text-gray-400" />
-            </div>
-            <p className="text-xs md:text-sm text-gray-500 font-josefin">Start saving inspirations</p>
-          </CardContent>
-        </Card>
       </div>
     );
   }

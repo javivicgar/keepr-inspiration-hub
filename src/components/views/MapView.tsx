@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { MapPin, ExternalLink } from 'lucide-react';
+import { MapPin, ExternalLink, Navigation } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { InteractiveMap } from '@/components/InteractiveMap';
 import type { SavedContent } from '@/types/SavedContent';
 
 interface MapViewProps {
@@ -10,6 +9,15 @@ interface MapViewProps {
 }
 
 const categories = ['all', 'Food Spots', 'Locations', 'Outdoor', 'Sports', 'Travel Spots'];
+
+const categoryColors: Record<string, string> = {
+  'Food Spots': '#D4C1EC',
+  'Locations': '#A1D6F2', 
+  'Outdoor': '#B8E994',
+  'Sports': '#F6A9A9',
+  'Travel Spots': '#FFE4A3',
+  'Other': '#A19DCA'
+};
 
 export const MapView = ({ content }: MapViewProps) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
@@ -25,10 +33,6 @@ export const MapView = ({ content }: MapViewProps) => {
     const locations = filteredContent.map(item => item.location).join(' | ');
     const searchQuery = encodeURIComponent(locations || 'world map');
     window.open(`https://maps.google.com/search/${searchQuery}`, '_blank');
-  };
-
-  const handlePinClick = (item: SavedContent) => {
-    setSelectedKeepr(item);
   };
 
   const handleGetDirections = (location: string) => {
@@ -68,14 +72,52 @@ export const MapView = ({ content }: MapViewProps) => {
         </div>
       </div>
 
-      {/* Interactive Map */}
+      {/* Interactive Map Area */}
       <div className="absolute inset-0 pt-32">
         <div className="w-full h-full mx-4 mb-4 relative">
-          <InteractiveMap 
-            content={content}
-            selectedCategory={selectedCategory}
-            onPinClick={handlePinClick}
-          />
+          {/* Map Container */}
+          <div className="w-full h-full bg-gradient-to-br from-blue-50 to-green-50 rounded-2xl overflow-hidden shadow-lg relative">
+            {/* World Map Background */}
+            <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwMCIgaGVpZ2h0PSI1MDAiIHZpZXdCb3g9IjAgMCAxMDAwIDUwMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEwMCAxMDBIMjAwVjIwMEgxMDBWMTAwWiIgZmlsbD0iIzk4OTVjNyIgZmlsbC1vcGFjaXR5PSIwLjEiLz4KPHN0cm9rZSBkPSJNMCAwaDEwMDB2NTAwSDBWMCIgc3Ryb2tlPSIjYThhNWQwIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1kYXNoYXJyYXk9IjUgNSIgZmlsbD0ibm9uZSIvPgo8L3N2Zz4K')] opacity-20 bg-center bg-cover"></div>
+            
+            {/* Map Pins */}
+            {filteredContent.map((item, index) => {
+              const color = categoryColors[item.category] || categoryColors['Other'];
+              const x = 20 + (index * 150) % 800;
+              const y = 50 + (Math.floor(index / 5) * 100) % 300;
+              
+              return (
+                <div
+                  key={item.id}
+                  className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer hover:scale-110 transition-transform"
+                  style={{ left: `${x}px`, top: `${y}px` }}
+                  onClick={() => setSelectedKeepr(item)}
+                >
+                  <div 
+                    className="w-6 h-6 rounded-full border-2 border-white shadow-lg flex items-center justify-center"
+                    style={{ backgroundColor: color }}
+                  >
+                    <MapPin className="h-3 w-3 text-white" />
+                  </div>
+                </div>
+              );
+            })}
+            
+            {/* Map Placeholder Text */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <div className="text-center p-8 bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg max-w-md">
+                <Navigation className="h-12 w-12 mx-auto mb-4 text-[#a8a5d0]" />
+                <h3 className="font-semibold mb-2 font-josefin text-lg">Interactive Map</h3>
+                <p className="text-sm text-gray-600 font-josefin mb-4">
+                  Your saved Keeprs with location data appear as pins on the map
+                </p>
+                <div className="text-xs text-gray-500 font-josefin bg-gray-50 p-3 rounded-lg">
+                  <strong>Developer Note:</strong> This will be replaced with a live interactive map (Google Maps/Mapbox) 
+                  with real location pins, directions, and clustering features.
+                </div>
+              </div>
+            </div>
+          </div>
           
           {/* Keepr Preview Card */}
           {selectedKeepr && (
@@ -134,7 +176,11 @@ export const MapView = ({ content }: MapViewProps) => {
               
               <div className="space-y-3 max-h-32 overflow-y-auto">
                 {filteredContent.slice(0, 3).map((item) => (
-                  <div key={item.id} className="flex items-center gap-3 p-2 bg-gray-50 rounded-xl">
+                  <div 
+                    key={item.id} 
+                    className="flex items-center gap-3 p-2 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors"
+                    onClick={() => setSelectedKeepr(item)}
+                  >
                     <div className="w-8 h-8 bg-[#a8a5d0] rounded-lg flex items-center justify-center">
                       <MapPin className="h-4 w-4 text-white" />
                     </div>

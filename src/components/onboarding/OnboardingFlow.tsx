@@ -7,7 +7,7 @@ import { SaveMethodScreen } from './SaveMethodScreen';
 import { ReadyScreen } from './ReadyScreen';
 
 interface OnboardingFlowProps {
-  onComplete: () => void;
+  onComplete: (preferences: string[]) => void;
 }
 
 export const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
@@ -33,7 +33,7 @@ export const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
     />,
     <ReadyScreen 
       key="ready" 
-      onComplete={onComplete} 
+      onComplete={() => onComplete(contentPreferences)} 
       onBack={() => setCurrentScreen(2)}
     />
   ];
