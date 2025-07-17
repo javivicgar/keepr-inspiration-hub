@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { MapPin, ExternalLink } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { InteractiveMap } from '@/components/InteractiveMap';
 import type { SavedContent } from '@/types/SavedContent';
 
 interface MapViewProps {
@@ -12,6 +13,7 @@ const categories = ['all', 'Food Spots', 'Locations', 'Outdoor', 'Sports', 'Trav
 
 export const MapView = ({ content }: MapViewProps) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [selectedKeepr, setSelectedKeepr] = useState<SavedContent | null>(null);
 
   const locationsContent = content.filter(item => item.location);
   
@@ -20,7 +22,24 @@ export const MapView = ({ content }: MapViewProps) => {
   });
 
   const handleOpenGoogleMaps = () => {
-    window.open('https://maps.google.com', '_blank');
+    const locations = filteredContent.map(item => item.location).join(' | ');
+    const searchQuery = encodeURIComponent(locations || 'world map');
+    window.open(`https://maps.google.com/search/${searchQuery}`, '_blank');
+  };
+
+  const handlePinClick = (item: SavedContent) => {
+    setSelectedKeepr(item);
+  };
+
+  const handleGetDirections = (location: string) => {
+    const query = encodeURIComponent(location);
+    const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
+    if (isMobile && /iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+      window.open(`maps://maps.google.com/maps?q=${query}`, '_blank');
+    } else {
+      window.open(`https://maps.google.com/maps?q=${query}`, '_blank');
+    }
   };
 
   return (
@@ -49,47 +68,51 @@ export const MapView = ({ content }: MapViewProps) => {
         </div>
       </div>
 
-      {/* Map Placeholder */}
+      {/* Interactive Map */}
       <div className="absolute inset-0 pt-32">
-        <div className="w-full h-full bg-gradient-to-br from-blue-100 to-green-100 relative overflow-hidden rounded-lg mx-4 mb-4">
-          {/* World Map Placeholder */}
-          <div 
-            className="w-full h-full bg-cover bg-center bg-no-repeat"
-            style={{
-              backgroundImage: `url('https://images.unsplash.com/photo-1426604966848-d7adac402bff?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')`
-            }}
-          >
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/20" />
-          </div>
+        <div className="w-full h-full mx-4 mb-4 relative">
+          <InteractiveMap 
+            content={content}
+            selectedCategory={selectedCategory}
+            onPinClick={handlePinClick}
+          />
           
-          {/* Sample Location Pins */}
-          <div className="absolute top-1/3 left-1/4 w-8 h-8 bg-[#a8a5d0] rounded-full flex items-center justify-center shadow-lg border-2 border-white animate-pulse">
-            <MapPin className="h-4 w-4 text-white" />
-          </div>
-          <div className="absolute top-1/2 right-1/3 w-8 h-8 bg-red-500 rounded-full flex items-center justify-center shadow-lg border-2 border-white animate-pulse">
-            <MapPin className="h-4 w-4 text-white" />
-          </div>
-          <div className="absolute bottom-1/3 left-1/2 w-8 h-8 bg-green-500 rounded-full flex items-center justify-center shadow-lg border-2 border-white animate-pulse">
-            <MapPin className="h-4 w-4 text-white" />
-          </div>
-
-          {/* Center Message */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <Card className="bg-white/90 backdrop-blur-sm shadow-xl rounded-2xl border-0">
-              <CardContent className="p-6 text-center">
-                <MapPin className="h-12 w-12 text-[#a8a5d0] mx-auto mb-4" />
-                <h3 className="font-semibold mb-2 font-josefin text-lg">Your saved Keeprs will appear here soon</h3>
-                <p className="text-sm text-gray-600 font-josefin mb-4">
-                  Interactive map with location-based Keeprs coming soon
-                </p>
-                <div className="text-xs text-gray-500 font-josefin bg-gray-50 p-3 rounded-lg">
-                  <strong>Developer Note:</strong> This section will include a live interactive map 
-                  (Google Maps SDK or Mapbox) where pins are displayed based on Keeprs with location data. 
-                  Pins will be color-coded by category.
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+          {/* Keepr Preview Card */}
+          {selectedKeepr && (
+            <div className="absolute top-4 left-4 right-4 z-10">
+              <Card className="bg-white/95 backdrop-blur-sm shadow-xl rounded-2xl border-0">
+                <CardContent className="p-4">
+                  <div className="flex justify-between items-start mb-2">
+                    <h3 className="font-semibold font-josefin text-lg">{selectedKeepr.title}</h3>
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      onClick={() => setSelectedKeepr(null)}
+                      className="h-6 w-6 p-0"
+                    >
+                      ×
+                    </Button>
+                  </div>
+                  <p className="text-sm text-gray-600 font-josefin mb-2">{selectedKeepr.location}</p>
+                  <p className="text-xs text-gray-500 font-josefin mb-3">by @{selectedKeepr.creatorName}</p>
+                  <div className="flex gap-2">
+                    <Button 
+                      size="sm" 
+                      className="bg-[#a8a5d0] hover:bg-[#9895c7] text-white"
+                      onClick={() => handleGetDirections(selectedKeepr.location!)}
+                    >
+                      <MapPin className="h-3 w-3 mr-1" />
+                      Directions
+                    </Button>
+                    <Button variant="outline" size="sm" onClick={() => window.open(selectedKeepr.link, '_blank')}>
+                      <ExternalLink className="h-3 w-3 mr-1" />
+                      View
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          )}
         </div>
 
         {/* Floating Action Button */}

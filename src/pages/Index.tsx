@@ -44,62 +44,7 @@ const Index = () => {
   }, []);
 
   useEffect(() => {
-    const mockContent: SavedContent[] = [
-      {
-        id: '1',
-        title: 'Basketball court in Röti',
-        creatorName: 'sports_enthusiast',
-        link: 'https://example.com/court1',
-        category: 'Sports',
-        folder: 'Sport Courts',
-        location: 'Röti, Switzerland',
-        note: 'Great outdoor court with good facilities',
-        tags: ['basketball', 'outdoor', 'sport'],
-        image: '',
-        createdAt: new Date('2024-01-15'),
-        googleMapsRating: 4.5
-      },
-      {
-        id: '2',
-        title: 'Basketball court in Enge',
-        creatorName: 'city_explorer',
-        link: 'https://example.com/court2',
-        category: 'Sports',
-        folder: 'Sport Courts',
-        location: 'Enge, Zurich',
-        note: 'Urban court near the lake',
-        tags: ['basketball', 'urban', 'zurich'],
-        image: '',
-        createdAt: new Date('2024-01-10'),
-        googleMapsRating: 4.2
-      },
-      {
-        id: '3',
-        title: 'Amazing Pasta Place',
-        creatorName: 'foodie_lover',
-        link: 'https://example.com/pasta',
-        category: 'Food Spots',
-        folder: 'Italian Food',
-        location: 'Rome, Italy',
-        note: 'Best carbonara in Rome!',
-        tags: ['pasta', 'italian', 'rome'],
-        image: '',
-        createdAt: new Date('2024-01-20')
-      },
-      {
-        id: '4',
-        title: 'Vintage Bookstore',
-        creatorName: 'book_worm',
-        link: 'https://example.com/bookstore',
-        category: 'Locations',
-        folder: 'Bookstores',
-        location: 'Paris, France',
-        note: 'Hidden gem with rare books',
-        tags: ['books', 'vintage', 'paris'],
-        image: '',
-        createdAt: new Date('2024-01-18')
-      }
-    ];
+    const mockContent: SavedContent[] = [];
     
     setContent(mockContent);
     setFilteredContent(mockContent);

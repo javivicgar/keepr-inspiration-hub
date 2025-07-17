@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { X, MapPin, Link, User, Folder, Tag } from 'lucide-react';
+import { X, MapPin, Link, User, Folder, Tag, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import type { SavedContent } from '@/types/SavedContent';
 
 interface SaveContentModalProps {
@@ -152,16 +153,34 @@ export const SaveContentModal = ({ isOpen, onClose, onSave, existingFolders }: S
 
           <div className="space-y-2">
             <Label htmlFor="folder">Folder *</Label>
-            <div className="relative">
-              <Folder className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                id="folder"
-                className="pl-10"
-                value={formData.folder}
-                onChange={(e) => setFormData(prev => ({ ...prev, folder: e.target.value }))}
-                placeholder="Rome Trip, Summer Fits, etc."
-                required
-              />
+            <div className="space-y-2">
+              {existingFolders.length > 0 && (
+                <div className="space-y-2">
+                  <Label className="text-sm text-muted-foreground">Select existing folder:</Label>
+                  <Select value={formData.folder} onValueChange={(value) => setFormData(prev => ({ ...prev, folder: value }))}>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Choose folder" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {existingFolders.map((folder) => (
+                        <SelectItem key={folder} value={folder}>{folder}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <Label className="text-sm text-muted-foreground">Or create new folder:</Label>
+                </div>
+              )}
+              <div className="relative">
+                <Folder className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  id="folder"
+                  className="pl-10"
+                  value={formData.folder}
+                  onChange={(e) => setFormData(prev => ({ ...prev, folder: e.target.value }))}
+                  placeholder="Rome Trip, Summer Fits, etc."
+                  required
+                />
+              </div>
             </div>
           </div>
 
