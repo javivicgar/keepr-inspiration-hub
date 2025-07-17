@@ -4,7 +4,7 @@ import { Heart, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface AuthScreenProps {
-  onComplete: () => void;
+  onAuthenticate: () => void;
 }
 
 const funFacts = [
@@ -50,7 +50,7 @@ const funFacts = [
   "Cheese is the most stolen food in the world."
 ];
 
-export const AuthScreen = ({ onComplete }: AuthScreenProps) => {
+export const AuthScreen = ({ onAuthenticate }: AuthScreenProps) => {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [loginType, setLoginType] = useState<'google' | 'apple' | null>(null);
   const [currentFact, setCurrentFact] = useState(() => Math.floor(Math.random() * funFacts.length));
@@ -81,7 +81,7 @@ export const AuthScreen = ({ onComplete }: AuthScreenProps) => {
     setTimeout(() => {
       setIsAuthenticating(false);
       setShowLoginModal(false);
-      onComplete();
+      onAuthenticate();
     }, 2000);
   };
 

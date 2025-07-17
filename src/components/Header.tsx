@@ -2,7 +2,13 @@
 import React from 'react';
 import { Heart } from 'lucide-react';
 
-export const Header = () => {
+interface HeaderProps {
+  onCreateKeepr: () => void;
+  searchQuery: string;
+  onSearchChange: (query: string) => void;
+}
+
+export const Header = ({ onCreateKeepr, searchQuery, onSearchChange }: HeaderProps) => {
   return (
     <header className="bg-card border-b border-border sticky top-0 z-50">
       <div className="container mx-auto px-4 py-4">

@@ -11,9 +11,10 @@ interface SaveContentModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSave: (content: Omit<SavedContent, 'id' | 'createdAt'>) => void;
+  existingFolders: string[];
 }
 
-export const SaveContentModal = ({ isOpen, onClose, onSave }: SaveContentModalProps) => {
+export const SaveContentModal = ({ isOpen, onClose, onSave, existingFolders }: SaveContentModalProps) => {
   const [formData, setFormData] = useState({
     title: '',
     creatorName: '',

@@ -10,6 +10,7 @@ export interface SavedContent {
   note: string;
   tags: string[];
   folder: string;
+  image?: string;
   createdAt: Date;
   
   // Category-specific fields

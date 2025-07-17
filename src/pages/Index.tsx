@@ -49,9 +49,12 @@ const Index = () => {
         id: '1',
         title: 'Basketball court in Röti',
         creatorName: 'sports_enthusiast',
+        link: 'https://example.com/court1',
         category: 'Sports',
         folder: 'Sport Courts',
         location: 'Röti, Switzerland',
+        note: 'Great outdoor court with good facilities',
+        tags: ['basketball', 'outdoor', 'sport'],
         image: '',
         createdAt: new Date('2024-01-15'),
         googleMapsRating: 4.5
@@ -60,9 +63,12 @@ const Index = () => {
         id: '2',
         title: 'Basketball court in Enge',
         creatorName: 'city_explorer',
+        link: 'https://example.com/court2',
         category: 'Sports',
         folder: 'Sport Courts',
         location: 'Enge, Zurich',
+        note: 'Urban court near the lake',
+        tags: ['basketball', 'urban', 'zurich'],
         image: '',
         createdAt: new Date('2024-01-10'),
         googleMapsRating: 4.2
@@ -71,9 +77,12 @@ const Index = () => {
         id: '3',
         title: 'Amazing Pasta Place',
         creatorName: 'foodie_lover',
+        link: 'https://example.com/pasta',
         category: 'Food Spots',
         folder: 'Italian Food',
         location: 'Rome, Italy',
+        note: 'Best carbonara in Rome!',
+        tags: ['pasta', 'italian', 'rome'],
         image: '',
         createdAt: new Date('2024-01-20')
       },
@@ -81,9 +90,12 @@ const Index = () => {
         id: '4',
         title: 'Vintage Bookstore',
         creatorName: 'book_worm',
+        link: 'https://example.com/bookstore',
         category: 'Locations',
         folder: 'Bookstores',
         location: 'Paris, France',
+        note: 'Hidden gem with rare books',
+        tags: ['books', 'vintage', 'paris'],
         image: '',
         createdAt: new Date('2024-01-18')
       }
@@ -173,7 +185,7 @@ const Index = () => {
   };
 
   if (showSplash) {
-    return <SplashScreen />;
+    return <SplashScreen onComplete={() => setShowSplash(false)} />;
   }
 
   if (!isAuthenticated) {
@@ -280,6 +292,8 @@ const Index = () => {
                 onFolderChange={setSelectedFolder}
                 onSortClick={() => setShowSortModal(true)}
                 folders={Array.from(new Set(content.map(item => item.folder)))}
+                searchQuery={searchQuery}
+                onSearchChange={setSearchQuery}
               />
             )}
             {renderHomeContent()}
@@ -295,10 +309,10 @@ const Index = () => {
         
         {activeTab === 'map' && <MapView content={content} />}
         {activeTab === 'community' && <CommunityView />}
-        {activeTab === 'more' && <MoreView />}
+        {activeTab === 'more' && <MoreView totalContent={content.length} totalFolders={Array.from(new Set(content.map(item => item.folder))).length} />}
       </main>
 
-      <BottomNavigation activeTab={activeTab} onTabChange={setActiveTab} />
+      <BottomNavigation activeTab={activeTab} onTabChange={setActiveTab} onAddClick={() => setShowSaveModal(true)} />
 
       {showSaveModal && (
         <SaveContentModal

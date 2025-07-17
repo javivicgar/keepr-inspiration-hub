@@ -6,11 +6,11 @@ import { Button } from '@/components/ui/button';
 interface SortModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onApply: (sortBy: string) => void;
+  onSortChange: (sortBy: string) => void;
   currentSort: string;
 }
 
-export const SortModal = ({ isOpen, onClose, onApply, currentSort }: SortModalProps) => {
+export const SortModal = ({ isOpen, onClose, onSortChange, currentSort }: SortModalProps) => {
   const [selectedSort, setSelectedSort] = useState(currentSort);
 
   const sortOptions = [
@@ -19,7 +19,7 @@ export const SortModal = ({ isOpen, onClose, onApply, currentSort }: SortModalPr
   ];
 
   const handleApply = () => {
-    onApply(selectedSort);
+    onSortChange(selectedSort);
     onClose();
   };
 
