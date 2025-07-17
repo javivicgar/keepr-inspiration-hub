@@ -7,6 +7,7 @@ declare global {
         Marker: any;
         InfoWindow: any;
         Size: any;
+        Point: any;
         LatLng: any;
         event: any;
       };
