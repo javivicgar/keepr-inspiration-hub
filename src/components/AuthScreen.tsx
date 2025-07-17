@@ -35,6 +35,7 @@ export const AuthScreen = ({ onComplete }: AuthScreenProps) => {
   const [loginType, setLoginType] = useState<'google' | 'apple' | null>(null);
   const [currentFact, setCurrentFact] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -53,6 +54,17 @@ export const AuthScreen = ({ onComplete }: AuthScreenProps) => {
     setShowLoginModal(true);
   };
 
+  const handleAuthentication = async () => {
+    setIsAuthenticating(true);
+    
+    // Simulate authentication process
+    setTimeout(() => {
+      setIsAuthenticating(false);
+      setShowLoginModal(false);
+      onComplete();
+    }, 2000);
+  };
+
   const LoginModal = () => (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-6">
       <div className="bg-white rounded-3xl p-8 w-full max-w-sm">
@@ -65,6 +77,7 @@ export const AuthScreen = ({ onComplete }: AuthScreenProps) => {
             size="sm"
             onClick={() => setShowLoginModal(false)}
             className="rounded-full p-2"
+            disabled={isAuthenticating}
           >
             <X className="h-4 w-4" />
           </Button>
@@ -72,14 +85,22 @@ export const AuthScreen = ({ onComplete }: AuthScreenProps) => {
         
         <div className="space-y-4">
           <div className="bg-gray-50 rounded-2xl p-4 text-center">
-            <p className="text-sm text-gray-600 font-josefin">
-              {loginType === 'google' ? 'Google' : 'Apple'} sign-in would appear here
+            <p className="text-sm text-gray-600 font-josefin mb-4">
+              {isAuthenticating ? 'Signing you in...' : `Continue with ${loginType === 'google' ? 'Google' : 'Apple'}`}
             </p>
+            
+            <Button
+              onClick={handleAuthentication}
+              disabled={isAuthenticating}
+              className="w-full bg-[#a8a5d0] hover:bg-[#9895c7] text-white font-josefin rounded-2xl py-3"
+            >
+              {isAuthenticating ? 'Please wait...' : 'Continue'}
+            </Button>
           </div>
           
           <div className="border-t pt-4">
-            <p className="text-sm text-gray-600 mb-3 font-josefin text-center">
-              Log in to unlock community features like sharing and connecting with others.
+            <p className="text-sm text-gray-600 font-josefin text-center">
+              By continuing, you agree to our Terms of Service and Privacy Policy
             </p>
           </div>
         </div>
