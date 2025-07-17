@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Heart, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -7,9 +7,46 @@ interface AuthScreenProps {
   onComplete: () => void;
 }
 
+const funFacts = [
+  "The most stolen food in the world is cheese.",
+  "Ketchup was once sold as medicine.",
+  "Croissants actually originated in Austria, not France.",
+  "The world's most expensive pizza costs over $12,000.",
+  "In Japan, it's polite to slurp your noodles!",
+  "Iceland has no mosquitoes.",
+  "Vatican City is the smallest country in the world.",
+  "Canada has more lakes than all other countries combined.",
+  "In Switzerland, it's illegal to own just one guinea pig (they get lonely!).",
+  "There's a pink lake in Australia — yes, it's really pink!",
+  "High heels were originally designed for men.",
+  "The world's longest fashion show lasted 30 hours.",
+  "Denim was invented in France — \"de Nîmes\".",
+  "Queen Elizabeth had her wedding dress paid for with WWII ration coupons.",
+  "The T-shirt is over 100 years old!",
+  "The first email ever sent was \"QWERTYUIOP\".",
+  "Over 90% of smartphone time is spent using apps.",
+  "The first iPhone had no App Store.",
+  "Google processes over 99,000 searches every second.",
+  "TikTok was the most downloaded app globally in 2021 & 2022."
+];
+
 export const AuthScreen = ({ onComplete }: AuthScreenProps) => {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [loginType, setLoginType] = useState<'google' | 'apple' | null>(null);
+  const [currentFact, setCurrentFact] = useState(0);
+  const [isVisible, setIsVisible] = useState(true);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsVisible(false);
+      setTimeout(() => {
+        setCurrentFact((prev) => (prev + 1) % funFacts.length);
+        setIsVisible(true);
+      }, 500);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const handleSignUpClick = (type: 'google' | 'apple') => {
     setLoginType(type);
@@ -44,16 +81,6 @@ export const AuthScreen = ({ onComplete }: AuthScreenProps) => {
             <p className="text-sm text-gray-600 mb-3 font-josefin text-center">
               Log in to unlock community features like sharing and connecting with others.
             </p>
-            <p className="text-sm text-gray-500 mb-3 font-josefin text-center">
-              or
-            </p>
-            <Button
-              onClick={onComplete}
-              variant="outline"
-              className="w-full font-josefin font-medium py-3 rounded-2xl"
-            >
-              Continue as Guest
-            </Button>
           </div>
         </div>
       </div>
@@ -70,10 +97,10 @@ export const AuthScreen = ({ onComplete }: AuthScreenProps) => {
         <h1 className="text-5xl font-bold text-white mb-3 font-josefin tracking-wide">Keepr</h1>
         <p className="text-white/90 text-lg mb-12 font-josefin">Save your inspirations.</p>
         
-        <div className="space-y-4">
+        <div className="space-y-4 mb-8">
           <Button 
             onClick={() => handleSignUpClick('apple')}
-            className="w-full bg-black text-white hover:bg-gray-800 font-josefin font-medium py-6 rounded-2xl text-lg shadow-lg transition-all duration-200 flex items-center justify-center gap-3"
+            className="w-full bg-black text-white hover:bg-gray-800 font-josefin font-medium py-6 rounded-2xl text-lg shadow-lg transition-all duration-200 flex items-center justify-center gap-3 h-14"
           >
             <img 
               src="/lovable-uploads/88fccea4-8273-4f19-a655-d7000b52ba19.png" 
@@ -85,7 +112,7 @@ export const AuthScreen = ({ onComplete }: AuthScreenProps) => {
           
           <Button 
             onClick={() => handleSignUpClick('google')}
-            className="w-full bg-white text-gray-700 hover:bg-gray-50 font-josefin font-medium py-6 rounded-2xl text-lg shadow-lg transition-all duration-200 border border-gray-200 flex items-center justify-center gap-3"
+            className="w-full bg-white text-gray-700 hover:bg-gray-50 font-josefin font-medium py-6 rounded-2xl text-lg shadow-lg transition-all duration-200 border border-gray-200 flex items-center justify-center gap-3 h-14"
           >
             <img 
               src="/lovable-uploads/0e1e7537-0953-4c7c-927a-1d2fa977968a.png" 
@@ -94,14 +121,17 @@ export const AuthScreen = ({ onComplete }: AuthScreenProps) => {
             />
             Sign up with Google
           </Button>
-          
-          <Button 
-            onClick={onComplete}
-            variant="ghost"
-            className="w-full text-white hover:bg-white/10 font-josefin font-medium py-4 rounded-2xl text-base transition-all duration-200 mt-6"
+        </div>
+
+        <div className="bg-white/10 rounded-2xl p-4 backdrop-blur-sm">
+          <p className="text-white/80 text-sm font-josefin mb-2">Did you know?</p>
+          <p 
+            className={`text-white text-sm font-josefin transition-opacity duration-500 ${
+              isVisible ? 'opacity-100' : 'opacity-0'
+            }`}
           >
-            Continue as Guest
-          </Button>
+            {funFacts[currentFact]}
+          </p>
         </div>
       </div>
       

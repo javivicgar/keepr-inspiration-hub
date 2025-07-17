@@ -21,8 +21,8 @@ export const SplashScreen = ({ onComplete }: SplashScreenProps) => {
         <div className="bg-white rounded-3xl p-6 mb-6 inline-block shadow-lg">
           <Heart className="h-12 w-12 text-[#a8a5d0] fill-current" />
         </div>
-        <h1 className="text-4xl font-bold text-white mb-2">Keepr</h1>
-        <p className="text-white/80 text-lg">Save your inspiration</p>
+        <h1 className="text-4xl font-bold text-white mb-2 font-josefin">Keepr</h1>
+        <p className="text-white/80 text-lg font-josefin">Save your inspirations.</p>
       </div>
     </div>
   );
