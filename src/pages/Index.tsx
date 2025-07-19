@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { AuthScreen } from '@/components/AuthScreen';
 import { OnboardingFlow } from '@/components/onboarding/OnboardingFlow';
+import { PersonalizingScreen } from '@/components/onboarding/PersonalizingScreen';
 import { Header } from '@/components/Header';
 import { BottomNavigation } from '@/components/BottomNavigation';
 import { ImprovedContentGrid } from '@/components/ImprovedContentGrid';
@@ -21,6 +22,7 @@ const Index = () => {
   const [hasCompletedOnboarding, setHasCompletedOnboarding] = useState(false);
   const [showPersonalizing, setShowPersonalizing] = useState(false);
   const [userPreferences, setUserPreferences] = useState<string[]>([]);
+  const [username, setUsername] = useState('');
   const [activeTab, setActiveTab] = useState('home');
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [showAddOptions, setShowAddOptions] = useState(false);
@@ -84,15 +86,16 @@ const Index = () => {
     setIsAuthenticated(true);
   };
 
-  const handleOnboardingComplete = (preferences: string[]) => {
+  const handleOnboardingComplete = (preferences: string[], selectedUsername: string) => {
     setUserPreferences(preferences);
+    setUsername(selectedUsername);
     setShowPersonalizing(true);
     
-    // Show personalizing for 2 seconds, then complete onboarding
+    // Show personalizing for 5 seconds, then complete onboarding
     setTimeout(() => {
       setShowPersonalizing(false);
       setHasCompletedOnboarding(true);
-    }, 2000);
+    }, 5000);
   };
 
   const handleAddContent = (newContent: Omit<SavedContent, 'id' | 'createdAt'>) => {
@@ -141,14 +144,7 @@ const Index = () => {
   }
 
   if (showPersonalizing) {
-    return (
-      <div className="fixed inset-0 bg-gradient-to-b from-[#a8a5d0] to-[#9895c7] flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-4 border-white border-t-transparent mx-auto mb-4"></div>
-          <p className="text-white text-lg font-josefin">Personalizing your Keepr experience...</p>
-        </div>
-      </div>
-    );
+    return <PersonalizingScreen />;
   }
 
   const renderHomeContent = () => {
@@ -249,6 +245,7 @@ const Index = () => {
                 onFolderChange={setSelectedFolder}
                 onSortClick={() => setShowSortModal(true)}
                 folders={Array.from(new Set(content.map(item => item.folder)))}
+                userPreferences={userPreferences}
               />
             )}
             {renderHomeContent()}

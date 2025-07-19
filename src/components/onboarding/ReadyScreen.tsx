@@ -47,7 +47,7 @@ export const ReadyScreen = ({ onComplete, onBack }: ReadyScreenProps) => {
           </div>
           
           <p className="text-white/90 text-lg md:text-xl mb-8 md:mb-12 font-josefin px-4">
-            Let's explore your Keeprs.
+            Let's start adding your first Keeprs.
           </p>
         </div>
         

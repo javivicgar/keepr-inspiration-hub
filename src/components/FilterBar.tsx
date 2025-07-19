@@ -9,6 +9,7 @@ interface FilterBarProps {
   onFolderChange: (folder: string) => void;
   onSortClick: () => void;
   folders: string[];
+  userPreferences?: string[];
 }
 
 export const FilterBar = ({ 
@@ -17,12 +18,28 @@ export const FilterBar = ({
   onCategoryChange, 
   onFolderChange, 
   onSortClick, 
-  folders
+  folders,
+  userPreferences = []
 }: FilterBarProps) => {
-  const categories = [
-    'All', 'Food Spots', 'Locations', 'Fashion', 'Useful Apps', 
-    'Tutorials', 'Outdoor', 'Music', 'Home', 'Sports', 'Other'
-  ];
+  // Map content preferences to display categories
+  const preferenceMap: Record<string, string> = {
+    'food': 'Food Spots',
+    'travel': 'Travel Spots', 
+    'locations': 'Locations',
+    'fashion': 'Fashion',
+    'outdoor': 'Outdoor',
+    'sports': 'Sports',
+    'apps': 'Useful Apps',
+    'music': 'Music',
+    'tutorials': 'Tutorials',
+    'home': 'Home'
+  };
+
+  // Show selected categories first, then 'All'
+  const selectedCategories = userPreferences.map(pref => preferenceMap[pref]).filter(Boolean);
+  const categories = selectedCategories.length > 0 
+    ? ['All', ...selectedCategories]
+    : ['All', 'Food Spots', 'Locations', 'Fashion', 'Useful Apps', 'Tutorials', 'Outdoor', 'Music', 'Home', 'Sports', 'Other'];
 
   return (
     <div className="space-y-3 mb-4">
@@ -43,13 +60,20 @@ export const FilterBar = ({
               variant={selectedCategory === category ? "default" : "outline"}
               size="sm"
               onClick={() => onCategoryChange(category)}
-              className={`whitespace-nowrap text-xs font-josefin rounded-xl border-2 transition-all duration-200 h-8 flex-shrink-0 ${
+              className={`whitespace-nowrap text-xs font-josefin rounded-xl border-2 transition-all duration-200 h-8 flex-shrink-0 relative ${
                 selectedCategory === category
                   ? 'bg-[#a8a5d0] hover:bg-[#9895c7] text-white border-[#a8a5d0]'
                   : 'hover:border-[#a8a5d0]'
+              } ${
+                userPreferences.length > 0 && selectedCategories.includes(category) 
+                  ? 'ring-2 ring-[#a8a5d0]/30 shadow-md' 
+                  : ''
               }`}
             >
               {category}
+              {userPreferences.length > 0 && selectedCategories.includes(category) && (
+                <span className="absolute -top-1 -right-1 text-xs text-[#a8a5d0]">★</span>
+              )}
             </Button>
           ))}
         </div>

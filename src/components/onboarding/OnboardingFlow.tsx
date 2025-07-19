@@ -2,39 +2,49 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { WelcomeScreen } from './WelcomeScreen';
+import { UsernameScreen } from './UsernameScreen';
 import { ContentPreferencesScreen } from './ContentPreferencesScreen';
 import { SaveMethodScreen } from './SaveMethodScreen';
 import { ReadyScreen } from './ReadyScreen';
 
 interface OnboardingFlowProps {
-  onComplete: (preferences: string[]) => void;
+  onComplete: (preferences: string[], username: string) => void;
 }
 
 export const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
   const [currentScreen, setCurrentScreen] = useState(0);
+  const [username, setUsername] = useState('');
   const [contentPreferences, setContentPreferences] = useState<string[]>([]);
   const [saveMethods, setSaveMethods] = useState<string[]>([]);
 
   const screens = [
     <WelcomeScreen key="welcome" onNext={() => setCurrentScreen(1)} />,
+    <UsernameScreen 
+      key="username"
+      onNext={(selectedUsername) => {
+        setUsername(selectedUsername);
+        setCurrentScreen(2);
+      }}
+      onBack={() => setCurrentScreen(0)}
+    />,
     <ContentPreferencesScreen 
       key="content" 
       selectedPreferences={contentPreferences}
       onPreferencesChange={setContentPreferences}
-      onNext={() => setCurrentScreen(2)} 
-      onBack={() => setCurrentScreen(0)}
+      onNext={() => setCurrentScreen(3)} 
+      onBack={() => setCurrentScreen(1)}
     />,
     <SaveMethodScreen 
       key="method" 
       selectedMethods={saveMethods}
       onMethodsChange={setSaveMethods}
-      onNext={() => setCurrentScreen(3)} 
-      onBack={() => setCurrentScreen(1)}
+      onNext={() => setCurrentScreen(4)} 
+      onBack={() => setCurrentScreen(2)}
     />,
     <ReadyScreen 
       key="ready" 
-      onComplete={() => onComplete(contentPreferences)} 
-      onBack={() => setCurrentScreen(2)}
+      onComplete={() => onComplete(contentPreferences, username)} 
+      onBack={() => setCurrentScreen(3)}
     />
   ];
 
