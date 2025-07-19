@@ -6,9 +6,10 @@ import { ChevronLeft, Sparkles } from 'lucide-react';
 interface ReadyScreenProps {
   onComplete: () => void;
   onBack: () => void;
+  onStartPersonalizing: () => void;
 }
 
-export const ReadyScreen = ({ onComplete, onBack }: ReadyScreenProps) => {
+export const ReadyScreen = ({ onComplete, onBack, onStartPersonalizing }: ReadyScreenProps) => {
   const [isVisible, setIsVisible] = useState(false);
   const [sparkleVisible, setSparkleVisible] = useState(false);
 
@@ -60,7 +61,7 @@ export const ReadyScreen = ({ onComplete, onBack }: ReadyScreenProps) => {
       
       <div className="mt-auto">
         <Button 
-          onClick={onComplete}
+          onClick={onStartPersonalizing}
           className="w-full bg-white text-[#a8a5d0] hover:bg-white/90 font-josefin font-medium py-4 md:py-6 rounded-2xl text-lg shadow-lg transition-all duration-200 h-12 md:h-14"
         >
           Enter Keepr →

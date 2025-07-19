@@ -9,9 +9,10 @@ import { ReadyScreen } from './ReadyScreen';
 
 interface OnboardingFlowProps {
   onComplete: (preferences: string[], username: string) => void;
+  onStartPersonalizing: () => void;
 }
 
-export const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
+export const OnboardingFlow = ({ onComplete, onStartPersonalizing }: OnboardingFlowProps) => {
   const [currentScreen, setCurrentScreen] = useState(0);
   const [username, setUsername] = useState('');
   const [contentPreferences, setContentPreferences] = useState<string[]>([]);
@@ -45,6 +46,7 @@ export const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
       key="ready" 
       onComplete={() => onComplete(contentPreferences, username)} 
       onBack={() => setCurrentScreen(3)}
+      onStartPersonalizing={onStartPersonalizing}
     />
   ];
 
