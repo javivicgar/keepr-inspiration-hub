@@ -164,10 +164,10 @@ export const AuthScreen = ({ onAuthenticate }: AuthScreenProps) => {
           </Button>
         </div>
 
-        <div className="bg-white/10 rounded-2xl p-4 backdrop-blur-sm h-24 flex flex-col justify-center">
+        <div className="bg-white/10 rounded-2xl p-4 backdrop-blur-sm min-h-[96px] flex flex-col justify-center">
           <p className="text-white/80 text-sm font-josefin mb-2">Did you know?</p>
           <p 
-            className={`text-white text-sm font-josefin transition-opacity duration-500 ${
+            className={`text-white text-sm font-josefin transition-opacity duration-500 leading-relaxed ${
               isVisible ? 'opacity-100' : 'opacity-0'
             }`}
           >

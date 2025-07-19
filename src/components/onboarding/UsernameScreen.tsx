@@ -48,7 +48,7 @@ export const UsernameScreen = ({ onNext, onBack }: UsernameScreenProps) => {
       </div>
       
       <div className="flex-1 flex flex-col justify-center px-4">
-        <div className="space-y-4">
+        <div className="space-y-6">
           <Input
             type="text"
             placeholder="Enter username"
@@ -58,7 +58,7 @@ export const UsernameScreen = ({ onNext, onBack }: UsernameScreenProps) => {
           />
           
           {username && (
-            <div className="text-center">
+            <div className="text-center mt-4">
               {isValid ? (
                 <p className="text-green-300 text-sm font-josefin">✓ Username is available</p>
               ) : (
@@ -71,7 +71,7 @@ export const UsernameScreen = ({ onNext, onBack }: UsernameScreenProps) => {
         </div>
       </div>
       
-      <div className="mt-auto px-4">
+      <div className="mt-auto px-4 pt-6">
         <Button 
           onClick={handleNext}
           disabled={!isValid || !username}

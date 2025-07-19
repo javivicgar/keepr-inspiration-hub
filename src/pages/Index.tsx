@@ -273,7 +273,12 @@ const Index = () => {
         {activeTab === 'more' && (
           <div className="py-4">
             <h2 className="text-xl font-bold mb-4 font-josefin">More</h2>
-            <MoreView totalContent={content.length} totalFolders={Array.from(new Set(content.map(item => item.folder))).length} />
+            <MoreView 
+              totalContent={content.length} 
+              totalFolders={Array.from(new Set(content.map(item => item.folder))).length}
+              userPreferences={userPreferences}
+              onPreferencesUpdate={setUserPreferences}
+            />
           </div>
         )}
       </main>

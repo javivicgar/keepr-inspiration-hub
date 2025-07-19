@@ -1,17 +1,21 @@
 
 import React, { useState } from 'react';
-import { Settings, Heart, Star, Share2, HelpCircle, Mail, Moon, Sun, Chrome } from 'lucide-react';
+import { Settings, Heart, Star, Share2, HelpCircle, Mail, Moon, Sun, Chrome, User } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
+import { EditPreferencesModal } from '@/components/EditPreferencesModal';
 
 interface MoreViewProps {
   totalContent: number;
   totalFolders: number;
+  userPreferences?: string[];
+  onPreferencesUpdate?: (preferences: string[]) => void;
 }
 
-export const MoreView = ({ totalContent, totalFolders }: MoreViewProps) => {
+export const MoreView = ({ totalContent, totalFolders, userPreferences = [], onPreferencesUpdate }: MoreViewProps) => {
   const [darkMode, setDarkMode] = useState(false);
+  const [showEditPreferences, setShowEditPreferences] = useState(false);
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
@@ -25,6 +29,11 @@ export const MoreView = ({ totalContent, totalFolders }: MoreViewProps) => {
   };
 
   const menuItems = [
+    { 
+      icon: User, 
+      label: 'Edit Preferences', 
+      action: () => setShowEditPreferences(true)
+    },
     { 
       icon: darkMode ? Sun : Moon, 
       label: 'Dark Mode', 
@@ -118,6 +127,13 @@ export const MoreView = ({ totalContent, totalFolders }: MoreViewProps) => {
         <p className="text-sm text-muted-foreground mb-2 font-josefin">Keepr v1.0.0</p>
         <p className="text-xs text-muted-foreground font-josefin">Made with ❤️ for saving inspiration</p>
       </div>
+
+      <EditPreferencesModal
+        isOpen={showEditPreferences}
+        onClose={() => setShowEditPreferences(false)}
+        currentPreferences={userPreferences}
+        onSave={(preferences) => onPreferencesUpdate?.(preferences)}
+      />
     </div>
   );
 };
