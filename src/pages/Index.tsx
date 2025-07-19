@@ -89,15 +89,16 @@ const Index = () => {
   const handleOnboardingComplete = (preferences: string[], selectedUsername: string) => {
     setUserPreferences(preferences);
     setUsername(selectedUsername);
-    setHasCompletedOnboarding(true);
+    // Don't complete onboarding yet - wait for personalizing screen
   };
 
   const handleStartPersonalizing = () => {
     setShowPersonalizing(true);
     
-    // Show personalizing for 5 seconds, then complete
+    // Show personalizing for 5 seconds, then complete onboarding
     setTimeout(() => {
       setShowPersonalizing(false);
+      setHasCompletedOnboarding(true);
     }, 5000);
   };
 
@@ -142,7 +143,7 @@ const Index = () => {
     return <AuthScreen onAuthenticate={handleAuthentication} />;
   }
 
-  if (!hasCompletedOnboarding && !showPersonalizing) {
+  if (!hasCompletedOnboarding) {
     return <OnboardingFlow onComplete={handleOnboardingComplete} onStartPersonalizing={handleStartPersonalizing} />;
   }
 
