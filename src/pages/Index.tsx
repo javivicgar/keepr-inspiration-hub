@@ -15,6 +15,7 @@ import { SaveContentModal } from '@/components/SaveContentModal';
 import { FilterBar } from '@/components/FilterBar';
 import { SortModal } from '@/components/SortModal';
 import { AddOptionsModal } from '@/components/AddOptionsModal';
+import { ProfileModal } from '@/components/ProfileModal';
 import { SavedContent } from '@/types/SavedContent';
 
 const Index = () => {
@@ -26,6 +27,7 @@ const Index = () => {
   const [activeTab, setActiveTab] = useState('home');
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [showAddOptions, setShowAddOptions] = useState(false);
+  const [showProfileModal, setShowProfileModal] = useState(false);
   const [content, setContent] = useState<SavedContent[]>([]);
   const [filteredContent, setFilteredContent] = useState<SavedContent[]>([]);
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -89,7 +91,7 @@ const Index = () => {
   const handleOnboardingComplete = (preferences: string[], selectedUsername: string) => {
     setUserPreferences(preferences);
     setUsername(selectedUsername);
-    // Don't complete onboarding yet - wait for personalizing screen
+    setHasCompletedOnboarding(true);
   };
 
   const handleStartPersonalizing = () => {
@@ -235,6 +237,8 @@ const Index = () => {
           onCreateKeepr={() => setShowSaveModal(true)}
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}
+          username={username}
+          onProfileClick={() => setShowProfileModal(true)}
         />
       )}
       
@@ -312,6 +316,15 @@ const Index = () => {
           isOpen={showAddOptions}
           onClose={() => setShowAddOptions(false)}
           onOptionSelect={() => setShowSaveModal(true)}
+        />
+      )}
+
+      {showProfileModal && (
+        <ProfileModal
+          isOpen={showProfileModal}
+          onClose={() => setShowProfileModal(false)}
+          username={username}
+          onUsernameUpdate={setUsername}
         />
       )}
     </div>

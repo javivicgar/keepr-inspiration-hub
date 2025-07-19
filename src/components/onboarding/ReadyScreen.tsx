@@ -61,7 +61,10 @@ export const ReadyScreen = ({ onComplete, onBack, onStartPersonalizing }: ReadyS
       
       <div className="mt-auto">
         <Button 
-          onClick={onStartPersonalizing}
+          onClick={() => {
+            onComplete();
+            onStartPersonalizing();
+          }}
           className="w-full bg-white text-[#a8a5d0] hover:bg-white/90 font-josefin font-medium py-4 md:py-6 rounded-2xl text-lg shadow-lg transition-all duration-200 h-12 md:h-14"
         >
           Enter Keepr →
