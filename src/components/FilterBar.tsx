@@ -42,7 +42,7 @@ export const FilterBar = ({
     : ['All', 'Food Spots', 'Locations', 'Fashion', 'Useful Apps', 'Tutorials', 'Outdoor', 'Music', 'Home', 'Sports', 'Other'];
 
   return (
-    <div className="space-y-2 mb-4">
+    <div className="space-y-2 mb-2">
       <div className="flex items-center space-x-2 overflow-x-auto">
         <Button
           variant="outline"

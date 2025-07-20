@@ -243,10 +243,27 @@ const Index = () => {
         />
       )}
       
-      {(activeTab === 'map' || activeTab === 'community' || activeTab === 'more') && (
+      {activeTab === 'map' && (
         <ProfileHeader 
           username={username}
           onProfileClick={() => setShowProfileModal(true)}
+          title="Explore your Keeprs"
+        />
+      )}
+      
+      {activeTab === 'community' && (
+        <ProfileHeader 
+          username={username}
+          onProfileClick={() => setShowProfileModal(true)}
+          title="Community"
+        />
+      )}
+      
+      {activeTab === 'more' && (
+        <ProfileHeader 
+          username={username}
+          onProfileClick={() => setShowProfileModal(true)}
+          title="More"
         />
       )}
       
@@ -285,7 +302,6 @@ const Index = () => {
         )}
         {activeTab === 'more' && (
           <div className="py-4">
-            <h2 className="text-2xl font-bold mb-6 font-josefin tracking-wide">More</h2>
             <MoreView 
               totalContent={content.length} 
               totalFolders={Array.from(new Set(content.map(item => item.folder))).length}

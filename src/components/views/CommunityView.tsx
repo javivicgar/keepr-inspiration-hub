@@ -84,8 +84,6 @@ export const CommunityView = () => {
     <div className="space-y-6 pb-20">
       {/* Header with Search */}
       <div className="mb-6">
-        <h2 className="text-2xl font-bold mb-4 font-josefin tracking-wide">Community</h2>
-        
         {/* Friend Search */}
         <div className="relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />

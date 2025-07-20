@@ -5,13 +5,15 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 interface ProfileHeaderProps {
   username: string;
   onProfileClick: () => void;
+  title: string;
 }
 
-export const ProfileHeader = ({ username, onProfileClick }: ProfileHeaderProps) => {
+export const ProfileHeader = ({ username, onProfileClick, title }: ProfileHeaderProps) => {
   return (
     <header className="bg-card border-b border-border sticky top-0 z-50">
       <div className="container mx-auto px-4 py-4">
-        <div className="flex items-center justify-end">
+        <div className="flex items-center justify-between">
+          <h1 className="text-xl font-bold text-foreground font-josefin">{title}</h1>
           <Button
             onClick={onProfileClick}
             variant="ghost"
