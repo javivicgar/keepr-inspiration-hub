@@ -232,7 +232,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {activeTab === 'home' && (
+      {(activeTab === 'home' || activeTab === 'map' || activeTab === 'community' || activeTab === 'more') && (
         <Header 
           onCreateKeepr={() => setShowSaveModal(true)}
           searchQuery={searchQuery}
@@ -268,19 +268,17 @@ const Index = () => {
         )}
         
         {activeTab === 'map' && (
-          <div className="relative">
+          <div className="relative -mt-16">
             <MapView content={content} />
           </div>
         )}
         {activeTab === 'community' && (
           <div className="py-4">
-            <h2 className="text-xl font-bold mb-4 font-josefin">Community</h2>
             <CommunityView />
           </div>
         )}
         {activeTab === 'more' && (
           <div className="py-4">
-            <h2 className="text-xl font-bold mb-4 font-josefin">More</h2>
             <MoreView 
               totalContent={content.length} 
               totalFolders={Array.from(new Set(content.map(item => item.folder))).length}

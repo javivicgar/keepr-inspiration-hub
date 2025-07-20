@@ -49,7 +49,7 @@ export const MapView = ({ content }: MapViewProps) => {
   return (
     <div className="relative h-screen pb-20 overflow-hidden">
       {/* Header */}
-      <div className="absolute top-0 left-0 right-0 z-10 bg-white/95 backdrop-blur-sm p-4 shadow-sm">
+      <div className="absolute top-16 left-0 right-0 z-10 bg-white/95 backdrop-blur-sm p-4 shadow-sm">
         <h2 className="text-xl font-bold mb-4 font-josefin tracking-wide">Explore your saved Keeprs</h2>
         
         {/* Category Filter */}
