@@ -76,7 +76,7 @@ export const MoreView = ({ totalContent, totalFolders, userPreferences = [], onP
   ];
 
   return (
-    <div className="space-y-6 pb-20">
+    <div className="space-y-4 pb-20">
       {/* Stats */}
       <Card className="bg-gradient-to-r from-[#a8a5d0]/10 to-[#9895c7]/10">
         <CardContent className="p-6 text-center">

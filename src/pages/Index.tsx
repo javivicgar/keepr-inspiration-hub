@@ -267,7 +267,7 @@ const Index = () => {
         />
       )}
       
-      <main className={`container mx-auto px-4 ${activeTab === 'home' ? 'pt-16' : 'pt-20'}`}>
+      <main className={`container mx-auto px-4 ${activeTab === 'home' ? 'pt-16' : 'pt-4'}`}>
         {activeTab === 'home' && (
           <>
             {currentView === 'home' && (

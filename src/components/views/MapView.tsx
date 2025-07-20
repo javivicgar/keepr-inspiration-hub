@@ -61,8 +61,7 @@ export const MapView = ({ content }: MapViewProps) => {
     <div className="relative h-screen pb-20 overflow-hidden">
       {/* Header */}
       <div className="absolute top-16 left-0 right-0 z-10 bg-white/95 backdrop-blur-sm p-4 shadow-sm">
-        <h2 className="text-xl font-bold mb-4 font-josefin tracking-wide">Explore your Keeprs</h2>
-        
+        {/* Removed duplicate title - it's now in ProfileHeader */}
         {/* Category Filter */}
         <div className="flex gap-2 overflow-x-auto pb-2">
           {categories.map((category) => (
