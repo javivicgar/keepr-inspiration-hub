@@ -3,6 +3,7 @@ import { AuthScreen } from '@/components/AuthScreen';
 import { OnboardingFlow } from '@/components/onboarding/OnboardingFlow';
 import { PersonalizingScreen } from '@/components/onboarding/PersonalizingScreen';
 import { Header } from '@/components/Header';
+import { ProfileHeader } from '@/components/ProfileHeader';
 import { BottomNavigation } from '@/components/BottomNavigation';
 import { ImprovedContentGrid } from '@/components/ImprovedContentGrid';
 import { FoldersView } from '@/components/views/FoldersView';
@@ -232,7 +233,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {(activeTab === 'home' || activeTab === 'map' || activeTab === 'community' || activeTab === 'more') && (
+      {activeTab === 'home' && (
         <Header 
           onCreateKeepr={() => setShowSaveModal(true)}
           searchQuery={searchQuery}
@@ -242,7 +243,14 @@ const Index = () => {
         />
       )}
       
-      <main className="container mx-auto px-4 pt-16">
+      {(activeTab === 'map' || activeTab === 'community' || activeTab === 'more') && (
+        <ProfileHeader 
+          username={username}
+          onProfileClick={() => setShowProfileModal(true)}
+        />
+      )}
+      
+      <main className={`container mx-auto px-4 ${activeTab === 'home' ? 'pt-16' : 'pt-20'}`}>
         {activeTab === 'home' && (
           <>
             {currentView === 'home' && (
@@ -268,17 +276,19 @@ const Index = () => {
         )}
         
         {activeTab === 'map' && (
-          <div className="relative -mt-16">
+          <div className="relative -mt-20">
             <MapView content={content} />
           </div>
         )}
         {activeTab === 'community' && (
           <div className="py-4">
+            <h2 className="text-2xl font-bold mb-6 font-josefin tracking-wide">Community</h2>
             <CommunityView />
           </div>
         )}
         {activeTab === 'more' && (
           <div className="py-4">
+            <h2 className="text-2xl font-bold mb-6 font-josefin tracking-wide">More</h2>
             <MoreView 
               totalContent={content.length} 
               totalFolders={Array.from(new Set(content.map(item => item.folder))).length}

@@ -1,0 +1,31 @@
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+
+interface ProfileHeaderProps {
+  username: string;
+  onProfileClick: () => void;
+}
+
+export const ProfileHeader = ({ username, onProfileClick }: ProfileHeaderProps) => {
+  return (
+    <header className="bg-card border-b border-border sticky top-0 z-50">
+      <div className="container mx-auto px-4 py-4">
+        <div className="flex items-center justify-end">
+          <Button
+            onClick={onProfileClick}
+            variant="ghost"
+            size="sm"
+            className="rounded-full p-2 hover:bg-muted"
+          >
+            <Avatar className="w-8 h-8">
+              <AvatarFallback className="bg-gradient-to-br from-[#a8a5d0] to-[#9895c7] text-white text-sm font-josefin">
+                {username.charAt(0).toUpperCase()}
+              </AvatarFallback>
+            </Avatar>
+          </Button>
+        </div>
+      </div>
+    </header>
+  );
+};
