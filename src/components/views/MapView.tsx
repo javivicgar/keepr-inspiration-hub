@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { MapPin, ExternalLink, Navigation } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { InteractiveMap } from '@/components/InteractiveMap';
 import type { SavedContent } from '@/types/SavedContent';
 
 interface MapViewProps {
@@ -22,6 +23,7 @@ const categoryColors: Record<string, string> = {
 export const MapView = ({ content }: MapViewProps) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedKeepr, setSelectedKeepr] = useState<SavedContent | null>(null);
+  const [showFullMap, setShowFullMap] = useState(false);
 
   const locationsContent = content.filter(item => item.location);
   
@@ -46,11 +48,20 @@ export const MapView = ({ content }: MapViewProps) => {
     }
   };
 
+  if (showFullMap) {
+    return (
+      <InteractiveMap 
+        content={content} 
+        onBack={() => setShowFullMap(false)} 
+      />
+    );
+  }
+
   return (
     <div className="relative h-screen pb-20 overflow-hidden">
       {/* Header */}
       <div className="absolute top-16 left-0 right-0 z-10 bg-white/95 backdrop-blur-sm p-4 shadow-sm">
-        <h2 className="text-xl font-bold mb-4 font-josefin tracking-wide">Explore your saved Keeprs</h2>
+        <h2 className="text-xl font-bold mb-4 font-josefin tracking-wide">Explore your Keeprs</h2>
         
         {/* Category Filter */}
         <div className="flex gap-2 overflow-x-auto pb-2">
@@ -76,7 +87,10 @@ export const MapView = ({ content }: MapViewProps) => {
       <div className="absolute inset-0 pt-32">
         <div className="w-full h-full mx-4 mb-4 relative">
           {/* Map Container */}
-          <div className="w-full h-full bg-gradient-to-br from-blue-50 to-green-50 rounded-2xl overflow-hidden shadow-lg relative">
+          <div 
+            className="w-full h-full bg-gradient-to-br from-blue-50 to-green-50 rounded-2xl overflow-hidden shadow-lg relative cursor-pointer hover:shadow-xl transition-shadow"
+            onClick={() => setShowFullMap(true)}
+          >
             {/* World Map Background */}
             <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwMCIgaGVpZ2h0PSI1MDAiIHZpZXdCb3g9IjAgMCAxMDAwIDUwMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEwMCAxMDBIMjAwVjIwMEgxMDBWMTAwWiIgZmlsbD0iIzk4OTVjNyIgZmlsbC1vcGFjaXR5PSIwLjEiLz4KPHN0cm9rZSBkPSJNMCAwaDEwMDB2NTAwSDBWMCIgc3Ryb2tlPSIjYThhNWQwIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1kYXNoYXJyYXk9IjUgNSIgZmlsbD0ibm9uZSIvPgo8L3N2Zz4K')] opacity-20 bg-center bg-cover"></div>
             
@@ -111,10 +125,15 @@ export const MapView = ({ content }: MapViewProps) => {
                 <p className="text-sm text-gray-600 font-josefin mb-4">
                   Your saved Keeprs with location data appear as pins on the map
                 </p>
-                <div className="text-xs text-gray-500 font-josefin bg-gray-50 p-3 rounded-lg">
-                  <strong>Developer Note:</strong> This will be replaced with a live interactive map (Google Maps/Mapbox) 
-                  with real location pins, directions, and clustering features.
-                </div>
+                <Button 
+                  className="bg-[#a8a5d0] hover:bg-[#9895c7] text-white font-josefin"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowFullMap(true);
+                  }}
+                >
+                  Open Full Map
+                </Button>
               </div>
             </div>
           </div>

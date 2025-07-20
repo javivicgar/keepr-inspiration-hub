@@ -281,10 +281,7 @@ const Index = () => {
           </div>
         )}
         {activeTab === 'community' && (
-          <div className="py-4">
-            <h2 className="text-2xl font-bold mb-6 font-josefin tracking-wide">Community</h2>
-            <CommunityView />
-          </div>
+          <CommunityView />
         )}
         {activeTab === 'more' && (
           <div className="py-4">
