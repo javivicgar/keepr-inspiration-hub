@@ -271,7 +271,7 @@ const Index = () => {
         {activeTab === 'home' && (
           <>
             {currentView === 'home' && (
-              <div className="mb-4">
+              <div className="mb-4 -mt-4">
                 <FilterBar
                   selectedCategory={selectedCategory}
                   selectedFolder={selectedFolder}
