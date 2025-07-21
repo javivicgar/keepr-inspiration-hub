@@ -271,15 +271,17 @@ const Index = () => {
         {activeTab === 'home' && (
           <>
             {currentView === 'home' && (
-              <FilterBar
-                selectedCategory={selectedCategory}
-                selectedFolder={selectedFolder}
-                onCategoryChange={setSelectedCategory}
-                onFolderChange={setSelectedFolder}
-                onSortClick={() => setShowSortModal(true)}
-                folders={Array.from(new Set(content.map(item => item.folder)))}
-                userPreferences={userPreferences}
-              />
+              <div className="mb-4">
+                <FilterBar
+                  selectedCategory={selectedCategory}
+                  selectedFolder={selectedFolder}
+                  onCategoryChange={setSelectedCategory}
+                  onFolderChange={setSelectedFolder}
+                  onSortClick={() => setShowSortModal(true)}
+                  folders={Array.from(new Set(content.map(item => item.folder)))}
+                  userPreferences={userPreferences}
+                />
+              </div>
             )}
             {renderHomeContent()}
           </>
