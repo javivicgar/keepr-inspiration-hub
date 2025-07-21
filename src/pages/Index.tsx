@@ -17,6 +17,10 @@ import { FilterBar } from '@/components/FilterBar';
 import { SortModal } from '@/components/SortModal';
 import { AddOptionsModal } from '@/components/AddOptionsModal';
 import { ProfileModal } from '@/components/ProfileModal';
+import { SuggestedKeeprCarousel } from '@/components/SuggestedKeeprCarousel';
+import { CollectionsPreview } from '@/components/CollectionsPreview';
+import { RecentlyViewed } from '@/components/RecentlyViewed';
+import { EnhancedEmptyState } from '@/components/EnhancedEmptyState';
 import { SavedContent } from '@/types/SavedContent';
 
 const Index = () => {
@@ -41,6 +45,9 @@ const Index = () => {
   const [currentView, setCurrentView] = useState<'home' | 'folder-content' | 'keepr-detail'>('home');
   const [selectedFolderName, setSelectedFolderName] = useState<string>('');
   const [selectedKeepr, setSelectedKeepr] = useState<SavedContent | null>(null);
+  
+  // Recently viewed keeprs
+  const [recentlyViewed, setRecentlyViewed] = useState<SavedContent[]>([]);
 
   // Remove splash screen - load directly to auth
 
@@ -129,6 +136,12 @@ const Index = () => {
   const handleKeeprClick = (keepr: SavedContent) => {
     setSelectedKeepr(keepr);
     setCurrentView('keepr-detail');
+    
+    // Add to recently viewed (max 3, most recent first)
+    setRecentlyViewed(prev => {
+      const filtered = prev.filter(item => item.id !== keepr.id);
+      return [keepr, ...filtered].slice(0, 3);
+    });
   };
 
   const handleBackToHome = () => {
@@ -185,35 +198,37 @@ const Index = () => {
       );
     }
 
-    // Show folders section in home if user has folders
-    const folders = Array.from(new Set(content.map(item => item.folder)));
-    if (folders.length > 0 && activeTab === 'home') {
+    // Enhanced Home section layout
+    if (activeTab === 'home') {
+      // Show enhanced empty state if no content
+      if (content.length === 0) {
+        return <EnhancedEmptyState onCreateKeepr={() => setShowSaveModal(true)} />;
+      }
+
       return (
         <div className="space-y-6">
-          <div className="mb-6">
-            <h2 className="text-xl font-bold mb-2 font-josefin">Your Folders</h2>
-            <div className="grid grid-cols-2 gap-3">
-              {folders.map(folderName => {
-                const folderContent = content.filter(item => item.folder === folderName);
-                return (
-                  <div
-                    key={folderName}
-                    onClick={() => handleFolderClick(folderName)}
-                    className="p-4 bg-gradient-to-br from-[#a8a5d0]/10 to-[#9895c7]/20 rounded-2xl border-2 border-[#a8a5d0]/20 hover:border-[#a8a5d0]/40 transition-all cursor-pointer"
-                  >
-                    <div className="text-2xl mb-2">📁</div>
-                    <h3 className="font-semibold text-sm font-josefin line-clamp-1">{folderName}</h3>
-                    <p className="text-xs text-gray-600 font-josefin">
-                      {folderContent.length} {folderContent.length === 1 ? 'Keepr' : 'Keeprs'}
-                    </p>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-          
-          <div className="mb-6">
-            <h2 className="text-xl font-bold mb-4 font-josefin">All Keeprs</h2>
+          {/* Suggested Keeprs */}
+          <SuggestedKeeprCarousel 
+            userPreferences={userPreferences}
+            onSaveKeepr={handleAddContent}
+          />
+
+          {/* Collections Preview */}
+          <CollectionsPreview 
+            content={content}
+            onFolderClick={handleFolderClick}
+            onCreateFolder={() => setShowSaveModal(true)}
+          />
+
+          {/* Recently Viewed */}
+          <RecentlyViewed 
+            recentlyViewed={recentlyViewed}
+            onKeeprClick={handleKeeprClick}
+          />
+
+          {/* All Keeprs */}
+          <div>
+            <h2 className="text-xl font-bold mb-4 font-josefin">All Your Keeprs</h2>
             <ImprovedContentGrid 
               content={filteredContent} 
               onCreateKeepr={() => setShowSaveModal(true)} 
