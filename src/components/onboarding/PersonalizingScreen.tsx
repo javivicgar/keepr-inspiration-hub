@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Heart, Sparkles } from 'lucide-react';
+import { Bookmark, Sparkles } from 'lucide-react';
 
 export const PersonalizingScreen = () => {
   const [dots, setDots] = useState('');
@@ -29,7 +29,9 @@ export const PersonalizingScreen = () => {
         {/* Animated Keepr Logo */}
         <div className="mb-8 relative">
           <div className="bg-white rounded-3xl p-6 inline-block shadow-xl animate-pulse">
-            <Heart className="h-12 w-12 text-[#a8a5d0] fill-current" />
+            <div className="bg-[#a8a5d0] rounded-full p-3 flex items-center justify-center">
+              <Bookmark className="h-8 w-8 text-white fill-white" />
+            </div>
           </div>
           <div className="absolute -top-2 -right-2">
             <Sparkles className="h-6 w-6 text-white animate-spin" />
