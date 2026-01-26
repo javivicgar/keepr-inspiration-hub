@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Heart, X } from 'lucide-react';
+import { Bookmark, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface AuthScreenProps {
@@ -132,7 +132,9 @@ export const AuthScreen = ({ onAuthenticate }: AuthScreenProps) => {
     <div className="fixed inset-0 bg-gradient-to-b from-[#a8a5d0] to-[#9895c7] flex items-center justify-center p-4 md:p-6">
       <div className="text-center w-full max-w-md">
         <div className="bg-white rounded-3xl p-8 mb-8 inline-block shadow-xl">
-          <Heart className="h-16 w-16 text-[#a8a5d0] fill-current" />
+          <div className="bg-[#a8a5d0] rounded-full p-4 flex items-center justify-center">
+            <Bookmark className="h-10 w-10 text-white fill-white" />
+          </div>
         </div>
         
         <h1 className="text-4xl md:text-5xl font-bold text-white mb-3 font-josefin tracking-wide">Keepr</h1>
