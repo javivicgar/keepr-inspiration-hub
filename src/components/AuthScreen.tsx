@@ -166,15 +166,17 @@ export const AuthScreen = ({ onAuthenticate }: AuthScreenProps) => {
           </Button>
         </div>
 
-        <div className="bg-white/10 rounded-2xl p-4 backdrop-blur-sm min-h-[120px] flex flex-col justify-center">
-          <p className="text-white/80 text-sm font-josefin mb-2">Did you know?</p>
-          <p 
-            className={`text-white text-sm font-josefin transition-opacity duration-500 leading-relaxed ${
-              isVisible ? 'opacity-100' : 'opacity-0'
-            }`}
-          >
-            {funFacts[currentFact]}
-          </p>
+        <div className="bg-white/10 rounded-2xl p-4 backdrop-blur-sm min-h-[140px] flex flex-col justify-start overflow-hidden">
+          <p className="text-white/80 text-sm font-josefin mb-2 flex-shrink-0">Did you know?</p>
+          <div className="flex-1 flex items-center overflow-hidden">
+            <p 
+              className={`text-white text-sm font-josefin transition-opacity duration-500 leading-relaxed line-clamp-4 ${
+                isVisible ? 'opacity-100' : 'opacity-0'
+              }`}
+            >
+              {funFacts[currentFact]}
+            </p>
+          </div>
         </div>
       </div>
       
