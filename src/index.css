@@ -100,19 +100,19 @@
   }
 
   html {
-    font-family: 'Geist', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
   }
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Geist', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
 
-  /* Type scale — h1/h2 use distinctive serif display face */
-  h1 { @apply font-display text-3xl md:text-4xl font-medium tracking-tight; letter-spacing: -0.02em; }
-  h2 { @apply font-display text-2xl font-medium tracking-tight; letter-spacing: -0.015em; }
+  /* Type scale — headings use Inter; only the wordmark uses Josefin Sans */
+  h1 { @apply font-sans text-3xl md:text-4xl font-semibold tracking-tight; letter-spacing: -0.02em; }
+  h2 { @apply font-sans text-2xl font-semibold tracking-tight; letter-spacing: -0.015em; }
   h3 { @apply text-lg font-semibold; }
 
   /* Visible non-color focus ring on every interactive element */
