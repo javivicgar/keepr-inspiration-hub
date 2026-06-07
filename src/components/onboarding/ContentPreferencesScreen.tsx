@@ -57,21 +57,22 @@ export const ContentPreferencesScreen = ({
       <div className="flex-1 overflow-y-auto min-h-0 mb-4">
         <div className="grid grid-cols-2 gap-3">
           {contentOptions.map((option) => {
-            const Icon = categoryMeta[option.label].icon;
+            const meta = categoryMeta[option.label];
+            const Icon = meta.icon;
             const selected = selectedPreferences.includes(option.id);
             return (
               <button
                 key={option.id}
                 onClick={() => toggle(option.id)}
                 aria-pressed={selected}
-                className={`p-4 rounded-md border transition-colors text-left ${
+                className={`p-4 rounded-xl border text-left transition-all ${meta.toneBg} ${
                   selected
-                    ? 'bg-primary text-primary-foreground border-primary'
-                    : 'bg-card text-foreground border-border hover:bg-muted'
+                    ? 'border-foreground/70 ring-2 ring-foreground/10 shadow-sm'
+                    : 'border-transparent hover:border-foreground/10'
                 }`}
               >
-                <Icon className="h-5 w-5 mb-2" aria-hidden="true" />
-                <div className="text-sm font-medium leading-tight">{option.label}</div>
+                <Icon className={`h-5 w-5 mb-2 ${meta.tone}`} strokeWidth={1.75} aria-hidden="true" />
+                <div className="text-sm font-medium leading-tight text-foreground">{option.label}</div>
               </button>
             );
           })}
