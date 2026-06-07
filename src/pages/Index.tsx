@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { IntroScreen } from '@/components/IntroScreen';
 import { AuthScreen } from '@/components/AuthScreen';
 import { OnboardingFlow } from '@/components/onboarding/OnboardingFlow';
 import { PersonalizingScreen } from '@/components/onboarding/PersonalizingScreen';
@@ -25,7 +24,6 @@ import { EnhancedEmptyState } from '@/components/EnhancedEmptyState';
 import { SavedContent } from '@/types/SavedContent';
 
 const Index = () => {
-  const [hasSeenIntro, setHasSeenIntro] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [hasCompletedOnboarding, setHasCompletedOnboarding] = useState(false);
   const [showPersonalizing, setShowPersonalizing] = useState(false);
@@ -156,10 +154,6 @@ const Index = () => {
     setCurrentView('folder-content');
     setSelectedKeepr(null);
   };
-
-  if (!hasSeenIntro) {
-    return <IntroScreen onContinue={() => setHasSeenIntro(true)} />;
-  }
 
   if (!isAuthenticated) {
     return <AuthScreen onAuthenticate={handleAuthentication} />;
