@@ -18,11 +18,10 @@ export const AuthScreen = ({ onAuthenticate }: AuthScreenProps) => {
   const [pendingProvider, setPendingProvider] = useState<Provider | null>(null);
   const [isAuthenticating, setIsAuthenticating] = useState(false);
 
+  const [stageEl, setStageEl] = useState<HTMLElement | null>(null);
+
   useEffect(() => {
-    document.documentElement.setAttribute('data-auth-glow', 'true');
-    return () => {
-      document.documentElement.removeAttribute('data-auth-glow');
-    };
+    setStageEl(document.getElementById('phone-stage'));
   }, []);
 
   const handleContinue = () => {
