@@ -128,7 +128,6 @@ export const AuthScreen = ({ onAuthenticate }: AuthScreenProps) => {
       </div>
 
       {pendingProvider && <IOSAuthDialog provider={pendingProvider} />}
-      {stageEl && createPortal(<div className="auth-bleed-glow" aria-hidden="true" />, stageEl)}
     </div>
   );
 };
