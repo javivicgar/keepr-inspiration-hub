@@ -145,7 +145,8 @@
 
   /* Legacy alias: many components still use `font-josefin`.
      Remap to Geist so we don't have to touch every className. */
-  .font-josefin { font-family: 'Geist', system-ui, -apple-system, sans-serif; }
+  .font-josefin { font-family: 'Josefin Sans', system-ui, -apple-system, sans-serif; }
+  .font-keepr-wordmark { font-family: 'Josefin Sans', system-ui, -apple-system, sans-serif; font-weight: 600; letter-spacing: -0.01em; }
 
   .line-clamp-1 { overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; }
   .line-clamp-2 { overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
