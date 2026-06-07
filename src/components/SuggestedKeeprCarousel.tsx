@@ -1,8 +1,8 @@
 import React from 'react';
+import { Search, Bookmark } from 'lucide-react';
 import { SavedContent } from '@/types/SavedContent';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Heart, Bookmark } from 'lucide-react';
 
 interface SuggestedKeeprCarouselProps {
   userPreferences: string[];
