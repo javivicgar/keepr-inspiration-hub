@@ -15,11 +15,8 @@ export const WelcomeScreen = ({ onNext }: WelcomeScreenProps) => {
   }, []);
 
   return (
-    <div className="animate-fade-in h-full flex flex-col">
-      {/* Spacer to mirror back-arrow row on other screens */}
-      <div className="h-10 flex-shrink-0" />
-
-      <div className="flex-1 flex flex-col items-center justify-center text-center">
+    <div className="animate-fade-in relative h-full">
+      <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 pointer-events-none">
         <div
           className={`transition-all duration-700 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
@@ -28,13 +25,13 @@ export const WelcomeScreen = ({ onNext }: WelcomeScreenProps) => {
           <h1 className="text-4xl md:text-5xl font-semibold text-foreground mb-4 tracking-tight">
             Welcome
           </h1>
-          <p className="text-muted-foreground text-base md:text-lg px-4">
+          <p className="text-muted-foreground text-base md:text-lg">
             Let's set things up for you.
           </p>
         </div>
       </div>
 
-      <div className="flex-shrink-0">
+      <div className="absolute left-0 right-0 bottom-0">
         <Button
           onClick={onNext}
           className="w-full bg-primary text-primary-foreground hover:bg-primary-hover font-medium py-3 rounded-md text-base h-12"
