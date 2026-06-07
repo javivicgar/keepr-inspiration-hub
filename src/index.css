@@ -13,7 +13,8 @@
 @layer base {
   :root {
     /* Neutral surfaces */
-    --background: 0 0% 99%;          /* page bg */
+    --page: 240 6% 92%;              /* outside the phone frame */
+    --background: 0 0% 100%;         /* app surface (inside phone) */
     --foreground: 240 10% 12%;       /* primary text */
 
     --card: 0 0% 100%;
