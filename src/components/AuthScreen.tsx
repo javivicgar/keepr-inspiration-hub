@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Bookmark } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -16,6 +16,13 @@ const providerCopy: Record<Provider, { domain: string }> = {
 export const AuthScreen = ({ onAuthenticate }: AuthScreenProps) => {
   const [pendingProvider, setPendingProvider] = useState<Provider | null>(null);
   const [isAuthenticating, setIsAuthenticating] = useState(false);
+
+  useEffect(() => {
+    document.body.setAttribute('data-auth-glow', 'true');
+    return () => {
+      document.body.removeAttribute('data-auth-glow');
+    };
+  }, []);
 
   const handleContinue = () => {
     setIsAuthenticating(true);
@@ -75,9 +82,10 @@ export const AuthScreen = ({ onAuthenticate }: AuthScreenProps) => {
   );
 
   return (
-    <div className="absolute inset-0 bg-background brand-glow overflow-hidden">
-      <div className="h-full w-full max-w-sm mx-auto px-6 flex flex-col">
-        <div className="flex-[2] flex flex-col items-center justify-center">
+    <div className="h-full w-full bg-background brand-glow overflow-hidden flex justify-center relative">
+      <div className="w-full max-w-sm px-6 flex flex-col justify-between items-center pt-[16%] pb-8">
+        {/* Wordmark */}
+        <div className="flex flex-col items-center">
           <div className="bg-primary-soft rounded-2xl p-5 mb-6 inline-flex shadow-sm">
             <div className="bg-primary rounded-full p-3.5 flex items-center justify-center">
               <Bookmark className="h-7 w-7 text-primary-foreground fill-current" aria-hidden="true" />
@@ -87,7 +95,8 @@ export const AuthScreen = ({ onAuthenticate }: AuthScreenProps) => {
           <p className="text-muted-foreground text-base">Save your inspirations.</p>
         </div>
 
-        <div className="flex-shrink-0 pb-8 space-y-3">
+        {/* CTAs + legal */}
+        <div className="w-full space-y-3">
           <Button
             onClick={() => setPendingProvider('apple')}
             className="w-full bg-foreground text-background hover:bg-foreground/90 font-medium py-3 rounded-xl text-base h-12 flex items-center justify-center gap-3"
