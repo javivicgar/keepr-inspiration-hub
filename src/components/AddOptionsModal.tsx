@@ -61,13 +61,13 @@ export const AddOptionsModal = ({ isOpen, onClose, onOptionSelect }: AddOptionsM
                 placeholder="Search for content or paste a URL..."
                 value={browserUrl}
                 onChange={(e) => setBrowserUrl(e.target.value)}
-                className="h-12 text-base rounded-2xl border-2 focus:border-[#a8a5d0] font-josefin"
+                className="h-12 text-base rounded-2xl border-2 focus:border-primary font-josefin"
               />
             </div>
             
             <Button
               onClick={handleBrowserSearch}
-              className="w-full bg-[#a8a5d0] hover:bg-[#9895c7] text-white font-josefin font-medium py-3 rounded-2xl"
+              className="w-full bg-primary hover:bg-primary-hover text-white font-josefin font-medium py-3 rounded-2xl"
               disabled={!browserUrl.trim()}
             >
               Add as Keepr
@@ -92,7 +92,7 @@ export const AddOptionsModal = ({ isOpen, onClose, onOptionSelect }: AddOptionsM
           <div className="p-6 space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <button
-                className="flex flex-col items-center p-6 rounded-2xl border-2 border-border hover:border-[#a8a5d0] transition-all font-josefin hover:shadow-md"
+                className="flex flex-col items-center p-6 rounded-2xl border-2 border-border hover:border-primary transition-all font-josefin hover:shadow-md"
                 onClick={() => handleMediaSelect('photo')}
               >
                 <div className="p-4 rounded-full bg-green-50 text-green-600 mb-3">
@@ -102,7 +102,7 @@ export const AddOptionsModal = ({ isOpen, onClose, onOptionSelect }: AddOptionsM
               </button>
               
               <button
-                className="flex flex-col items-center p-6 rounded-2xl border-2 border-border hover:border-[#a8a5d0] transition-all font-josefin hover:shadow-md"
+                className="flex flex-col items-center p-6 rounded-2xl border-2 border-border hover:border-primary transition-all font-josefin hover:shadow-md"
                 onClick={() => handleMediaSelect('video')}
               >
                 <div className="p-4 rounded-full bg-blue-50 text-blue-600 mb-3">
@@ -132,7 +132,7 @@ export const AddOptionsModal = ({ isOpen, onClose, onOptionSelect }: AddOptionsM
             {options.map((option) => (
               <button
                 key={option.id}
-                className="flex flex-col items-center p-6 rounded-2xl border-2 border-border hover:border-[#a8a5d0] transition-all font-josefin hover:shadow-md"
+                className="flex flex-col items-center p-6 rounded-2xl border-2 border-border hover:border-primary transition-all font-josefin hover:shadow-md"
                 onClick={() => {
                   if (option.id === 'browser') {
                     setShowBrowser(true);

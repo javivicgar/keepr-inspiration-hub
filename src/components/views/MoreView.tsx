@@ -78,19 +78,19 @@ export const MoreView = ({ totalContent, totalFolders, userPreferences = [], onP
   return (
     <div className="space-y-4 pb-20">
       {/* Stats */}
-      <Card className="bg-gradient-to-r from-[#a8a5d0]/10 to-[#9895c7]/10">
+      <Card className="bg-card">
         <CardContent className="p-6 text-center">
           <div className="bg-white rounded-2xl p-4 mb-4 inline-block">
-            <Heart className="h-8 w-8 text-[#a8a5d0] fill-current" />
+            <Heart className="h-8 w-8 text-primary fill-current" />
           </div>
           <h2 className="text-xl font-semibold mb-2 font-josefin">Your Keepr Stats</h2>
           <div className="grid grid-cols-2 gap-4 mt-4">
             <div>
-              <div className="text-2xl font-bold text-[#a8a5d0] font-josefin">{totalContent}</div>
+              <div className="text-2xl font-bold text-primary font-josefin">{totalContent}</div>
               <div className="text-sm text-muted-foreground font-josefin">Saved Items</div>
             </div>
             <div>
-              <div className="text-2xl font-bold text-[#a8a5d0] font-josefin">{totalFolders}</div>
+              <div className="text-2xl font-bold text-primary font-josefin">{totalFolders}</div>
               <div className="text-sm text-muted-foreground font-josefin">Folders</div>
             </div>
           </div>

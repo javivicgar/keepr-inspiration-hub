@@ -24,12 +24,12 @@ export const PersonalizingScreen = () => {
   }, []);
 
   return (
-    <div className="fixed inset-0 bg-gradient-to-b from-[#a8a5d0] to-[#9895c7] flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-background flex items-center justify-center z-50">
       <div className="text-center animate-fade-in">
         {/* Animated Keepr Logo */}
         <div className="mb-8 relative">
           <div className="bg-white rounded-3xl p-6 inline-block shadow-xl animate-pulse">
-            <div className="bg-[#a8a5d0] rounded-full p-3 flex items-center justify-center">
+            <div className="bg-primary rounded-full p-3 flex items-center justify-center">
               <Bookmark className="h-8 w-8 text-white fill-white" />
             </div>
           </div>

@@ -40,7 +40,7 @@ export const WelcomeScreen = ({ onNext }: WelcomeScreenProps) => {
       <div className="mt-auto">
         <Button 
           onClick={onNext}
-          className="w-full bg-white text-[#a8a5d0] hover:bg-white/90 font-josefin font-medium py-4 md:py-6 rounded-2xl text-lg shadow-lg transition-all duration-200 h-12 md:h-14"
+          className="w-full bg-white text-primary hover:bg-white/90 font-josefin font-medium py-4 md:py-6 rounded-2xl text-lg shadow-lg transition-all duration-200 h-12 md:h-14"
         >
           Get started →
         </Button>

@@ -112,7 +112,7 @@ export const AuthScreen = ({ onAuthenticate }: AuthScreenProps) => {
             <Button
               onClick={handleAuthentication}
               disabled={isAuthenticating}
-              className="w-full bg-[#a8a5d0] hover:bg-[#9895c7] text-white font-josefin rounded-2xl py-3"
+              className="w-full bg-primary hover:bg-primary-hover text-white font-josefin rounded-2xl py-3"
             >
               {isAuthenticating ? 'Please wait...' : 'Continue'}
             </Button>
@@ -129,10 +129,10 @@ export const AuthScreen = ({ onAuthenticate }: AuthScreenProps) => {
   );
 
   return (
-    <div className="fixed inset-0 bg-gradient-to-b from-[#a8a5d0] to-[#9895c7] flex items-center justify-center p-4 md:p-6">
+    <div className="fixed inset-0 bg-background flex items-center justify-center p-4 md:p-6">
       <div className="text-center w-full max-w-md">
         <div className="bg-white rounded-3xl p-8 mb-8 inline-block shadow-xl">
-          <div className="bg-[#a8a5d0] rounded-full p-4 flex items-center justify-center">
+          <div className="bg-primary rounded-full p-4 flex items-center justify-center">
             <Bookmark className="h-10 w-10 text-white fill-white" />
           </div>
         </div>

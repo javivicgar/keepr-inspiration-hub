@@ -67,7 +67,7 @@ export const ContentPreferencesScreen = ({
               onClick={() => togglePreference(option.id)}
               className={`p-2 md:p-3 lg:p-4 rounded-xl md:rounded-2xl border-2 transition-all duration-200 ${
                 selectedPreferences.includes(option.id)
-                  ? 'bg-white text-[#a8a5d0] border-white shadow-lg transform scale-[0.98]'
+                  ? 'bg-white text-primary border-white shadow-lg transform scale-[0.98]'
                   : 'bg-white/10 text-white border-white/20 hover:bg-white/20'
               }`}
             >
@@ -82,7 +82,7 @@ export const ContentPreferencesScreen = ({
         <Button 
           onClick={onNext}
           disabled={selectedPreferences.length === 0}
-          className="w-full bg-white text-[#a8a5d0] hover:bg-white/90 font-josefin font-medium py-3 md:py-4 lg:py-6 rounded-xl md:rounded-2xl text-sm md:text-lg shadow-lg transition-all duration-200 h-10 md:h-12 lg:h-14 disabled:opacity-50"
+          className="w-full bg-white text-primary hover:bg-white/90 font-josefin font-medium py-3 md:py-4 lg:py-6 rounded-xl md:rounded-2xl text-sm md:text-lg shadow-lg transition-all duration-200 h-10 md:h-12 lg:h-14 disabled:opacity-50"
         >
           Continue →
         </Button>

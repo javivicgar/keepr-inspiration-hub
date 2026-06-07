@@ -62,7 +62,7 @@ export const SaveMethodScreen = ({
               onClick={() => toggleMethod(option.id)}
               className={`w-full p-3 md:p-4 lg:p-6 rounded-xl md:rounded-2xl border-2 transition-all duration-200 text-left ${
                 selectedMethods.includes(option.id)
-                  ? 'bg-white text-[#a8a5d0] border-white shadow-lg transform scale-[0.98]'
+                  ? 'bg-white text-primary border-white shadow-lg transform scale-[0.98]'
                   : 'bg-white/10 text-white border-white/20 hover:bg-white/20'
               }`}
             >
@@ -71,7 +71,7 @@ export const SaveMethodScreen = ({
                 <div className="flex-1">
                   <div className="font-josefin font-medium text-sm md:text-base lg:text-lg mb-1">{option.label}</div>
                   <div className={`text-xs md:text-sm font-josefin ${
-                    selectedMethods.includes(option.id) ? 'text-[#a8a5d0]/70' : 'text-white/70'
+                    selectedMethods.includes(option.id) ? 'text-primary/70' : 'text-white/70'
                   }`}>
                     {option.description}
                   </div>
@@ -86,7 +86,7 @@ export const SaveMethodScreen = ({
         <Button 
           onClick={onNext}
           disabled={selectedMethods.length === 0}
-          className="w-full bg-white text-[#a8a5d0] hover:bg-white/90 font-josefin font-medium py-3 md:py-4 lg:py-6 rounded-xl md:rounded-2xl text-sm md:text-lg shadow-lg transition-all duration-200 h-10 md:h-12 lg:h-14 disabled:opacity-50"
+          className="w-full bg-white text-primary hover:bg-white/90 font-josefin font-medium py-3 md:py-4 lg:py-6 rounded-xl md:rounded-2xl text-sm md:text-lg shadow-lg transition-all duration-200 h-10 md:h-12 lg:h-14 disabled:opacity-50"
         >
           Almost there →
         </Button>

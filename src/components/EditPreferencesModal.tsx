@@ -60,7 +60,7 @@ export const EditPreferencesModal = ({ isOpen, onClose, currentPreferences, onSa
                 onClick={() => togglePreference(type.id)}
                 className={`p-4 rounded-2xl border-2 transition-all duration-200 ${
                   selectedPreferences.includes(type.id)
-                    ? 'border-[#a8a5d0] bg-[#a8a5d0]/10'
+                    ? 'border-primary bg-primary/10'
                     : 'border-gray-200 hover:border-gray-300'
                 }`}
               >
@@ -68,7 +68,7 @@ export const EditPreferencesModal = ({ isOpen, onClose, currentPreferences, onSa
                   <div className="text-2xl mb-2">{type.icon}</div>
                   <div className="font-josefin text-sm font-medium">{type.label}</div>
                   {selectedPreferences.includes(type.id) && (
-                    <Check className="h-4 w-4 text-[#a8a5d0] mx-auto mt-2" />
+                    <Check className="h-4 w-4 text-primary mx-auto mt-2" />
                   )}
                 </div>
               </button>
@@ -85,7 +85,7 @@ export const EditPreferencesModal = ({ isOpen, onClose, currentPreferences, onSa
             </Button>
             <Button
               onClick={handleSave}
-              className="flex-1 bg-[#a8a5d0] hover:bg-[#9895c7] text-white font-josefin"
+              className="flex-1 bg-primary hover:bg-primary-hover text-white font-josefin"
             >
               Save Changes
             </Button>

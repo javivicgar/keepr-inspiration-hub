@@ -63,7 +63,7 @@ export const KeeprDetailView = ({ keepr, onBack }: KeeprDetailViewProps) => {
           {/* Category and Folder */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="px-3 py-1 bg-[#a8a5d0]/10 text-[#a8a5d0] rounded-full text-sm font-josefin">
+              <span className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-josefin">
                 {keepr.category}
               </span>
               <span className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm font-josefin">
@@ -106,7 +106,7 @@ export const KeeprDetailView = ({ keepr, onBack }: KeeprDetailViewProps) => {
               <Share className="h-4 w-4 mr-2" />
               Share
             </Button>
-            <Button className="flex-1 bg-[#a8a5d0] hover:bg-[#9895c7] rounded-xl font-josefin">
+            <Button className="flex-1 bg-primary hover:bg-primary-hover rounded-xl font-josefin">
               <ExternalLink className="h-4 w-4 mr-2" />
               Open
             </Button>

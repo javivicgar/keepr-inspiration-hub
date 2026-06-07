@@ -72,8 +72,8 @@ export const MapView = ({ content }: MapViewProps) => {
               onClick={() => setSelectedCategory(category)}
               className={`whitespace-nowrap text-xs font-josefin rounded-xl border-2 transition-all duration-200 h-8 ${
                 selectedCategory === category
-                  ? 'bg-[#a8a5d0] hover:bg-[#9895c7] text-white border-[#a8a5d0]'
-                  : 'hover:border-[#a8a5d0]'
+                  ? 'bg-primary hover:bg-primary-hover text-white border-primary'
+                  : 'hover:border-primary'
               }`}
             >
               {category === 'all' ? 'All' : category}
@@ -119,13 +119,13 @@ export const MapView = ({ content }: MapViewProps) => {
             {/* Map Placeholder Text */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
               <div className="text-center p-8 bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg max-w-md">
-                <Navigation className="h-12 w-12 mx-auto mb-4 text-[#a8a5d0]" />
+                <Navigation className="h-12 w-12 mx-auto mb-4 text-primary" />
                 <h3 className="font-semibold mb-2 font-josefin text-lg">Interactive Map</h3>
                 <p className="text-sm text-gray-600 font-josefin mb-4">
                   Your saved Keeprs with location data appear as pins on the map
                 </p>
                 <Button 
-                  className="bg-[#a8a5d0] hover:bg-[#9895c7] text-white font-josefin"
+                  className="bg-primary hover:bg-primary-hover text-white font-josefin"
                   onClick={(e) => {
                     e.stopPropagation();
                     setShowFullMap(true);
@@ -158,7 +158,7 @@ export const MapView = ({ content }: MapViewProps) => {
                   <div className="flex gap-2">
                     <Button 
                       size="sm" 
-                      className="bg-[#a8a5d0] hover:bg-[#9895c7] text-white"
+                      className="bg-primary hover:bg-primary-hover text-white"
                       onClick={() => handleGetDirections(selectedKeepr.location!)}
                     >
                       <MapPin className="h-3 w-3 mr-1" />
@@ -178,7 +178,7 @@ export const MapView = ({ content }: MapViewProps) => {
         {/* Floating Action Button */}
         <Button
           onClick={handleOpenGoogleMaps}
-          className="absolute bottom-8 right-8 bg-[#a8a5d0] hover:bg-[#9895c7] shadow-lg hover:shadow-xl transition-all duration-200 rounded-full h-14 w-14 p-0"
+          className="absolute bottom-8 right-8 bg-primary hover:bg-primary-hover shadow-lg hover:shadow-xl transition-all duration-200 rounded-full h-14 w-14 p-0"
         >
           <ExternalLink className="h-6 w-6 text-white" />
         </Button>
@@ -199,7 +199,7 @@ export const MapView = ({ content }: MapViewProps) => {
                     className="flex items-center gap-3 p-2 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors"
                     onClick={() => setSelectedKeepr(item)}
                   >
-                    <div className="w-8 h-8 bg-[#a8a5d0] rounded-lg flex items-center justify-center">
+                    <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
                       <MapPin className="h-4 w-4 text-white" />
                     </div>
                     <div className="flex-1">
