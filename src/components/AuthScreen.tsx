@@ -1,119 +1,136 @@
 import React, { useState } from 'react';
-import { Bookmark, X } from 'lucide-react';
+import { Bookmark } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface AuthScreenProps {
   onAuthenticate: () => void;
 }
 
+type Provider = 'apple' | 'google';
+
+const providerCopy: Record<Provider, { domain: string }> = {
+  apple: { domain: 'appleid.apple.com' },
+  google: { domain: 'accounts.google.com' },
+};
+
 export const AuthScreen = ({ onAuthenticate }: AuthScreenProps) => {
-  const [showLoginModal, setShowLoginModal] = useState(false);
-  const [loginType, setLoginType] = useState<'google' | 'apple' | null>(null);
+  const [pendingProvider, setPendingProvider] = useState<Provider | null>(null);
   const [isAuthenticating, setIsAuthenticating] = useState(false);
 
-  const handleSignUpClick = (type: 'google' | 'apple') => {
-    setLoginType(type);
-    setShowLoginModal(true);
-  };
-
-  const handleAuthentication = () => {
+  const handleContinue = () => {
     setIsAuthenticating(true);
     setTimeout(() => {
       setIsAuthenticating(false);
-      setShowLoginModal(false);
+      setPendingProvider(null);
       onAuthenticate();
-    }, 1200);
+    }, 1000);
   };
 
-  const LoginModal = () => (
-    <div className="fixed inset-0 bg-foreground/40 z-50 flex items-center justify-center p-6">
-      <div className="bg-card rounded-2xl p-6 w-full max-w-sm shadow-lg border border-border">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-lg font-semibold">
-            Sign in with {loginType === 'google' ? 'Google' : 'Apple'}
-          </h3>
-          <Button
-            variant="ghost"
-            size="icon"
-            aria-label="Close sign-in dialog"
-            onClick={() => setShowLoginModal(false)}
-            className="rounded-md"
-            disabled={isAuthenticating}
-          >
-            <X className="h-4 w-4" />
-          </Button>
-        </div>
+  const handleCancel = () => {
+    if (isAuthenticating) return;
+    setPendingProvider(null);
+  };
 
-        <div className="space-y-4">
-          <p className="text-sm text-muted-foreground">
-            {isAuthenticating
-              ? 'Signing you in…'
-              : `You'll continue with your ${loginType === 'google' ? 'Google' : 'Apple'} account.`}
+  const IOSAuthDialog = ({ provider }: { provider: Provider }) => (
+    <div
+      className="absolute inset-0 z-50 flex items-center justify-center p-6"
+      style={{ background: 'hsl(240 10% 12% / 0.35)', backdropFilter: 'blur(6px)' }}
+      role="dialog"
+      aria-modal="true"
+    >
+      <div
+        className="w-full max-w-[280px] rounded-2xl overflow-hidden text-center"
+        style={{
+          background: 'hsl(0 0% 100% / 0.92)',
+          backdropFilter: 'blur(20px) saturate(180%)',
+          boxShadow: '0 20px 50px -10px hsl(240 10% 12% / 0.25)',
+        }}
+      >
+        <div className="px-5 pt-5 pb-4">
+          <h3 className="text-[15px] font-semibold text-foreground leading-snug">
+            “Keepr” Wants to Use “{providerCopy[provider].domain}” to Sign In
+          </h3>
+          <p className="text-[13px] text-muted-foreground mt-2 leading-snug">
+            This allows the app and website to share information about you.
           </p>
-          <Button
-            onClick={handleAuthentication}
+        </div>
+        <div className="border-t border-border/70 grid grid-cols-2">
+          <button
+            onClick={handleCancel}
             disabled={isAuthenticating}
-            className="w-full bg-primary text-primary-foreground hover:bg-primary-hover rounded-md py-3"
+            className="py-3 text-[15px] text-foreground border-r border-border/70 hover:bg-muted/50 transition-colors"
           >
-            {isAuthenticating ? 'Please wait…' : 'Continue'}
-          </Button>
-          <p className="text-xs text-muted-foreground text-center">
-            By continuing, you agree to our Terms of Service and Privacy Policy.
-          </p>
+            Cancel
+          </button>
+          <button
+            onClick={handleContinue}
+            disabled={isAuthenticating}
+            className="py-3 text-[15px] font-semibold text-primary hover:bg-muted/50 transition-colors"
+          >
+            {isAuthenticating ? 'Signing in…' : 'Continue'}
+          </button>
         </div>
       </div>
     </div>
   );
 
   return (
-    <div className="absolute inset-0 bg-background brand-glow flex items-center justify-center p-6 overflow-hidden">
-      <div className="w-full max-w-sm text-center relative">
-        <div className="bg-primary-soft rounded-2xl p-6 mb-8 inline-flex shadow-sm">
-          <div className="bg-primary rounded-full p-4 flex items-center justify-center">
-            <Bookmark className="h-8 w-8 text-primary-foreground fill-current" aria-hidden="true" />
+    <div className="absolute inset-0 bg-background brand-glow overflow-hidden">
+      <div className="h-full w-full max-w-sm mx-auto px-6 flex flex-col">
+        {/* Upper third: wordmark */}
+        <div className="flex-[1] flex flex-col items-center justify-end pb-6">
+          <div className="bg-primary-soft rounded-2xl p-5 mb-6 inline-flex shadow-sm">
+            <div className="bg-primary rounded-full p-3.5 flex items-center justify-center">
+              <Bookmark className="h-7 w-7 text-primary-foreground fill-current" aria-hidden="true" />
+            </div>
           </div>
+          <h1 className="font-keepr-wordmark text-5xl text-foreground mb-2 tracking-tight">Keepr</h1>
+          <p className="text-muted-foreground text-base">Save your inspirations.</p>
         </div>
 
-        <h1 className="font-keepr-wordmark text-5xl text-foreground mb-2 tracking-tight">Keepr</h1>
-        <p className="text-muted-foreground text-base mb-10">Save your inspirations.</p>
+        {/* Middle: breathing space */}
+        <div className="flex-[1]" />
 
-        <div className="space-y-3">
-          <Button
-            onClick={() => handleSignUpClick('apple')}
-            className="w-full bg-foreground text-background hover:bg-foreground/90 font-medium py-3 rounded-xl text-base h-12 flex items-center justify-center gap-3"
-          >
-            <img
-              src="/lovable-uploads/88fccea4-8273-4f19-a655-d7000b52ba19.png"
-              alt=""
-              aria-hidden="true"
-              className="w-5 h-5"
-            />
-            Sign up with Apple
-          </Button>
+        {/* Lower third: CTAs */}
+        <div className="flex-[1] flex flex-col justify-end pb-8">
+          <div className="space-y-3">
+            <Button
+              onClick={() => setPendingProvider('apple')}
+              className="w-full bg-foreground text-background hover:bg-foreground/90 font-medium py-3 rounded-xl text-base h-12 flex items-center justify-center gap-3"
+            >
+              <img
+                src="/lovable-uploads/88fccea4-8273-4f19-a655-d7000b52ba19.png"
+                alt=""
+                aria-hidden="true"
+                className="w-5 h-5"
+              />
+              Sign up with Apple
+            </Button>
 
-          <Button
-            onClick={() => handleSignUpClick('google')}
-            className="w-full bg-primary-soft text-foreground hover:bg-primary-soft/70 font-medium py-3 rounded-xl text-base h-12 border border-border/60 flex items-center justify-center gap-3"
-          >
-            <img
-              src="/lovable-uploads/0e1e7537-0953-4c7c-927a-1d2fa977968a.png"
-              alt=""
-              aria-hidden="true"
-              className="w-5 h-5"
-            />
-            Sign up with Google
-          </Button>
+            <Button
+              onClick={() => setPendingProvider('google')}
+              className="w-full bg-primary-soft text-foreground hover:bg-primary-soft/70 font-medium py-3 rounded-xl text-base h-12 border border-border/60 flex items-center justify-center gap-3"
+            >
+              <img
+                src="/lovable-uploads/0e1e7537-0953-4c7c-927a-1d2fa977968a.png"
+                alt=""
+                aria-hidden="true"
+                className="w-5 h-5"
+              />
+              Sign up with Google
+            </Button>
 
-          <p className="text-xs text-muted-foreground pt-3 leading-relaxed">
-            By continuing you agree to our{' '}
-            <a href="#" className="underline underline-offset-2 hover:text-foreground">Terms</a>
-            {' '}and{' '}
-            <a href="#" className="underline underline-offset-2 hover:text-foreground">Privacy Policy</a>.
-          </p>
+            <p className="text-xs text-muted-foreground pt-3 leading-relaxed text-center">
+              By continuing you agree to our{' '}
+              <a href="#" className="underline underline-offset-2 hover:text-foreground">Terms</a>
+              {' '}and{' '}
+              <a href="#" className="underline underline-offset-2 hover:text-foreground">Privacy Policy</a>.
+            </p>
+          </div>
         </div>
       </div>
 
-      {showLoginModal && <LoginModal />}
+      {pendingProvider && <IOSAuthDialog provider={pendingProvider} />}
     </div>
   );
 };
