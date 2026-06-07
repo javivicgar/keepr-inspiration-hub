@@ -18,28 +18,28 @@ export const UsernameScreen = ({ onNext, onBack }: UsernameScreenProps) => {
 
   return (
     <div className="animate-fade-in h-full flex flex-col">
-      <div className="flex items-center mb-6">
+      <div className="flex items-center flex-shrink-0">
         <Button
           onClick={onBack}
           variant="ghost"
           size="icon"
           aria-label="Go back"
-          className="rounded-md"
+          className="rounded-md -ml-2"
         >
           <ChevronLeft className="h-5 w-5" />
         </Button>
       </div>
 
-      <div className="mb-8 px-1">
-        <h2 className="text-2xl md:text-3xl font-semibold text-foreground mb-2 tracking-tight">
-          Choose your username
-        </h2>
-        <p className="text-muted-foreground text-base">
-          This is how you'll be known in the Keepr community.
-        </p>
-      </div>
+      <div className="flex-1 flex flex-col justify-center">
+        <div className="mb-6 px-1">
+          <h2 className="text-2xl md:text-3xl font-semibold text-foreground mb-2 tracking-tight">
+            Choose your username
+          </h2>
+          <p className="text-muted-foreground text-base">
+            This is how you'll be known in the Keepr community.
+          </p>
+        </div>
 
-      <div className="flex-1 flex flex-col">
         <label htmlFor="username" className="sr-only">Username</label>
         <Input
           id="username"
@@ -65,7 +65,7 @@ export const UsernameScreen = ({ onNext, onBack }: UsernameScreenProps) => {
         )}
       </div>
 
-      <div className="mt-auto pt-6">
+      <div className="flex-shrink-0">
         <Button
           onClick={handleNext}
           disabled={!isValid}
