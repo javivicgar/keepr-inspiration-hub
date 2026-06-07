@@ -1,7 +1,15 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft } from 'lucide-react';
+import {
+  ChevronLeft,
+  ArrowRight,
+  Film,
+  Link2,
+  Camera,
+  Send,
+  Brain,
+  type LucideIcon,
+} from 'lucide-react';
 
 interface SaveMethodScreenProps {
   selectedMethods: string[];
@@ -10,23 +18,28 @@ interface SaveMethodScreenProps {
   onBack: () => void;
 }
 
-const saveMethodOptions = [
-  { id: 'reels', label: 'From Reels or TikToks', emoji: '📱', description: 'Short videos and social content' },
-  { id: 'links', label: 'Copying and pasting links', emoji: '🔗', description: 'URLs and web content' },
-  { id: 'screenshots', label: 'Taking screenshots', emoji: '📸', description: 'Visual content capture' },
-  { id: 'messaging', label: 'Send it to myself', emoji: '📨', description: 'Messaging and sharing' },
-  { id: 'memory', label: 'Just remembering', emoji: '🧠', description: 'Mental notes and ideas' }
+const saveMethodOptions: {
+  id: string;
+  label: string;
+  icon: LucideIcon;
+  description: string;
+}[] = [
+  { id: 'reels',       label: 'From Reels or TikToks',   icon: Film,   description: 'Short videos and social content' },
+  { id: 'links',       label: 'Copying and pasting links', icon: Link2,  description: 'URLs and web content' },
+  { id: 'screenshots', label: 'Taking screenshots',       icon: Camera, description: 'Visual content capture' },
+  { id: 'messaging',   label: 'Send it to myself',         icon: Send,   description: 'Messaging and sharing' },
+  { id: 'memory',      label: 'Just remembering',          icon: Brain,  description: 'Mental notes and ideas' },
 ];
 
-export const SaveMethodScreen = ({ 
-  selectedMethods, 
-  onMethodsChange, 
-  onNext, 
-  onBack 
+export const SaveMethodScreen = ({
+  selectedMethods,
+  onMethodsChange,
+  onNext,
+  onBack,
 }: SaveMethodScreenProps) => {
-  const toggleMethod = (id: string) => {
+  const toggle = (id: string) => {
     if (selectedMethods.includes(id)) {
-      onMethodsChange(selectedMethods.filter(m => m !== id));
+      onMethodsChange(selectedMethods.filter((m) => m !== id));
     } else {
       onMethodsChange([...selectedMethods, id]);
     }
@@ -34,61 +47,60 @@ export const SaveMethodScreen = ({
 
   return (
     <div className="animate-fade-in h-full flex flex-col min-h-0">
-      <div className="flex items-center mb-4 md:mb-6 flex-shrink-0">
-        <Button
-          onClick={onBack}
-          variant="ghost"
-          size="sm"
-          className="text-white hover:bg-white/10 p-2 rounded-full"
-        >
-          <ChevronLeft className="h-4 w-4 md:h-5 md:w-5" />
+      <div className="flex items-center mb-4 flex-shrink-0">
+        <Button onClick={onBack} variant="ghost" size="icon" aria-label="Go back" className="rounded-md">
+          <ChevronLeft className="h-5 w-5" />
         </Button>
       </div>
-      
-      <div className="text-center mb-4 md:mb-6 px-2 flex-shrink-0">
-        <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2 md:mb-3 font-josefin leading-tight">
+
+      <div className="mb-6 px-1 flex-shrink-0">
+        <h2 className="text-2xl md:text-3xl font-semibold text-foreground mb-2 tracking-tight leading-tight">
           How do you usually save content?
         </h2>
-        <p className="text-white/80 text-sm md:text-base lg:text-lg font-josefin">
+        <p className="text-muted-foreground text-base">
           This helps us make Keepr more seamless for you.
         </p>
       </div>
-      
-      <div className="flex-1 overflow-y-auto min-h-0 mb-4 md:mb-6">
-        <div className="space-y-2 md:space-y-3 px-1">
-          {saveMethodOptions.map((option) => (
-            <button
-              key={option.id}
-              onClick={() => toggleMethod(option.id)}
-              className={`w-full p-3 md:p-4 lg:p-6 rounded-xl md:rounded-2xl border-2 transition-all duration-200 text-left ${
-                selectedMethods.includes(option.id)
-                  ? 'bg-white text-[#a8a5d0] border-white shadow-lg transform scale-[0.98]'
-                  : 'bg-white/10 text-white border-white/20 hover:bg-white/20'
-              }`}
-            >
-              <div className="flex items-center">
-                <div className="text-lg md:text-xl lg:text-2xl mr-3 md:mr-4">{option.emoji}</div>
-                <div className="flex-1">
-                  <div className="font-josefin font-medium text-sm md:text-base lg:text-lg mb-1">{option.label}</div>
-                  <div className={`text-xs md:text-sm font-josefin ${
-                    selectedMethods.includes(option.id) ? 'text-[#a8a5d0]/70' : 'text-white/70'
-                  }`}>
-                    {option.description}
+
+      <div className="flex-1 overflow-y-auto min-h-0 mb-4">
+        <div className="space-y-3">
+          {saveMethodOptions.map((option) => {
+            const Icon = option.icon;
+            const selected = selectedMethods.includes(option.id);
+            return (
+              <button
+                key={option.id}
+                onClick={() => toggle(option.id)}
+                aria-pressed={selected}
+                className={`w-full p-4 rounded-md border transition-colors text-left ${
+                  selected
+                    ? 'bg-primary text-primary-foreground border-primary'
+                    : 'bg-card text-foreground border-border hover:bg-muted'
+                }`}
+              >
+                <div className="flex items-center gap-4">
+                  <Icon className="h-5 w-5 flex-shrink-0" aria-hidden="true" />
+                  <div className="flex-1">
+                    <div className="font-medium text-base mb-0.5">{option.label}</div>
+                    <div className={`text-sm ${selected ? 'text-primary-foreground/80' : 'text-muted-foreground'}`}>
+                      {option.description}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </button>
-          ))}
+              </button>
+            );
+          })}
         </div>
       </div>
-      
+
       <div className="flex-shrink-0">
-        <Button 
+        <Button
           onClick={onNext}
           disabled={selectedMethods.length === 0}
-          className="w-full bg-white text-[#a8a5d0] hover:bg-white/90 font-josefin font-medium py-3 md:py-4 lg:py-6 rounded-xl md:rounded-2xl text-sm md:text-lg shadow-lg transition-all duration-200 h-10 md:h-12 lg:h-14 disabled:opacity-50"
+          className="w-full bg-primary text-primary-foreground hover:bg-primary-hover font-medium py-3 rounded-md text-base h-12 disabled:opacity-50"
         >
-          Almost there →
+          Almost there
+          <ArrowRight className="h-4 w-4 ml-1.5" />
         </Button>
       </div>
     </div>

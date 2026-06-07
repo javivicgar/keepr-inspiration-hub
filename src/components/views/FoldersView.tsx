@@ -67,7 +67,7 @@ export const FoldersView = ({ content, onFolderClick }: FoldersViewProps) => {
             <div className="flex items-start justify-between">
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-2">
-                  <Folder className="h-5 w-5 text-[#a8a5d0]" />
+                  <Folder className="h-5 w-5 text-primary" />
                   <h3 className="font-semibold text-foreground">{folder.name}</h3>
                 </div>
                 

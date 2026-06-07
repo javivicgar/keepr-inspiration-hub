@@ -1,30 +1,20 @@
 
 import React from 'react';
-import { ArrowLeft, MapPin, Calendar, Star, ExternalLink, Heart, Share } from 'lucide-react';
+import { ArrowLeft, MapPin, Calendar, Star, ExternalLink, Heart, Share2, Folder } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import type { SavedContent } from '@/types/SavedContent';
+import { getCategoryMeta } from '@/lib/categories';
 
 interface KeeprDetailViewProps {
   keepr: SavedContent;
   onBack: () => void;
 }
 
-const categoryIcons = {
-  'Food Spots': { emoji: '🍕', color: '#D4C1EC' },
-  'Locations': { emoji: '🧳', color: '#A1D6F2' },
-  'Fashion': { emoji: '👕', color: '#F8C4D6' },
-  'Useful Apps': { emoji: '📱', color: '#B8E994' },
-  'Tutorials': { emoji: '📚', color: '#FFE4A3' },
-  'Outdoor': { emoji: '🏞️', color: '#B8E994' },
-  'Music': { emoji: '🎵', color: '#F6A9A9' },
-  'Home': { emoji: '🏡', color: '#DDA0DD' },
-  'Sports': { emoji: '⚽', color: '#F6A9A9' },
-  'Other': { emoji: '📍', color: '#A19DCA' }
-};
-
 export const KeeprDetailView = ({ keepr, onBack }: KeeprDetailViewProps) => {
-  const categoryInfo = categoryIcons[keepr.category] || categoryIcons['Other'];
+  const meta = getCategoryMeta(keepr.category);
+  const CategoryIcon = meta.icon;
+
 
   return (
     <div className="space-y-6 pb-20">
@@ -42,19 +32,16 @@ export const KeeprDetailView = ({ keepr, onBack }: KeeprDetailViewProps) => {
       </div>
 
       {/* Main Content Card */}
-      <Card className="rounded-2xl border-0 overflow-hidden shadow-lg">
-        <div 
-          className="w-full h-48 relative"
-          style={{ backgroundColor: categoryInfo.color }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent" />
-          
+      <Card className="rounded-2xl border border-border overflow-hidden shadow-md">
+        <div className={`w-full h-48 relative ${meta.toneBg}`}>
           <div className="absolute top-4 left-4">
-            <div className="text-3xl">{categoryInfo.emoji}</div>
+            <div className={`w-10 h-10 rounded-lg bg-card/80 backdrop-blur flex items-center justify-center ${meta.tone}`}>
+              <CategoryIcon className="h-5 w-5" />
+            </div>
           </div>
-          
-          <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent">
-            <h1 className="text-white text-xl font-bold font-josefin mb-2">{keepr.title}</h1>
+
+          <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-foreground/70 to-transparent">
+            <h1 className="text-white text-xl font-semibold font-josefin mb-2">{keepr.title}</h1>
             <p className="text-white/90 text-sm font-josefin">@{keepr.creatorName}</p>
           </div>
         </div>
@@ -62,15 +49,17 @@ export const KeeprDetailView = ({ keepr, onBack }: KeeprDetailViewProps) => {
         <CardContent className="p-6 space-y-4">
           {/* Category and Folder */}
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <span className="px-3 py-1 bg-[#a8a5d0]/10 text-[#a8a5d0] rounded-full text-sm font-josefin">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="px-3 py-1 bg-primary/10 text-primary rounded-md text-sm font-josefin">
                 {keepr.category}
               </span>
-              <span className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm font-josefin">
-                📁 {keepr.folder}
+              <span className="px-3 py-1 bg-muted text-muted-foreground rounded-md text-sm font-josefin inline-flex items-center gap-1.5">
+                <Folder className="h-3.5 w-3.5" />
+                {keepr.folder}
               </span>
             </div>
           </div>
+
 
           {/* Location */}
           {keepr.location && (
@@ -103,10 +92,10 @@ export const KeeprDetailView = ({ keepr, onBack }: KeeprDetailViewProps) => {
               Like
             </Button>
             <Button variant="outline" className="flex-1 rounded-xl font-josefin">
-              <Share className="h-4 w-4 mr-2" />
+              <Share2 className="h-4 w-4 mr-2" />
               Share
             </Button>
-            <Button className="flex-1 bg-[#a8a5d0] hover:bg-[#9895c7] rounded-xl font-josefin">
+            <Button className="flex-1 bg-primary hover:bg-primary-hover rounded-xl font-josefin">
               <ExternalLink className="h-4 w-4 mr-2" />
               Open
             </Button>

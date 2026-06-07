@@ -228,7 +228,7 @@ const Index = () => {
 
           {/* All Keeprs */}
           <div>
-            <h2 className="text-xl font-bold mb-4 font-josefin">All Your Keeprs</h2>
+            <h2 className="text-lg font-semibold mb-4">All Your Keeprs</h2>
             <ImprovedContentGrid 
               content={filteredContent} 
               onCreateKeepr={() => setShowSaveModal(true)} 

@@ -193,7 +193,7 @@ export const ImprovedSaveModal = ({ isOpen, onClose, onSave, importType }: Impro
                 value={formData.googleMapsRating}
                 onChange={(e) => setFormData(prev => ({ ...prev, googleMapsRating: e.target.value }))}
                 placeholder="4.5"
-                className="h-12 text-base rounded-2xl border-2 focus:border-[#a8a5d0] font-josefin"
+                className="h-12 text-base rounded-2xl border-2 focus:border-primary font-josefin"
               />
             </div>
             <div className="space-y-2">
@@ -203,7 +203,7 @@ export const ImprovedSaveModal = ({ isOpen, onClose, onSave, importType }: Impro
                 value={formData.recommendedBy}
                 onChange={(e) => setFormData(prev => ({ ...prev, recommendedBy: e.target.value }))}
                 placeholder="Creator name"
-                className="h-12 text-base rounded-2xl border-2 focus:border-[#a8a5d0] font-josefin"
+                className="h-12 text-base rounded-2xl border-2 focus:border-primary font-josefin"
               />
             </div>
           </>
@@ -219,7 +219,7 @@ export const ImprovedSaveModal = ({ isOpen, onClose, onSave, importType }: Impro
                 value={formData.country}
                 onChange={(e) => setFormData(prev => ({ ...prev, country: e.target.value }))}
                 placeholder="Switzerland"
-                className="h-12 text-base rounded-2xl border-2 focus:border-[#a8a5d0] font-josefin"
+                className="h-12 text-base rounded-2xl border-2 focus:border-primary font-josefin"
               />
             </div>
             <div className="space-y-2">
@@ -229,7 +229,7 @@ export const ImprovedSaveModal = ({ isOpen, onClose, onSave, importType }: Impro
                 value={formData.city}
                 onChange={(e) => setFormData(prev => ({ ...prev, city: e.target.value }))}
                 placeholder="Zurich"
-                className="h-12 text-base rounded-2xl border-2 focus:border-[#a8a5d0] font-josefin"
+                className="h-12 text-base rounded-2xl border-2 focus:border-primary font-josefin"
               />
             </div>
             <div className="space-y-2">
@@ -239,13 +239,13 @@ export const ImprovedSaveModal = ({ isOpen, onClose, onSave, importType }: Impro
                 value={formData.visitedWith}
                 onChange={(e) => setFormData(prev => ({ ...prev, visitedWith: e.target.value }))}
                 placeholder="Friends, family..."
-                className="h-12 text-base rounded-2xl border-2 focus:border-[#a8a5d0] font-josefin"
+                className="h-12 text-base rounded-2xl border-2 focus:border-primary font-josefin"
               />
             </div>
             <div className="space-y-2">
               <Label htmlFor="bestSeason" className="text-base font-medium font-josefin">Best Season</Label>
               <Select value={formData.bestSeason} onValueChange={(value) => setFormData(prev => ({ ...prev, bestSeason: value }))}>
-                <SelectTrigger className="h-12 text-base rounded-2xl border-2 focus:border-[#a8a5d0] font-josefin">
+                <SelectTrigger className="h-12 text-base rounded-2xl border-2 focus:border-primary font-josefin">
                   <SelectValue placeholder="Select season" />
                 </SelectTrigger>
                 <SelectContent>
@@ -270,13 +270,13 @@ export const ImprovedSaveModal = ({ isOpen, onClose, onSave, importType }: Impro
                 value={formData.brand}
                 onChange={(e) => setFormData(prev => ({ ...prev, brand: e.target.value }))}
                 placeholder="Zara, H&M, Nike..."
-                className="h-12 text-base rounded-2xl border-2 focus:border-[#a8a5d0] font-josefin"
+                className="h-12 text-base rounded-2xl border-2 focus:border-primary font-josefin"
               />
             </div>
             <div className="space-y-2">
               <Label htmlFor="priceRange" className="text-base font-medium font-josefin">Price Range</Label>
               <Select value={formData.priceRange} onValueChange={(value) => setFormData(prev => ({ ...prev, priceRange: value }))}>
-                <SelectTrigger className="h-12 text-base rounded-2xl border-2 focus:border-[#a8a5d0] font-josefin">
+                <SelectTrigger className="h-12 text-base rounded-2xl border-2 focus:border-primary font-josefin">
                   <SelectValue placeholder="Select price range" />
                 </SelectTrigger>
                 <SelectContent>
@@ -294,7 +294,7 @@ export const ImprovedSaveModal = ({ isOpen, onClose, onSave, importType }: Impro
                 value={formData.buyLink}
                 onChange={(e) => setFormData(prev => ({ ...prev, buyLink: e.target.value }))}
                 placeholder="https://..."
-                className="h-12 text-base rounded-2xl border-2 focus:border-[#a8a5d0] font-josefin"
+                className="h-12 text-base rounded-2xl border-2 focus:border-primary font-josefin"
               />
             </div>
             <div className="space-y-2">
@@ -304,7 +304,7 @@ export const ImprovedSaveModal = ({ isOpen, onClose, onSave, importType }: Impro
                 value={formData.styleTags}
                 onChange={(e) => setFormData(prev => ({ ...prev, styleTags: e.target.value }))}
                 placeholder="casual, summer, elegant..."
-                className="h-12 text-base rounded-2xl border-2 focus:border-[#a8a5d0] font-josefin"
+                className="h-12 text-base rounded-2xl border-2 focus:border-primary font-josefin"
               />
             </div>
           </>
@@ -316,7 +316,7 @@ export const ImprovedSaveModal = ({ isOpen, onClose, onSave, importType }: Impro
             <div className="space-y-2">
               <Label htmlFor="platform" className="text-base font-medium font-josefin">Platform</Label>
               <Select value={formData.platform} onValueChange={(value) => setFormData(prev => ({ ...prev, platform: value }))}>
-                <SelectTrigger className="h-12 text-base rounded-2xl border-2 focus:border-[#a8a5d0] font-josefin">
+                <SelectTrigger className="h-12 text-base rounded-2xl border-2 focus:border-primary font-josefin">
                   <SelectValue placeholder="Select platform" />
                 </SelectTrigger>
                 <SelectContent>
@@ -330,7 +330,7 @@ export const ImprovedSaveModal = ({ isOpen, onClose, onSave, importType }: Impro
             <div className="space-y-2">
               <Label htmlFor="appCategory" className="text-base font-medium font-josefin">Category</Label>
               <Select value={formData.appCategory} onValueChange={(value) => setFormData(prev => ({ ...prev, appCategory: value }))}>
-                <SelectTrigger className="h-12 text-base rounded-2xl border-2 focus:border-[#a8a5d0] font-josefin">
+                <SelectTrigger className="h-12 text-base rounded-2xl border-2 focus:border-primary font-josefin">
                   <SelectValue placeholder="Select category" />
                 </SelectTrigger>
                 <SelectContent>
@@ -346,7 +346,7 @@ export const ImprovedSaveModal = ({ isOpen, onClose, onSave, importType }: Impro
             <div className="space-y-2">
               <Label htmlFor="price" className="text-base font-medium font-josefin">Price</Label>
               <Select value={formData.price} onValueChange={(value) => setFormData(prev => ({ ...prev, price: value }))}>
-                <SelectTrigger className="h-12 text-base rounded-2xl border-2 focus:border-[#a8a5d0] font-josefin">
+                <SelectTrigger className="h-12 text-base rounded-2xl border-2 focus:border-primary font-josefin">
                   <SelectValue placeholder="Select price" />
                 </SelectTrigger>
                 <SelectContent>
@@ -366,7 +366,7 @@ export const ImprovedSaveModal = ({ isOpen, onClose, onSave, importType }: Impro
             <div className="space-y-2">
               <Label htmlFor="skillLevel" className="text-base font-medium font-josefin">Skill Level</Label>
               <Select value={formData.skillLevel} onValueChange={(value) => setFormData(prev => ({ ...prev, skillLevel: value }))}>
-                <SelectTrigger className="h-12 text-base rounded-2xl border-2 focus:border-[#a8a5d0] font-josefin">
+                <SelectTrigger className="h-12 text-base rounded-2xl border-2 focus:border-primary font-josefin">
                   <SelectValue placeholder="Select skill level" />
                 </SelectTrigger>
                 <SelectContent>
@@ -389,7 +389,7 @@ export const ImprovedSaveModal = ({ isOpen, onClose, onSave, importType }: Impro
                 value={formData.sportType}
                 onChange={(e) => setFormData(prev => ({ ...prev, sportType: e.target.value }))}
                 placeholder="Tennis, Football, Yoga..."
-                className="h-12 text-base rounded-2xl border-2 focus:border-[#a8a5d0] font-josefin"
+                className="h-12 text-base rounded-2xl border-2 focus:border-primary font-josefin"
               />
             </div>
             <div className="space-y-2">
@@ -399,7 +399,7 @@ export const ImprovedSaveModal = ({ isOpen, onClose, onSave, importType }: Impro
                 value={formData.duration}
                 onChange={(e) => setFormData(prev => ({ ...prev, duration: e.target.value }))}
                 placeholder="1 hour, 2 hours..."
-                className="h-12 text-base rounded-2xl border-2 focus:border-[#a8a5d0] font-josefin"
+                className="h-12 text-base rounded-2xl border-2 focus:border-primary font-josefin"
               />
             </div>
             <div className="space-y-2">
@@ -409,7 +409,7 @@ export const ImprovedSaveModal = ({ isOpen, onClose, onSave, importType }: Impro
                 value={formData.entryFee}
                 onChange={(e) => setFormData(prev => ({ ...prev, entryFee: e.target.value }))}
                 placeholder="Free, $20, $50..."
-                className="h-12 text-base rounded-2xl border-2 focus:border-[#a8a5d0] font-josefin"
+                className="h-12 text-base rounded-2xl border-2 focus:border-primary font-josefin"
               />
             </div>
           </>
@@ -457,12 +457,12 @@ export const ImprovedSaveModal = ({ isOpen, onClose, onSave, importType }: Impro
               onChange={(e) => setPasteText(e.target.value)}
               placeholder="Paste TikTok description, Instagram caption, or any content link..."
               rows={6}
-              className="text-base rounded-2xl border-2 focus:border-[#a8a5d0] font-josefin"
+              className="text-base rounded-2xl border-2 focus:border-primary font-josefin"
             />
             <Button 
               onClick={() => analyzeContent(pasteText)}
               disabled={!pasteText || isAnalyzing}
-              className="w-full h-12 bg-[#a8a5d0] hover:bg-[#9895c7] rounded-2xl font-josefin font-medium"
+              className="w-full h-12 bg-primary hover:bg-primary-hover rounded-2xl font-josefin font-medium"
             >
               {isAnalyzing ? 'Analyzing...' : 'Analyze Content'}
             </Button>
@@ -498,7 +498,7 @@ export const ImprovedSaveModal = ({ isOpen, onClose, onSave, importType }: Impro
                   type="button"
                   className={`p-4 rounded-2xl border-2 transition-all text-left font-josefin ${
                     formData.category === category.value
-                      ? 'border-[#a8a5d0] bg-[#a8a5d0]/10'
+                      ? 'border-primary bg-primary/10'
                       : 'border-border hover:border-muted-foreground'
                   }`}
                   onClick={() => setFormData(prev => ({ ...prev, category: category.value }))}
@@ -515,7 +515,7 @@ export const ImprovedSaveModal = ({ isOpen, onClose, onSave, importType }: Impro
                   type="button"
                   className={`p-3 rounded-2xl border-2 transition-all text-left font-josefin ${
                     formData.category === category.value
-                      ? 'border-[#a8a5d0] bg-[#a8a5d0]/10'
+                      ? 'border-primary bg-primary/10'
                       : 'border-border hover:border-muted-foreground'
                   }`}
                   onClick={() => setFormData(prev => ({ ...prev, category: category.value }))}
@@ -535,7 +535,7 @@ export const ImprovedSaveModal = ({ isOpen, onClose, onSave, importType }: Impro
               value={formData.title}
               onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
               placeholder="Amazing rooftop café in Rome"
-              className="h-12 text-base rounded-2xl border-2 focus:border-[#a8a5d0] font-josefin"
+              className="h-12 text-base rounded-2xl border-2 focus:border-primary font-josefin"
               required
             />
           </div>
@@ -547,7 +547,7 @@ export const ImprovedSaveModal = ({ isOpen, onClose, onSave, importType }: Impro
               <Link className="absolute left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 id="link"
-                className="pl-12 h-12 text-base rounded-2xl border-2 focus:border-[#a8a5d0] font-josefin"
+                className="pl-12 h-12 text-base rounded-2xl border-2 focus:border-primary font-josefin"
                 value={formData.link}
                 onChange={(e) => setFormData(prev => ({ ...prev, link: e.target.value }))}
                 placeholder="https://tiktok.com/@user/video/..."
@@ -563,7 +563,7 @@ export const ImprovedSaveModal = ({ isOpen, onClose, onSave, importType }: Impro
               <User className="absolute left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 id="creator"
-                className="pl-12 h-12 text-base rounded-2xl border-2 focus:border-[#a8a5d0] font-josefin"
+                className="pl-12 h-12 text-base rounded-2xl border-2 focus:border-primary font-josefin"
                 value={formData.creatorName}
                 onChange={(e) => setFormData(prev => ({ ...prev, creatorName: e.target.value }))}
                 placeholder="@username"
@@ -580,7 +580,7 @@ export const ImprovedSaveModal = ({ isOpen, onClose, onSave, importType }: Impro
                   <MapPin className="absolute left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   <Input
                     id="location"
-                    className="pl-12 h-12 text-base rounded-2xl border-2 focus:border-[#a8a5d0] font-josefin"
+                    className="pl-12 h-12 text-base rounded-2xl border-2 focus:border-primary font-josefin"
                     value={formData.location}
                     onChange={(e) => setFormData(prev => ({ ...prev, location: e.target.value }))}
                     placeholder="Rome, Italy"
@@ -595,7 +595,7 @@ export const ImprovedSaveModal = ({ isOpen, onClose, onSave, importType }: Impro
                   value={formData.mapLink}
                   onChange={(e) => setFormData(prev => ({ ...prev, mapLink: e.target.value }))}
                   placeholder="https://maps.google.com/..."
-                  className="h-12 text-base rounded-2xl border-2 focus:border-[#a8a5d0] font-josefin"
+                  className="h-12 text-base rounded-2xl border-2 focus:border-primary font-josefin"
                 />
               </div>
             </>
@@ -611,7 +611,7 @@ export const ImprovedSaveModal = ({ isOpen, onClose, onSave, importType }: Impro
               <Folder className="absolute left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 id="folder"
-                className="pl-12 h-12 text-base rounded-2xl border-2 focus:border-[#a8a5d0] font-josefin"
+                className="pl-12 h-12 text-base rounded-2xl border-2 focus:border-primary font-josefin"
                 value={formData.folder}
                 onChange={(e) => setFormData(prev => ({ ...prev, folder: e.target.value }))}
                 placeholder="Rome Trip, Summer Fits, etc."
@@ -627,7 +627,7 @@ export const ImprovedSaveModal = ({ isOpen, onClose, onSave, importType }: Impro
               <Tag className="absolute left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 id="tags"
-                className="pl-12 h-12 text-base rounded-2xl border-2 focus:border-[#a8a5d0] font-josefin"
+                className="pl-12 h-12 text-base rounded-2xl border-2 focus:border-primary font-josefin"
                 value={formData.tags}
                 onChange={(e) => setFormData(prev => ({ ...prev, tags: e.target.value }))}
                 placeholder="coffee, rooftop, romantic"
@@ -644,7 +644,7 @@ export const ImprovedSaveModal = ({ isOpen, onClose, onSave, importType }: Impro
               onChange={(e) => setFormData(prev => ({ ...prev, note: e.target.value }))}
               placeholder="Why you saved this..."
               rows={4}
-              className="text-base rounded-2xl border-2 focus:border-[#a8a5d0] font-josefin"
+              className="text-base rounded-2xl border-2 focus:border-primary font-josefin"
             />
           </div>
 
@@ -659,7 +659,7 @@ export const ImprovedSaveModal = ({ isOpen, onClose, onSave, importType }: Impro
             </Button>
             <Button 
               type="submit" 
-              className="flex-1 h-12 bg-[#a8a5d0] hover:bg-[#9895c7] rounded-2xl font-josefin font-medium"
+              className="flex-1 h-12 bg-primary hover:bg-primary-hover rounded-2xl font-josefin font-medium"
             >
               Save Keepr
             </Button>

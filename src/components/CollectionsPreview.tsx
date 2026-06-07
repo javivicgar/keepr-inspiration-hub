@@ -16,7 +16,7 @@ export const CollectionsPreview = ({ content, onFolderClick, onCreateFolder }: C
   if (folders.length === 0) {
     return (
       <div className="mb-6">
-        <h2 className="text-xl font-bold mb-4 font-josefin">🗂 Your Collections</h2>
+        <h2 className="text-xl font-bold mb-4 font-josefin">Your Collections</h2>
         <Card className="p-6 bg-gradient-to-br from-primary/5 to-primary/10 border-2 border-dashed border-primary/20">
           <div className="text-center">
             <FolderPlus className="h-12 w-12 mx-auto mb-3 text-primary/60" />
@@ -38,7 +38,7 @@ export const CollectionsPreview = ({ content, onFolderClick, onCreateFolder }: C
   return (
     <div className="mb-6">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-bold font-josefin">🗂 Your Collections</h2>
+        <h2 className="text-xl font-bold font-josefin">Your Collections</h2>
         {folders.length > 3 && (
           <span className="text-sm text-muted-foreground">+{folders.length - 3} more</span>
         )}

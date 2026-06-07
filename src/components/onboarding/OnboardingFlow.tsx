@@ -51,7 +51,7 @@ export const OnboardingFlow = ({ onComplete, onStartPersonalizing }: OnboardingF
   ];
 
   return (
-    <div className="fixed inset-0 bg-gradient-to-b from-[#a8a5d0] to-[#9895c7] flex items-center justify-center p-4 md:p-6 overflow-hidden">
+    <div className="fixed inset-0 bg-background flex items-center justify-center p-4 md:p-6 overflow-hidden">
       <div className="w-full max-w-md">
         {screens[currentScreen]}
       </div>

@@ -35,7 +35,7 @@ export const ProfileModal = ({ isOpen, onClose, username, onUsernameUpdate }: Pr
             <div className="relative">
               <Avatar className="w-20 h-20">
                 <AvatarImage src="" />
-                <AvatarFallback className="bg-gradient-to-br from-[#a8a5d0] to-[#9895c7] text-white text-2xl font-josefin">
+                <AvatarFallback className="bg-primary text-white text-2xl font-josefin">
                   {username.charAt(0).toUpperCase()}
                 </AvatarFallback>
               </Avatar>
@@ -85,7 +85,7 @@ export const ProfileModal = ({ isOpen, onClose, username, onUsernameUpdate }: Pr
             </Button>
             <Button
               onClick={handleSave}
-              className="flex-1 bg-gradient-to-r from-[#a8a5d0] to-[#9895c7] text-white font-josefin"
+              className="flex-1 bg-primary text-white font-josefin"
             >
               Save Changes
             </Button>

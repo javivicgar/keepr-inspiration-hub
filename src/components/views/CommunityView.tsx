@@ -105,8 +105,8 @@ export const CommunityView = () => {
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-[#a8a5d0]/20 rounded-full flex items-center justify-center">
-                      <span className="font-bold text-[#a8a5d0] font-josefin">
+                    <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center">
+                      <span className="font-bold text-primary font-josefin">
                         {friend.username[1].toUpperCase()}
                       </span>
                     </div>
@@ -117,7 +117,7 @@ export const CommunityView = () => {
                       </p>
                     </div>
                   </div>
-                  <Button size="sm" className="bg-[#a8a5d0] hover:bg-[#9895c7] font-josefin rounded-xl">
+                  <Button size="sm" className="bg-primary hover:bg-primary-hover font-josefin rounded-xl">
                     <UserPlus className="h-3 w-3 mr-1" />
                     Follow
                   </Button>
@@ -139,7 +139,7 @@ export const CommunityView = () => {
                   <div className="text-2xl">{item.emoji}</div>
                   <div className="flex-1">
                     <h4 className="font-semibold font-josefin line-clamp-1">{item.title}</h4>
-                    <p className="text-sm text-[#a8a5d0] font-josefin">
+                    <p className="text-sm text-primary font-josefin">
                       Shared by {item.sharedBy} • {item.timeAgo}
                     </p>
                   </div>
@@ -164,7 +164,7 @@ export const CommunityView = () => {
                   <div className="text-2xl">{keepr.emoji}</div>
                   <div className="flex-1">
                     <h4 className="font-semibold font-josefin line-clamp-1">{keepr.title}</h4>
-                    <button className="text-sm text-[#a8a5d0] font-josefin hover:underline">
+                    <button className="text-sm text-primary font-josefin hover:underline">
                       {keepr.creator}
                     </button>
                     <div className="flex items-center text-xs text-muted-foreground font-josefin mb-2">
@@ -173,7 +173,7 @@ export const CommunityView = () => {
                     </div>
                     
                     {keepr.visitedWith.length > 0 && (
-                      <div className="flex items-center text-xs text-[#a8a5d0] font-josefin mb-3">
+                      <div className="flex items-center text-xs text-primary font-josefin mb-3">
                         <UserPlus className="h-3 w-3 mr-1" />
                         Visited with {keepr.visitedWith.join(', ')}
                       </div>
@@ -203,10 +203,10 @@ export const CommunityView = () => {
       </div>
 
       {/* Top Keepr Sharers */}
-      <Card className="bg-gradient-to-r from-[#a8a5d0]/10 to-[#9895c7]/10 border-[#a8a5d0]/20 rounded-2xl">
+      <Card className="bg-card border-border rounded-2xl">
         <CardContent className="p-6">
           <h3 className="font-semibold mb-4 font-josefin flex items-center">
-            <TrendingUp className="h-5 w-5 mr-2 text-[#a8a5d0]" />
+            <TrendingUp className="h-5 w-5 mr-2 text-primary" />
             Top Keepr Sharers This Week
           </h3>
           <div className="space-y-3">
@@ -221,7 +221,7 @@ export const CommunityView = () => {
                     <p className="text-xs text-gray-600 font-josefin">{user.shares} shares</p>
                   </div>
                 </div>
-                <span className="text-lg font-bold text-[#a8a5d0] font-josefin">#{index + 1}</span>
+                <span className="text-lg font-bold text-primary font-josefin">#{index + 1}</span>
               </div>
             ))}
           </div>
@@ -231,8 +231,8 @@ export const CommunityView = () => {
       {/* Daily Stats Banner */}
       <Card className="bg-gradient-to-r from-green-50 to-blue-50 border-0 rounded-2xl">
         <CardContent className="p-4 text-center">
-          <p className="font-semibold text-[#a8a5d0] font-josefin">
-            🎉 Today: 183 new food spots saved across the community!
+          <p className="font-semibold text-primary font-josefin">
+            Today: 183 new food spots saved across the community!
           </p>
         </CardContent>
       </Card>

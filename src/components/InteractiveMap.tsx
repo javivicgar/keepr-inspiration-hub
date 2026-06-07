@@ -3,20 +3,13 @@ import { ArrowLeft, MapPin, ExternalLink, Navigation } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import type { SavedContent } from '@/types/SavedContent';
+import { getCategoryMeta } from '@/lib/categories';
 
 interface InteractiveMapProps {
   content: SavedContent[];
   onBack: () => void;
 }
 
-const categoryColors: Record<string, string> = {
-  'Food Spots': '#D4C1EC',
-  'Locations': '#A1D6F2', 
-  'Outdoor': '#B8E994',
-  'Sports': '#F6A9A9',
-  'Travel Spots': '#FFE4A3',
-  'Other': '#A19DCA'
-};
 
 export const InteractiveMap = ({ content, onBack }: InteractiveMapProps) => {
   const [selectedKeepr, setSelectedKeepr] = useState<SavedContent | null>(null);
@@ -69,7 +62,7 @@ export const InteractiveMap = ({ content, onBack }: InteractiveMapProps) => {
           
           {/* Map Pins */}
           {locationsContent.map((item, index) => {
-            const color = categoryColors[item.category] || categoryColors['Other'];
+            const color = getCategoryMeta(item.category).pinColor;
             const x = 100 + (index * 120) % 700;
             const y = 80 + (Math.floor(index / 6) * 100) % 400;
             
@@ -95,7 +88,7 @@ export const InteractiveMap = ({ content, onBack }: InteractiveMapProps) => {
 
           {/* Interactive Map Instructions */}
           <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm p-4 rounded-2xl shadow-lg max-w-sm">
-            <Navigation className="h-8 w-8 mx-auto mb-2 text-[#a8a5d0]" />
+            <Navigation className="h-8 w-8 mx-auto mb-2 text-primary" />
             <h3 className="font-semibold mb-1 font-josefin text-center">Full Screen Map</h3>
             <p className="text-xs text-gray-600 font-josefin text-center">
               Zoom, pan, and click on pins to explore your Keeprs
@@ -107,14 +100,14 @@ export const InteractiveMap = ({ content, onBack }: InteractiveMapProps) => {
         <div className="absolute bottom-20 right-4 flex flex-col gap-2">
           <Button
             onClick={handleZoomIn}
-            className="w-12 h-12 rounded-full bg-white shadow-lg hover:shadow-xl text-[#a8a5d0] border border-[#a8a5d0]/20"
+            className="w-12 h-12 rounded-full bg-white shadow-lg hover:shadow-xl text-primary border border-border"
             variant="outline"
           >
             +
           </Button>
           <Button
             onClick={handleZoomOut}
-            className="w-12 h-12 rounded-full bg-white shadow-lg hover:shadow-xl text-[#a8a5d0] border border-[#a8a5d0]/20"
+            className="w-12 h-12 rounded-full bg-white shadow-lg hover:shadow-xl text-primary border border-border"
             variant="outline"
           >
             -
@@ -138,13 +131,13 @@ export const InteractiveMap = ({ content, onBack }: InteractiveMapProps) => {
                   </Button>
                 </div>
                 <div className="flex items-center gap-2 mb-2">
-                  <MapPin className="h-4 w-4 text-[#a8a5d0]" />
+                  <MapPin className="h-4 w-4 text-primary" />
                   <p className="text-sm font-josefin text-gray-700">{selectedKeepr.location}</p>
                 </div>
                 <p className="text-sm text-gray-500 font-josefin mb-4">by @{selectedKeepr.creatorName}</p>
                 <div className="flex gap-3">
                   <Button 
-                    className="bg-[#a8a5d0] hover:bg-[#9895c7] text-white flex-1"
+                    className="bg-primary hover:bg-primary-hover text-white flex-1"
                     onClick={() => handleGetDirections(selectedKeepr.location!)}
                   >
                     <MapPin className="h-4 w-4 mr-2" />

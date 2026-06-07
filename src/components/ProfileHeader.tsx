@@ -21,7 +21,7 @@ export const ProfileHeader = ({ username, onProfileClick, title }: ProfileHeader
             className="rounded-full p-2 hover:bg-muted"
           >
             <Avatar className="w-8 h-8">
-              <AvatarFallback className="bg-gradient-to-br from-[#a8a5d0] to-[#9895c7] text-white text-sm font-josefin">
+              <AvatarFallback className="bg-primary text-white text-sm font-josefin">
                 {username.charAt(0).toUpperCase()}
               </AvatarFallback>
             </Avatar>

@@ -1,66 +1,45 @@
 import React, { useEffect, useState } from 'react';
-import { Bookmark, Sparkles } from 'lucide-react';
+import { Bookmark } from 'lucide-react';
 
 export const PersonalizingScreen = () => {
   const [dots, setDots] = useState('');
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setDots(prev => prev.length >= 3 ? '' : prev + '.');
+    const dotsInt = setInterval(() => {
+      setDots((p) => (p.length >= 3 ? '' : p + '.'));
     }, 500);
-
-    const progressInterval = setInterval(() => {
-      setProgress(prev => {
-        if (prev >= 100) return 100;
-        return prev + 2;
-      });
+    const progInt = setInterval(() => {
+      setProgress((p) => Math.min(100, p + 2));
     }, 100);
-
     return () => {
-      clearInterval(interval);
-      clearInterval(progressInterval);
+      clearInterval(dotsInt);
+      clearInterval(progInt);
     };
   }, []);
 
   return (
-    <div className="fixed inset-0 bg-gradient-to-b from-[#a8a5d0] to-[#9895c7] flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-background flex items-center justify-center z-50">
       <div className="text-center animate-fade-in">
-        {/* Animated Keepr Logo */}
-        <div className="mb-8 relative">
-          <div className="bg-white rounded-3xl p-6 inline-block shadow-xl animate-pulse">
-            <div className="bg-[#a8a5d0] rounded-full p-3 flex items-center justify-center">
-              <Bookmark className="h-8 w-8 text-white fill-white" />
-            </div>
-          </div>
-          <div className="absolute -top-2 -right-2">
-            <Sparkles className="h-6 w-6 text-white animate-spin" />
+        <div className="bg-primary-soft rounded-2xl p-5 inline-flex mb-8 shadow-sm">
+          <div className="bg-primary rounded-full p-3 flex items-center justify-center">
+            <Bookmark className="h-7 w-7 text-primary-foreground fill-current" aria-hidden="true" />
           </div>
         </div>
 
-        {/* Meta balls loading animation */}
-        <div className="mb-8 flex justify-center items-center space-x-3">
-          <div className="w-3 h-3 bg-white rounded-full animate-bounce" style={{ animationDelay: '0ms', animationDuration: '1s' }}></div>
-          <div className="w-3 h-3 bg-white rounded-full animate-bounce" style={{ animationDelay: '0.1s', animationDuration: '1s' }}></div>
-          <div className="w-3 h-3 bg-white rounded-full animate-bounce" style={{ animationDelay: '0.2s', animationDuration: '1s' }}></div>
-          <div className="w-3 h-3 bg-white rounded-full animate-bounce" style={{ animationDelay: '0.3s', animationDuration: '1s' }}></div>
-          <div className="w-3 h-3 bg-white rounded-full animate-bounce" style={{ animationDelay: '0.4s', animationDuration: '1s' }}></div>
-        </div>
-        
-        <p className="text-white text-xl font-josefin mb-6">
+        <p className="text-foreground text-lg mb-6">
           Setting up your profile{dots}
         </p>
 
-        {/* Progress bar */}
-        <div className="w-64 bg-white/20 rounded-full h-2 mx-auto mb-4">
-          <div 
-            className="bg-white h-2 rounded-full transition-all duration-300 ease-out"
+        <div className="w-64 bg-muted rounded-md h-1.5 mx-auto mb-4 overflow-hidden">
+          <div
+            className="bg-primary h-full rounded-md transition-all duration-300 ease-out"
             style={{ width: `${progress}%` }}
-          ></div>
+          />
         </div>
 
-        <p className="text-white/80 text-sm font-josefin">
-          Personalizing your Keepr experience...
+        <p className="text-muted-foreground text-sm">
+          Personalizing your Keepr experience…
         </p>
       </div>
     </div>

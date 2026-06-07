@@ -1,8 +1,8 @@
 import React from 'react';
+import { Search, Bookmark } from 'lucide-react';
 import { SavedContent } from '@/types/SavedContent';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Heart, Bookmark } from 'lucide-react';
 
 interface SuggestedKeeprCarouselProps {
   userPreferences: string[];
@@ -94,7 +94,7 @@ export const SuggestedKeeprCarousel = ({ userPreferences, onSaveKeepr }: Suggest
 
   return (
     <div className="mb-6">
-      <h2 className="text-xl font-bold mb-4 font-josefin">🧠 Suggested Keeprs</h2>
+      <h2 className="text-lg font-semibold mb-4">Suggested Keeprs</h2>
       <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
         {suggestedKeeprs.map((keepr, index) => (
           <div
@@ -131,7 +131,7 @@ export const SuggestedKeeprCarousel = ({ userPreferences, onSaveKeepr }: Suggest
                     {keepr.category}
                   </span>
                   <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                    <Heart className="h-3 w-3" />
+                    <Bookmark className="h-3 w-3" />
                     <span>{Math.floor(Math.random() * 500) + 100}</span>
                   </div>
                 </div>

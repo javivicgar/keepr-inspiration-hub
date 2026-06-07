@@ -41,14 +41,14 @@ export const SortModal = ({ isOpen, onClose, onSortChange, currentSort }: SortMo
               key={option.value}
               className={`w-full flex items-center justify-between p-4 rounded-xl border-2 transition-all font-josefin ${
                 selectedSort === option.value
-                  ? 'border-[#a8a5d0] bg-[#a8a5d0]/10'
+                  ? 'border-primary bg-primary/10'
                   : 'border-border hover:border-muted-foreground'
               }`}
               onClick={() => setSelectedSort(option.value)}
             >
               <span className="font-medium text-left">{option.label}</span>
               {selectedSort === option.value && (
-                <Check className="h-5 w-5 text-[#a8a5d0]" />
+                <Check className="h-5 w-5 text-primary" />
               )}
             </button>
           ))}
@@ -57,7 +57,7 @@ export const SortModal = ({ isOpen, onClose, onSortChange, currentSort }: SortMo
         <div className="p-6 pt-0">
           <Button 
             onClick={handleApply}
-            className="w-full h-12 bg-[#a8a5d0] hover:bg-[#9895c7] font-josefin font-medium rounded-xl"
+            className="w-full h-12 bg-primary hover:bg-primary-hover font-josefin font-medium rounded-xl"
           >
             Apply
           </Button>
