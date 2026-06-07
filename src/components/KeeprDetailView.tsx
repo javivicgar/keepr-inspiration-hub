@@ -92,7 +92,7 @@ export const KeeprDetailView = ({ keepr, onBack }: KeeprDetailViewProps) => {
               Like
             </Button>
             <Button variant="outline" className="flex-1 rounded-xl font-josefin">
-              <Share className="h-4 w-4 mr-2" />
+              <Share2 className="h-4 w-4 mr-2" />
               Share
             </Button>
             <Button className="flex-1 bg-primary hover:bg-primary-hover rounded-xl font-josefin">
