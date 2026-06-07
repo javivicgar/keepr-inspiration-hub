@@ -148,7 +148,10 @@
 
   /* Bleed-beyond-phone glow: rendered behind the phone frame at viewport level.
      Auth screen toggles `data-auth-glow` on <html> to activate. */
-  html[data-auth-glow="true"]::before {
+  /* Bleed-beyond-phone glow: rendered behind the phone frame at viewport level.
+     Auth screen toggles `data-auth-glow` on <html> to activate. */
+  html[data-auth-glow="true"] body { background: hsl(var(--page)); }
+  html[data-auth-glow="true"] body::before {
     content: "";
     position: fixed;
     inset: -10vh -10vw;
@@ -163,6 +166,7 @@
       radial-gradient(45% 32% at 70% 94%, hsl(244 70% 84% / 0.45), transparent 70%);
     filter: blur(60px);
   }
+  html[data-auth-glow="true"] .phone-frame { position: relative; z-index: 1; }
 
   /* Legacy alias: many components still use `font-josefin`. Remap to Inter.
      Josefin Sans is reserved exclusively for the Keepr wordmark. */
