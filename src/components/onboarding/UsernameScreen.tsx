@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { ChevronLeft } from 'lucide-react';
+import { ChevronLeft, ArrowRight, Check } from 'lucide-react';
 
 interface UsernameScreenProps {
   onNext: (username: string) => void;
@@ -10,19 +10,10 @@ interface UsernameScreenProps {
 
 export const UsernameScreen = ({ onNext, onBack }: UsernameScreenProps) => {
   const [username, setUsername] = useState('');
-  const [isValid, setIsValid] = useState(false);
-
-  const handleUsernameChange = (value: string) => {
-    setUsername(value);
-    // Simple validation: 3-20 characters, alphanumeric + underscore
-    const isValidUsername = /^[a-zA-Z0-9_]{3,20}$/.test(value);
-    setIsValid(isValidUsername);
-  };
+  const isValid = /^[a-zA-Z0-9_]{3,20}$/.test(username);
 
   const handleNext = () => {
-    if (isValid && username) {
-      onNext(username);
-    }
+    if (isValid) onNext(username);
   };
 
   return (
@@ -31,53 +22,57 @@ export const UsernameScreen = ({ onNext, onBack }: UsernameScreenProps) => {
         <Button
           onClick={onBack}
           variant="ghost"
-          size="sm"
-          className="text-white hover:bg-white/10 p-2 rounded-full"
+          size="icon"
+          aria-label="Go back"
+          className="rounded-md"
         >
           <ChevronLeft className="h-5 w-5" />
         </Button>
       </div>
-      
-      <div className="text-center mb-8 px-4">
-        <h2 className="text-2xl md:text-3xl font-bold text-white mb-3 font-josefin leading-tight">
+
+      <div className="mb-8 px-1">
+        <h2 className="text-2xl md:text-3xl font-semibold text-foreground mb-2 tracking-tight">
           Choose your username
         </h2>
-        <p className="text-white/80 text-lg font-josefin">
+        <p className="text-muted-foreground text-base">
           This is how you'll be known in the Keepr community.
         </p>
       </div>
-      
-      <div className="flex-1 flex flex-col justify-center px-4">
-        <div className="space-y-6">
-          <Input
-            type="text"
-            placeholder="Enter username"
-            value={username}
-            onChange={(e) => handleUsernameChange(e.target.value)}
-            className="w-full bg-white/10 border-white/20 text-white placeholder:text-white/60 font-josefin text-lg py-6 rounded-2xl focus:border-white focus:bg-white/20"
-          />
-          
-          {username && (
-            <div className="text-center mt-4">
-              {isValid ? (
-                <p className="text-green-300 text-sm font-josefin">✓ Username is available</p>
-              ) : (
-                <p className="text-red-300 text-sm font-josefin">
-                  Username must be 3-20 characters (letters, numbers, underscore only)
-                </p>
-              )}
-            </div>
-          )}
-        </div>
+
+      <div className="flex-1 flex flex-col">
+        <label htmlFor="username" className="sr-only">Username</label>
+        <Input
+          id="username"
+          type="text"
+          placeholder="Enter username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          className="w-full text-base py-6 rounded-md border border-border"
+        />
+
+        {username && (
+          <div className="mt-3 text-sm">
+            {isValid ? (
+              <p className="text-emerald-600 inline-flex items-center gap-1.5">
+                <Check className="h-4 w-4" /> Username is available
+              </p>
+            ) : (
+              <p className="text-destructive">
+                Username must be 3-20 characters (letters, numbers, underscore).
+              </p>
+            )}
+          </div>
+        )}
       </div>
-      
-      <div className="mt-auto px-4 pt-6">
-        <Button 
+
+      <div className="mt-auto pt-6">
+        <Button
           onClick={handleNext}
-          disabled={!isValid || !username}
-          className="w-full bg-white text-primary hover:bg-white/90 font-josefin font-medium py-4 md:py-6 rounded-2xl text-lg shadow-lg transition-all duration-200 h-12 md:h-14 disabled:opacity-50"
+          disabled={!isValid}
+          className="w-full bg-primary text-primary-foreground hover:bg-primary-hover font-medium py-3 rounded-md text-base h-12 disabled:opacity-50"
         >
-          Next →
+          Next
+          <ArrowRight className="h-4 w-4 ml-1.5" />
         </Button>
       </div>
     </div>

@@ -1,7 +1,7 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft } from 'lucide-react';
+import { ChevronLeft, ArrowRight } from 'lucide-react';
+import { categoryMeta, type CategoryName } from '@/lib/categories';
 
 interface ContentPreferencesScreenProps {
   selectedPreferences: string[];
@@ -10,28 +10,28 @@ interface ContentPreferencesScreenProps {
   onBack: () => void;
 }
 
-const contentOptions = [
-  { id: 'food', label: 'Food Spots', emoji: '🍕' },
-  { id: 'travel', label: 'Travel Spots', emoji: '✈️' },
-  { id: 'locations', label: 'Locations', emoji: '🧳' },
-  { id: 'fashion', label: 'Fashion', emoji: '👕' },
-  { id: 'outdoor', label: 'Outdoor', emoji: '🏞️' },
-  { id: 'sports', label: 'Sports', emoji: '⚽' },
-  { id: 'apps', label: 'Useful Apps', emoji: '📱' },
-  { id: 'music', label: 'Music', emoji: '🎵' },
-  { id: 'tutorials', label: 'Tutorials', emoji: '📚' },
-  { id: 'home', label: 'Home', emoji: '🏡' }
+const contentOptions: { id: string; label: CategoryName }[] = [
+  { id: 'food',      label: 'Food Spots' },
+  { id: 'travel',    label: 'Travel Spots' },
+  { id: 'locations', label: 'Locations' },
+  { id: 'fashion',   label: 'Fashion' },
+  { id: 'outdoor',   label: 'Outdoor' },
+  { id: 'sports',    label: 'Sports' },
+  { id: 'apps',      label: 'Useful Apps' },
+  { id: 'music',     label: 'Music' },
+  { id: 'tutorials', label: 'Tutorials' },
+  { id: 'home',      label: 'Home' },
 ];
 
-export const ContentPreferencesScreen = ({ 
-  selectedPreferences, 
-  onPreferencesChange, 
-  onNext, 
-  onBack 
+export const ContentPreferencesScreen = ({
+  selectedPreferences,
+  onPreferencesChange,
+  onNext,
+  onBack,
 }: ContentPreferencesScreenProps) => {
-  const togglePreference = (id: string) => {
+  const toggle = (id: string) => {
     if (selectedPreferences.includes(id)) {
-      onPreferencesChange(selectedPreferences.filter(p => p !== id));
+      onPreferencesChange(selectedPreferences.filter((p) => p !== id));
     } else {
       onPreferencesChange([...selectedPreferences, id]);
     }
@@ -39,52 +39,53 @@ export const ContentPreferencesScreen = ({
 
   return (
     <div className="animate-fade-in h-full flex flex-col min-h-0">
-      <div className="flex items-center mb-4 md:mb-6 flex-shrink-0">
-        <Button
-          onClick={onBack}
-          variant="ghost"
-          size="sm"
-          className="text-white hover:bg-white/10 p-2 rounded-full"
-        >
-          <ChevronLeft className="h-4 w-4 md:h-5 md:w-5" />
+      <div className="flex items-center mb-4 flex-shrink-0">
+        <Button onClick={onBack} variant="ghost" size="icon" aria-label="Go back" className="rounded-md">
+          <ChevronLeft className="h-5 w-5" />
         </Button>
       </div>
-      
-      <div className="text-center mb-4 md:mb-6 px-2 flex-shrink-0">
-        <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2 md:mb-3 font-josefin leading-tight">
+
+      <div className="mb-6 px-1 flex-shrink-0">
+        <h2 className="text-2xl md:text-3xl font-semibold text-foreground mb-2 tracking-tight leading-tight">
           What kind of content do you save the most?
         </h2>
-        <p className="text-white/80 text-sm md:text-base lg:text-lg font-josefin">
+        <p className="text-muted-foreground text-base">
           We'll tailor Keepr to your needs.
         </p>
       </div>
-      
-      <div className="flex-1 overflow-y-auto min-h-0 mb-4 md:mb-6">
-        <div className="grid grid-cols-2 gap-2 md:gap-3 px-1">
-          {contentOptions.map((option) => (
-            <button
-              key={option.id}
-              onClick={() => togglePreference(option.id)}
-              className={`p-2 md:p-3 lg:p-4 rounded-xl md:rounded-2xl border-2 transition-all duration-200 ${
-                selectedPreferences.includes(option.id)
-                  ? 'bg-white text-primary border-white shadow-lg transform scale-[0.98]'
-                  : 'bg-white/10 text-white border-white/20 hover:bg-white/20'
-              }`}
-            >
-              <div className="text-base md:text-lg lg:text-xl mb-1">{option.emoji}</div>
-              <div className="text-xs md:text-sm font-josefin font-medium leading-tight">{option.label}</div>
-            </button>
-          ))}
+
+      <div className="flex-1 overflow-y-auto min-h-0 mb-4">
+        <div className="grid grid-cols-2 gap-3">
+          {contentOptions.map((option) => {
+            const Icon = categoryMeta[option.label].icon;
+            const selected = selectedPreferences.includes(option.id);
+            return (
+              <button
+                key={option.id}
+                onClick={() => toggle(option.id)}
+                aria-pressed={selected}
+                className={`p-4 rounded-md border transition-colors text-left ${
+                  selected
+                    ? 'bg-primary text-primary-foreground border-primary'
+                    : 'bg-card text-foreground border-border hover:bg-muted'
+                }`}
+              >
+                <Icon className="h-5 w-5 mb-2" aria-hidden="true" />
+                <div className="text-sm font-medium leading-tight">{option.label}</div>
+              </button>
+            );
+          })}
         </div>
       </div>
-      
+
       <div className="flex-shrink-0">
-        <Button 
+        <Button
           onClick={onNext}
           disabled={selectedPreferences.length === 0}
-          className="w-full bg-white text-primary hover:bg-white/90 font-josefin font-medium py-3 md:py-4 lg:py-6 rounded-xl md:rounded-2xl text-sm md:text-lg shadow-lg transition-all duration-200 h-10 md:h-12 lg:h-14 disabled:opacity-50"
+          className="w-full bg-primary text-primary-foreground hover:bg-primary-hover font-medium py-3 rounded-md text-base h-12 disabled:opacity-50"
         >
-          Continue →
+          Continue
+          <ArrowRight className="h-4 w-4 ml-1.5" />
         </Button>
       </div>
     </div>
