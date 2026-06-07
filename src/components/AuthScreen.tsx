@@ -66,21 +66,23 @@ export const AuthScreen = ({ onAuthenticate }: AuthScreenProps) => {
   );
 
   return (
-    <div className="fixed inset-0 bg-background flex items-center justify-center p-6">
-      <div className="w-full max-w-sm text-center">
-        <div className="bg-primary-soft rounded-2xl p-6 mb-6 inline-flex shadow-sm">
+    <div className="absolute inset-0 bg-background brand-glow flex items-center justify-center p-6 overflow-hidden">
+      <div className="w-full max-w-sm text-center relative">
+        <div className="bg-primary-soft rounded-2xl p-6 mb-8 inline-flex shadow-sm">
           <div className="bg-primary rounded-full p-4 flex items-center justify-center">
             <Bookmark className="h-8 w-8 text-primary-foreground fill-current" aria-hidden="true" />
           </div>
         </div>
 
-        <h1 className="text-3xl font-semibold text-foreground mb-2 tracking-tight">Keepr</h1>
-        <p className="text-muted-foreground text-base mb-10">Save your inspirations.</p>
+        <h1 className="text-5xl font-display font-medium text-foreground mb-4 tracking-tight">Keepr</h1>
+        <p className="text-foreground/80 text-lg leading-snug mb-12 px-2">
+          Keep what matters.<br />Forget the rest.
+        </p>
 
         <div className="space-y-3">
           <Button
             onClick={() => handleSignUpClick('apple')}
-            className="w-full bg-foreground text-background hover:bg-foreground/90 font-medium py-3 rounded-md text-base h-12 flex items-center justify-center gap-3"
+            className="w-full bg-foreground text-background hover:bg-foreground/90 font-medium py-3 rounded-xl text-base h-12 flex items-center justify-center gap-3"
           >
             <img
               src="/lovable-uploads/88fccea4-8273-4f19-a655-d7000b52ba19.png"
@@ -93,8 +95,7 @@ export const AuthScreen = ({ onAuthenticate }: AuthScreenProps) => {
 
           <Button
             onClick={() => handleSignUpClick('google')}
-            variant="outline"
-            className="w-full bg-card text-foreground hover:bg-muted font-medium py-3 rounded-md text-base h-12 border border-border flex items-center justify-center gap-3"
+            className="w-full bg-primary-soft text-foreground hover:bg-primary-soft/70 font-medium py-3 rounded-xl text-base h-12 border border-border/60 flex items-center justify-center gap-3"
           >
             <img
               src="/lovable-uploads/0e1e7537-0953-4c7c-927a-1d2fa977968a.png"

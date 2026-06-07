@@ -20,12 +20,13 @@ export default {
         // Single app typeface. `josefin` retained as legacy alias.
         sans: ["Geist", "system-ui", "-apple-system", "sans-serif"],
         josefin: ["Geist", "system-ui", "-apple-system", "sans-serif"],
-        display: ["Geist", "system-ui", "sans-serif"],
+        display: ['"Fraunces"', "ui-serif", "Georgia", "serif"],
       },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
+        page: "hsl(var(--page))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {

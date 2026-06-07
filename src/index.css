@@ -13,7 +13,8 @@
 @layer base {
   :root {
     /* Neutral surfaces */
-    --background: 0 0% 99%;          /* page bg */
+    --page: 240 6% 92%;              /* outside the phone frame */
+    --background: 0 0% 100%;         /* app surface (inside phone) */
     --foreground: 240 10% 12%;       /* primary text */
 
     --card: 0 0% 100%;
@@ -109,9 +110,9 @@
     text-rendering: optimizeLegibility;
   }
 
-  /* Type scale */
-  h1 { @apply text-3xl md:text-4xl font-semibold tracking-tight; }
-  h2 { @apply text-2xl font-semibold tracking-tight; }
+  /* Type scale — h1/h2 use distinctive serif display face */
+  h1 { @apply font-display text-3xl md:text-4xl font-medium tracking-tight; letter-spacing: -0.02em; }
+  h2 { @apply font-display text-2xl font-medium tracking-tight; letter-spacing: -0.015em; }
   h3 { @apply text-lg font-semibold; }
 
   /* Visible non-color focus ring on every interactive element */
@@ -122,6 +123,25 @@
 
 @layer utilities {
   .safe-area-pb { padding-bottom: env(safe-area-inset-bottom); }
+
+  /* Signature brand atmosphere — soft watercolor lilac glow.
+     Used ONLY on auth + onboarding-welcome screens. */
+  .brand-glow {
+    position: relative;
+    isolation: isolate;
+  }
+  .brand-glow::before {
+    content: "";
+    position: absolute;
+    inset: -20% -10% 30% -10%;
+    z-index: -1;
+    background:
+      radial-gradient(60% 50% at 30% 25%, hsl(258 70% 82% / 0.55), transparent 70%),
+      radial-gradient(55% 45% at 75% 15%, hsl(280 60% 85% / 0.45), transparent 70%),
+      radial-gradient(70% 55% at 50% 5%, hsl(244 65% 88% / 0.50), transparent 75%);
+    filter: blur(40px);
+    pointer-events: none;
+  }
 
   /* Legacy alias: many components still use `font-josefin`.
      Remap to Geist so we don't have to touch every className. */
