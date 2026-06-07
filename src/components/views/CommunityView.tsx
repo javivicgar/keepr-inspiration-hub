@@ -232,7 +232,7 @@ export const CommunityView = () => {
       <Card className="bg-gradient-to-r from-green-50 to-blue-50 border-0 rounded-2xl">
         <CardContent className="p-4 text-center">
           <p className="font-semibold text-primary font-josefin">
-            🎉 Today: 183 new food spots saved across the community!
+            Today: 183 new food spots saved across the community!
           </p>
         </CardContent>
       </Card>

@@ -123,7 +123,7 @@ export const MoreView = ({ totalContent, totalFolders, userPreferences = [], onP
       {/* App Info */}
       <div className="text-center pt-8">
         <p className="text-sm text-muted-foreground mb-2 font-josefin">Keepr v1.0.0</p>
-        <p className="text-xs text-muted-foreground font-josefin">Made with ❤️ for saving inspiration</p>
+        <p className="text-xs text-muted-foreground font-josefin">For saving inspiration</p>
       </div>
 
       <EditPreferencesModal

@@ -15,7 +15,7 @@ export const RecentlyViewed = ({ recentlyViewed, onKeeprClick }: RecentlyViewedP
 
   return (
     <div className="mb-6">
-      <h2 className="text-xl font-bold mb-4 font-josefin">📅 Recently Viewed</h2>
+      <h2 className="text-lg font-semibold mb-4">Recently Viewed</h2>
       <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
         {recentlyViewed.map(keepr => (
           <div
