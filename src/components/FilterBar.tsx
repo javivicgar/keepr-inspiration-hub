@@ -66,7 +66,7 @@ export const FilterBar = ({
                   : 'hover:border-primary'
               } ${
                 userPreferences.length > 0 && selectedCategories.includes(category) 
-                  ? 'ring-2 ring-[#a8a5d0]/30 shadow-md' 
+                  ? 'ring-2 ring-primary/30 shadow-md' 
                   : ''
               }`}
             >
