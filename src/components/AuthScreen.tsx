@@ -82,7 +82,7 @@ export const AuthScreen = ({ onAuthenticate }: AuthScreenProps) => {
   );
 
   return (
-    <div className="absolute inset-0 bg-background brand-glow overflow-hidden flex justify-center">
+    <div className="h-full w-full bg-background brand-glow overflow-hidden flex justify-center relative">
       <div className="w-full max-w-sm px-6 flex flex-col justify-between items-center pt-[16%] pb-8">
         {/* Wordmark */}
         <div className="flex flex-col items-center">
