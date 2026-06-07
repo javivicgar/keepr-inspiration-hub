@@ -4,6 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { InteractiveMap } from '@/components/InteractiveMap';
 import type { SavedContent } from '@/types/SavedContent';
+import { getCategoryMeta } from '@/lib/categories';
 
 interface MapViewProps {
   content: SavedContent[];
@@ -11,14 +12,6 @@ interface MapViewProps {
 
 const categories = ['all', 'Food Spots', 'Locations', 'Outdoor', 'Sports', 'Travel Spots'];
 
-const categoryColors: Record<string, string> = {
-  'Food Spots': '#D4C1EC',
-  'Locations': '#A1D6F2', 
-  'Outdoor': '#B8E994',
-  'Sports': '#F6A9A9',
-  'Travel Spots': '#FFE4A3',
-  'Other': '#A19DCA'
-};
 
 export const MapView = ({ content }: MapViewProps) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
