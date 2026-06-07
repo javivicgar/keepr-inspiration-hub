@@ -1,9 +1,10 @@
 
 import React from 'react';
-import { ArrowLeft, MapPin, Calendar, ExternalLink } from 'lucide-react';
+import { ArrowLeft, MapPin, ExternalLink } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import type { SavedContent } from '@/types/SavedContent';
+import { getCategoryMeta } from '@/lib/categories';
 
 interface FolderContentViewProps {
   folderName: string;
@@ -12,18 +13,6 @@ interface FolderContentViewProps {
   onKeeprClick: (keepr: SavedContent) => void;
 }
 
-const categoryIcons = {
-  'Food Spots': { emoji: '🍕', color: '#D4C1EC' },
-  'Locations': { emoji: '🧳', color: '#A1D6F2' },
-  'Fashion': { emoji: '👕', color: '#F8C4D6' },
-  'Useful Apps': { emoji: '📱', color: '#B8E994' },
-  'Tutorials': { emoji: '📚', color: '#FFE4A3' },
-  'Outdoor': { emoji: '🏞️', color: '#B8E994' },
-  'Music': { emoji: '🎵', color: '#F6A9A9' },
-  'Home': { emoji: '🏡', color: '#DDA0DD' },
-  'Sports': { emoji: '⚽', color: '#F6A9A9' },
-  'Other': { emoji: '📍', color: '#A19DCA' }
-};
 
 export const FolderContentView = ({ folderName, content, onBack, onKeeprClick }: FolderContentViewProps) => {
   return (
