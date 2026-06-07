@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Bookmark } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -16,6 +16,13 @@ const providerCopy: Record<Provider, { domain: string }> = {
 export const AuthScreen = ({ onAuthenticate }: AuthScreenProps) => {
   const [pendingProvider, setPendingProvider] = useState<Provider | null>(null);
   const [isAuthenticating, setIsAuthenticating] = useState(false);
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-auth-glow', 'true');
+    return () => {
+      document.documentElement.removeAttribute('data-auth-glow');
+    };
+  }, []);
 
   const handleContinue = () => {
     setIsAuthenticating(true);
@@ -75,10 +82,10 @@ export const AuthScreen = ({ onAuthenticate }: AuthScreenProps) => {
   );
 
   return (
-    <div className="absolute inset-0 bg-background brand-glow overflow-hidden">
-      <div className="h-full w-full max-w-sm mx-auto px-6 flex flex-col">
-        {/* Upper third: wordmark */}
-        <div className="flex-[1] flex flex-col items-center justify-end pb-6">
+    <div className="absolute inset-0 bg-background brand-glow auth-glow-bleed overflow-hidden">
+      <div className="relative h-full w-full max-w-sm mx-auto px-6">
+        {/* Wordmark in upper portion */}
+        <div className="absolute left-0 right-0 top-[18%] flex flex-col items-center px-6">
           <div className="bg-primary-soft rounded-2xl p-5 mb-6 inline-flex shadow-sm">
             <div className="bg-primary rounded-full p-3.5 flex items-center justify-center">
               <Bookmark className="h-7 w-7 text-primary-foreground fill-current" aria-hidden="true" />
@@ -88,11 +95,8 @@ export const AuthScreen = ({ onAuthenticate }: AuthScreenProps) => {
           <p className="text-muted-foreground text-base">Save your inspirations.</p>
         </div>
 
-        {/* Middle: breathing space */}
-        <div className="flex-[1]" />
-
-        {/* Lower third: CTAs */}
-        <div className="flex-[1] flex flex-col justify-end pb-8">
+        {/* CTAs anchored to bottom */}
+        <div className="absolute left-0 right-0 bottom-8 px-6">
           <div className="space-y-3">
             <Button
               onClick={() => setPendingProvider('apple')}
