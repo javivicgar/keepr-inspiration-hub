@@ -88,7 +88,7 @@ export const MapView = ({ content }: MapViewProps) => {
             
             {/* Map Pins */}
             {filteredContent.map((item, index) => {
-              const color = categoryColors[item.category] || categoryColors['Other'];
+              const color = getCategoryMeta(item.category).pinColor;
               const x = 20 + (index * 150) % 800;
               const y = 50 + (Math.floor(index / 5) * 100) % 300;
               
