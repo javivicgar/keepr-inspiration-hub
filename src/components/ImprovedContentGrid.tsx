@@ -45,31 +45,38 @@ export const ImprovedContentGrid = ({ content, onCreateKeepr }: ImprovedContentG
       </Card>
 
       {content.map((item) => {
-        const categoryInfo = categoryIcons[item.category] || categoryIcons['Other'];
-        
+        const meta = getCategoryMeta(item.category);
+        const Icon = meta.icon;
+
         return (
-          <Card key={item.id} className="hover:shadow-lg transition-all duration-200 rounded-2xl border-0 overflow-hidden group">
-            <CardContent className="p-0 h-28 md:h-32">
-              <div 
-                className="w-full h-full relative"
-                style={{ backgroundColor: categoryInfo.color }}
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent" />
-                
+          <Card key={item.id} className="hover:shadow-md transition-shadow cursor-pointer rounded-2xl border border-border overflow-hidden group bg-card">
+            <CardContent className={`p-0 h-28 md:h-32 ${meta.toneBg}`}>
+              <div className="w-full h-full relative">
                 <div className="absolute top-2 left-2 md:top-3 md:left-3">
-                  <div className="text-lg md:text-xl">{categoryInfo.emoji}</div>
+                  <div className={`w-7 h-7 md:w-8 md:h-8 rounded-md bg-card/80 backdrop-blur flex items-center justify-center ${meta.tone}`}>
+                    <Icon className="h-4 w-4" />
+                  </div>
                 </div>
-                
+
                 {item.location && (
                   <div className="absolute top-2 right-2 md:top-3 md:right-3">
-                    <MapPin className="h-3 w-3 md:h-4 md:w-4 text-white/80" />
+                    <MapPin className="h-3 w-3 md:h-4 md:w-4 text-foreground/70" />
                   </div>
                 )}
-                
-                <div className="absolute bottom-0 left-0 right-0 p-2 md:p-3 bg-gradient-to-t from-black/40 to-transparent">
+
+                <div className="absolute bottom-0 left-0 right-0 p-2 md:p-3 bg-gradient-to-t from-foreground/70 to-transparent">
                   <h3 className="text-white text-xs md:text-sm font-semibold font-josefin line-clamp-1 mb-1">
                     {item.title}
                   </h3>
+                  <div className="flex items-center justify-between">
+                    <p className="text-white/80 text-xs font-josefin">
+                      @{item.creatorName}
+                    </p>
+                    <ExternalLink className="h-3 w-3 text-white/60 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </div>
+                </div>
+              </div>
+
                   <div className="flex items-center justify-between">
                     <p className="text-white/80 text-xs font-josefin">
                       @{item.creatorName}
