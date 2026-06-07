@@ -3,20 +3,13 @@ import { ArrowLeft, MapPin, ExternalLink, Navigation } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import type { SavedContent } from '@/types/SavedContent';
+import { getCategoryMeta } from '@/lib/categories';
 
 interface InteractiveMapProps {
   content: SavedContent[];
   onBack: () => void;
 }
 
-const categoryColors: Record<string, string> = {
-  'Food Spots': '#D4C1EC',
-  'Locations': '#A1D6F2', 
-  'Outdoor': '#B8E994',
-  'Sports': '#F6A9A9',
-  'Travel Spots': '#FFE4A3',
-  'Other': '#A19DCA'
-};
 
 export const InteractiveMap = ({ content, onBack }: InteractiveMapProps) => {
   const [selectedKeepr, setSelectedKeepr] = useState<SavedContent | null>(null);
