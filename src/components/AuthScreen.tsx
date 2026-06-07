@@ -74,8 +74,9 @@ export const AuthScreen = ({ onAuthenticate }: AuthScreenProps) => {
           </div>
         </div>
 
-        <h1 className="text-5xl font-display font-medium text-foreground mb-4 tracking-tight">Keepr</h1>
-        <p className="text-foreground/80 text-lg leading-snug mb-12 px-2">
+        <h1 className="font-keepr-wordmark text-5xl text-foreground mb-2 tracking-tight">Keepr</h1>
+        <p className="text-muted-foreground text-base mb-8">Save your inspirations.</p>
+        <p className="text-foreground/80 text-lg leading-snug mb-10 px-2">
           Keep what matters.<br />Forget the rest.
         </p>
 
