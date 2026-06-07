@@ -27,7 +27,7 @@ const saveMethodOptions: {
   { id: 'reels',       label: 'From Reels or TikToks',   icon: Film,   description: 'Short videos and social content' },
   { id: 'links',       label: 'Copying and pasting links', icon: Link2,  description: 'URLs and web content' },
   { id: 'screenshots', label: 'Taking screenshots',       icon: Camera, description: 'Visual content capture' },
-  { id: 'messaging',   label: 'Send it to myself',         icon: Send,   description: 'Messaging and sharing' },
+  { id: 'messaging',   label: 'Send it to myself or friends', icon: Send, description: 'Direct messages and shares' },
   { id: 'memory',      label: 'Just remembering',          icon: Brain,  description: 'Mental notes and ideas' },
 ];
 
