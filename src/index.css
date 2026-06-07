@@ -133,17 +133,35 @@
   .brand-glow::before {
     content: "";
     position: absolute;
-    inset: -25% -10%;
+    inset: -30% -15%;
     z-index: -1;
     background:
-      radial-gradient(60% 35% at 30% 8%, hsl(258 70% 82% / 0.55), transparent 70%),
-      radial-gradient(55% 32% at 75% 4%, hsl(280 60% 85% / 0.45), transparent 70%),
-      radial-gradient(70% 35% at 50% 0%, hsl(244 65% 88% / 0.50), transparent 75%),
-      radial-gradient(65% 35% at 30% 100%, hsl(258 70% 82% / 0.50), transparent 70%),
-      radial-gradient(55% 32% at 75% 100%, hsl(280 60% 85% / 0.42), transparent 70%),
-      radial-gradient(70% 35% at 50% 100%, hsl(244 65% 88% / 0.45), transparent 75%);
-    filter: blur(40px);
+      radial-gradient(60% 38% at 30% 6%, hsl(258 75% 80% / 0.75), transparent 70%),
+      radial-gradient(55% 34% at 75% 2%, hsl(280 65% 84% / 0.65), transparent 70%),
+      radial-gradient(72% 38% at 50% -4%, hsl(244 70% 86% / 0.70), transparent 75%),
+      radial-gradient(65% 38% at 30% 102%, hsl(258 75% 80% / 0.70), transparent 70%),
+      radial-gradient(55% 34% at 75% 100%, hsl(280 65% 84% / 0.62), transparent 70%),
+      radial-gradient(72% 38% at 50% 104%, hsl(244 70% 86% / 0.65), transparent 75%);
+    filter: blur(36px);
     pointer-events: none;
+  }
+
+  /* Bleed-beyond-phone glow: rendered behind the phone frame at viewport level.
+     Auth screen toggles `data-auth-glow` on <html> to activate. */
+  html[data-auth-glow="true"]::before {
+    content: "";
+    position: fixed;
+    inset: -10vh -10vw;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(40% 30% at 50% 10%, hsl(258 75% 78% / 0.55), transparent 70%),
+      radial-gradient(35% 26% at 30% 6%, hsl(280 65% 82% / 0.45), transparent 70%),
+      radial-gradient(45% 32% at 70% 8%, hsl(244 70% 84% / 0.50), transparent 70%),
+      radial-gradient(40% 30% at 50% 92%, hsl(258 75% 78% / 0.50), transparent 70%),
+      radial-gradient(35% 26% at 30% 96%, hsl(280 65% 82% / 0.42), transparent 70%),
+      radial-gradient(45% 32% at 70% 94%, hsl(244 70% 84% / 0.45), transparent 70%);
+    filter: blur(60px);
   }
 
   /* Legacy alias: many components still use `font-josefin`. Remap to Inter.
