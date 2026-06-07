@@ -155,10 +155,6 @@ const Index = () => {
     setSelectedKeepr(null);
   };
 
-  if (!hasSeenIntro) {
-    return <IntroScreen onContinue={() => setHasSeenIntro(true)} />;
-  }
-
   if (!isAuthenticated) {
     return <AuthScreen onAuthenticate={handleAuthentication} />;
   }
