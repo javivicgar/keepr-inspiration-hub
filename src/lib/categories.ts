@@ -39,17 +39,17 @@ export interface CategoryMeta {
 // Category accent palette. Colors live here as data for non-theme surfaces
 // (map pins, swatches). Components never reference hex directly.
 export const categoryMeta: Record<CategoryName, CategoryMeta> = {
-  'Food Spots':  { icon: UtensilsCrossed, tone: 'text-violet-500',  toneBg: 'bg-violet-100',  pinColor: '#D4C1EC' },
-  'Locations':   { icon: MapPin,          tone: 'text-sky-500',     toneBg: 'bg-sky-100',     pinColor: '#A1D6F2' },
-  'Travel Spots':{ icon: Plane,           tone: 'text-amber-500',   toneBg: 'bg-amber-100',   pinColor: '#FFE4A3' },
-  'Fashion':     { icon: Shirt,           tone: 'text-pink-500',    toneBg: 'bg-pink-100',    pinColor: '#F8C4D6' },
-  'Useful Apps': { icon: Smartphone,      tone: 'text-emerald-500', toneBg: 'bg-emerald-100', pinColor: '#B8E994' },
-  'Tutorials':   { icon: BookOpen,        tone: 'text-amber-500',   toneBg: 'bg-amber-100',   pinColor: '#FFE4A3' },
-  'Outdoor':     { icon: Mountain,        tone: 'text-emerald-500', toneBg: 'bg-emerald-100', pinColor: '#B8E994' },
-  'Music':       { icon: Music,           tone: 'text-rose-500',    toneBg: 'bg-rose-100',    pinColor: '#F6A9A9' },
-  'Home':        { icon: Home,            tone: 'text-fuchsia-500', toneBg: 'bg-fuchsia-100', pinColor: '#DDA0DD' },
-  'Sports':      { icon: Trophy,          tone: 'text-rose-500',    toneBg: 'bg-rose-100',    pinColor: '#F6A9A9' },
-  'Other':       { icon: Tag,             tone: 'text-primary',     toneBg: 'bg-primary/10',  pinColor: '#A19DCA' },
+  'Food Spots':  { icon: UtensilsCrossed, tone: 'text-orange-700',  toneBg: 'bg-orange-50',  pinColor: '#F4D6BC' },
+  'Locations':   { icon: MapPin,          tone: 'text-amber-700',   toneBg: 'bg-amber-50',   pinColor: '#EBD9B4' },
+  'Travel Spots':{ icon: Plane,           tone: 'text-sky-700',     toneBg: 'bg-sky-50',     pinColor: '#C9DEEB' },
+  'Fashion':     { icon: Shirt,           tone: 'text-rose-700',    toneBg: 'bg-rose-50',    pinColor: '#EBC9D3' },
+  'Useful Apps': { icon: Smartphone,      tone: 'text-slate-700',   toneBg: 'bg-slate-100',  pinColor: '#CFD6DF' },
+  'Tutorials':   { icon: BookOpen,        tone: 'text-amber-700',   toneBg: 'bg-amber-50',   pinColor: '#F0DDB6' },
+  'Outdoor':     { icon: Mountain,        tone: 'text-emerald-700', toneBg: 'bg-emerald-50', pinColor: '#C4DDC9' },
+  'Music':       { icon: Music,           tone: 'text-violet-700',  toneBg: 'bg-violet-50',  pinColor: '#D7CFEB' },
+  'Home':        { icon: Home,            tone: 'text-yellow-800',  toneBg: 'bg-yellow-50',  pinColor: '#EFE4C2' },
+  'Sports':      { icon: Trophy,          tone: 'text-red-700',     toneBg: 'bg-red-50',     pinColor: '#EBC4C0' },
+  'Other':       { icon: Tag,             tone: 'text-primary',     toneBg: 'bg-primary/10', pinColor: '#A19DCA' },
 };
 
 export const getCategoryMeta = (name: string): CategoryMeta =>
