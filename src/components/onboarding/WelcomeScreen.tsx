@@ -15,8 +15,8 @@ export const WelcomeScreen = ({ onNext }: WelcomeScreenProps) => {
   }, []);
 
   return (
-    <div className="animate-fade-in relative h-full">
-      <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 pointer-events-none">
+    <div className="animate-fade-in h-full flex flex-col items-center justify-center text-center px-4">
+      <div className="w-full max-w-xs">
         <div
           className={`transition-all duration-700 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
@@ -29,12 +29,10 @@ export const WelcomeScreen = ({ onNext }: WelcomeScreenProps) => {
             Let's set things up for you.
           </p>
         </div>
-      </div>
 
-      <div className="absolute left-0 right-0 bottom-0">
         <Button
           onClick={onNext}
-          className="w-full bg-primary text-primary-foreground hover:bg-primary-hover font-medium py-3 rounded-md text-base h-12"
+          className="mt-10 w-full bg-primary text-primary-foreground hover:bg-primary-hover font-medium py-3 rounded-md text-base h-12"
         >
           Get started
           <ArrowRight className="h-4 w-4 ml-1.5" />
