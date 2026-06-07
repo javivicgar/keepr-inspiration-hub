@@ -83,9 +83,9 @@ export const AuthScreen = ({ onAuthenticate }: AuthScreenProps) => {
 
   return (
     <div className="absolute inset-0 bg-background brand-glow overflow-hidden">
-      <div className="relative h-full w-full max-w-sm mx-auto">
-        {/* Upper third: wordmark */}
-        <div className="absolute left-0 right-0 top-[22%] -translate-y-1/2 flex flex-col items-center px-6">
+      <div className="h-full w-full max-w-sm mx-auto px-6 flex flex-col justify-between items-center pt-[16%] pb-8">
+        {/* Wordmark */}
+        <div className="flex flex-col items-center">
           <div className="bg-primary-soft rounded-2xl p-5 mb-6 inline-flex shadow-sm">
             <div className="bg-primary rounded-full p-3.5 flex items-center justify-center">
               <Bookmark className="h-7 w-7 text-primary-foreground fill-current" aria-hidden="true" />
@@ -95,8 +95,8 @@ export const AuthScreen = ({ onAuthenticate }: AuthScreenProps) => {
           <p className="text-muted-foreground text-base">Save your inspirations.</p>
         </div>
 
-        {/* Lower third: CTAs + legal */}
-        <div className="absolute left-0 right-0 bottom-8 px-6 space-y-3">
+        {/* CTAs + legal */}
+        <div className="w-full space-y-3">
           <Button
             onClick={() => setPendingProvider('apple')}
             className="w-full bg-foreground text-background hover:bg-foreground/90 font-medium py-3 rounded-xl text-base h-12 flex items-center justify-center gap-3"
