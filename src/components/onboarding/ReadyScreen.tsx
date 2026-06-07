@@ -18,8 +18,8 @@ export const ReadyScreen = ({ onComplete, onBack, onStartPersonalizing }: ReadyS
 
   return (
     <div className="animate-fade-in h-full flex flex-col">
-      <div className="flex items-center mb-6">
-        <Button onClick={onBack} variant="ghost" size="icon" aria-label="Go back" className="rounded-md">
+      <div className="flex items-center flex-shrink-0">
+        <Button onClick={onBack} variant="ghost" size="icon" aria-label="Go back" className="rounded-md -ml-2">
           <ChevronLeft className="h-5 w-5" />
         </Button>
       </div>
@@ -30,22 +30,16 @@ export const ReadyScreen = ({ onComplete, onBack, onStartPersonalizing }: ReadyS
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
           }`}
         >
-          <h1 className="text-3xl md:text-4xl font-semibold text-foreground mb-3 tracking-tight leading-tight">
+          <h2 className="text-2xl md:text-3xl font-semibold text-foreground mb-2 tracking-tight leading-tight">
             Keepr is ready for you
-          </h1>
-          <p className="text-muted-foreground text-base md:text-lg mb-8">
+          </h2>
+          <p className="text-muted-foreground text-base">
             Let's start adding your first Keeprs.
-          </p>
-        </div>
-
-        <div className="bg-card border border-border rounded-md p-4 mb-8">
-          <p className="text-sm text-muted-foreground">
-            Your personalized Keepr experience is ready. Start saving your inspirations and organize them your way.
           </p>
         </div>
       </div>
 
-      <div className="mt-auto">
+      <div className="flex-shrink-0">
         <Button
           onClick={() => {
             onComplete();
