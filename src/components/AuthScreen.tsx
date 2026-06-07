@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { createPortal } from 'react-dom';
+import React, { useState } from 'react';
 import { Bookmark } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -17,12 +16,6 @@ const providerCopy: Record<Provider, { domain: string }> = {
 export const AuthScreen = ({ onAuthenticate }: AuthScreenProps) => {
   const [pendingProvider, setPendingProvider] = useState<Provider | null>(null);
   const [isAuthenticating, setIsAuthenticating] = useState(false);
-
-  const [stageEl, setStageEl] = useState<HTMLElement | null>(null);
-
-  useEffect(() => {
-    setStageEl(document.getElementById('phone-stage'));
-  }, []);
 
   const handleContinue = () => {
     setIsAuthenticating(true);
