@@ -145,7 +145,7 @@
 
   /* Legacy alias: many components still use `font-josefin`. Remap to Inter.
      Josefin Sans is reserved exclusively for the Keepr wordmark. */
-  .font-josefin { font-family: 'Josefin Sans', system-ui, -apple-system, sans-serif; }
+  .font-josefin { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
   .font-keepr-wordmark { font-family: 'Josefin Sans', system-ui, -apple-system, sans-serif; font-weight: 600; letter-spacing: -0.01em; }
 
   .line-clamp-1 { overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; }
