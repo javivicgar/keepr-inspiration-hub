@@ -75,10 +75,7 @@ export const AuthScreen = ({ onAuthenticate }: AuthScreenProps) => {
         </div>
 
         <h1 className="font-keepr-wordmark text-5xl text-foreground mb-2 tracking-tight">Keepr</h1>
-        <p className="text-muted-foreground text-base mb-8">Save your inspirations.</p>
-        <p className="text-foreground/80 text-lg leading-snug mb-10 px-2">
-          Keep what matters.<br />Forget the rest.
-        </p>
+        <p className="text-muted-foreground text-base mb-10">Save your inspirations.</p>
 
         <div className="space-y-3">
           <Button
@@ -106,6 +103,13 @@ export const AuthScreen = ({ onAuthenticate }: AuthScreenProps) => {
             />
             Sign up with Google
           </Button>
+
+          <p className="text-xs text-muted-foreground pt-3 leading-relaxed">
+            By continuing you agree to our{' '}
+            <a href="#" className="underline underline-offset-2 hover:text-foreground">Terms</a>
+            {' '}and{' '}
+            <a href="#" className="underline underline-offset-2 hover:text-foreground">Privacy Policy</a>.
+          </p>
         </div>
       </div>
 
