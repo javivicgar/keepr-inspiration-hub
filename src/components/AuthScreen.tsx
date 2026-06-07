@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Bookmark } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -16,6 +16,13 @@ const providerCopy: Record<Provider, { domain: string }> = {
 export const AuthScreen = ({ onAuthenticate }: AuthScreenProps) => {
   const [pendingProvider, setPendingProvider] = useState<Provider | null>(null);
   const [isAuthenticating, setIsAuthenticating] = useState(false);
+
+  useEffect(() => {
+    document.body.setAttribute('data-auth-glow', 'true');
+    return () => {
+      document.body.removeAttribute('data-auth-glow');
+    };
+  }, []);
 
   const handleContinue = () => {
     setIsAuthenticating(true);
