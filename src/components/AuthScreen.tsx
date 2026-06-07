@@ -17,6 +17,13 @@ export const AuthScreen = ({ onAuthenticate }: AuthScreenProps) => {
   const [pendingProvider, setPendingProvider] = useState<Provider | null>(null);
   const [isAuthenticating, setIsAuthenticating] = useState(false);
 
+  useEffect(() => {
+    document.documentElement.setAttribute('data-auth-glow', 'true');
+    return () => {
+      document.documentElement.removeAttribute('data-auth-glow');
+    };
+  }, []);
+
   const handleContinue = () => {
     setIsAuthenticating(true);
     setTimeout(() => {
