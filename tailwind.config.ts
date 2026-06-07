@@ -17,10 +17,10 @@ export default {
     },
     extend: {
       fontFamily: {
-        // Single app typeface. `josefin` retained as legacy alias.
-        sans: ["Geist", "system-ui", "-apple-system", "sans-serif"],
-        josefin: ["Geist", "system-ui", "-apple-system", "sans-serif"],
-        display: ['"Fraunces"', "ui-serif", "Georgia", "serif"],
+        // Single app typeface: Inter. Josefin Sans is reserved for the Keepr wordmark only.
+        sans: ["Inter", "system-ui", "-apple-system", "sans-serif"],
+        josefin: ["Inter", "system-ui", "-apple-system", "sans-serif"],
+        display: ["Inter", "system-ui", "-apple-system", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
