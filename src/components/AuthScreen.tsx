@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Bookmark } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -16,13 +16,6 @@ const providerCopy: Record<Provider, { domain: string }> = {
 export const AuthScreen = ({ onAuthenticate }: AuthScreenProps) => {
   const [pendingProvider, setPendingProvider] = useState<Provider | null>(null);
   const [isAuthenticating, setIsAuthenticating] = useState(false);
-
-  useEffect(() => {
-    document.documentElement.setAttribute('data-auth-glow', 'true');
-    return () => {
-      document.documentElement.removeAttribute('data-auth-glow');
-    };
-  }, []);
 
   const handleContinue = () => {
     setIsAuthenticating(true);
@@ -82,10 +75,9 @@ export const AuthScreen = ({ onAuthenticate }: AuthScreenProps) => {
   );
 
   return (
-    <div className="absolute inset-0 bg-background brand-glow auth-glow-bleed overflow-hidden">
-      <div className="relative h-full w-full max-w-sm mx-auto px-6">
-        {/* Wordmark in upper portion */}
-        <div className="absolute left-0 right-0 top-[18%] flex flex-col items-center px-6">
+    <div className="absolute inset-0 bg-background brand-glow overflow-hidden">
+      <div className="h-full w-full max-w-sm mx-auto px-6 flex flex-col">
+        <div className="flex-[2] flex flex-col items-center justify-center">
           <div className="bg-primary-soft rounded-2xl p-5 mb-6 inline-flex shadow-sm">
             <div className="bg-primary rounded-full p-3.5 flex items-center justify-center">
               <Bookmark className="h-7 w-7 text-primary-foreground fill-current" aria-hidden="true" />
@@ -95,42 +87,39 @@ export const AuthScreen = ({ onAuthenticate }: AuthScreenProps) => {
           <p className="text-muted-foreground text-base">Save your inspirations.</p>
         </div>
 
-        {/* CTAs anchored to bottom */}
-        <div className="absolute left-0 right-0 bottom-8 px-6">
-          <div className="space-y-3">
-            <Button
-              onClick={() => setPendingProvider('apple')}
-              className="w-full bg-foreground text-background hover:bg-foreground/90 font-medium py-3 rounded-xl text-base h-12 flex items-center justify-center gap-3"
-            >
-              <img
-                src="/lovable-uploads/88fccea4-8273-4f19-a655-d7000b52ba19.png"
-                alt=""
-                aria-hidden="true"
-                className="w-5 h-5"
-              />
-              Sign up with Apple
-            </Button>
+        <div className="flex-shrink-0 pb-8 space-y-3">
+          <Button
+            onClick={() => setPendingProvider('apple')}
+            className="w-full bg-foreground text-background hover:bg-foreground/90 font-medium py-3 rounded-xl text-base h-12 flex items-center justify-center gap-3"
+          >
+            <img
+              src="/lovable-uploads/88fccea4-8273-4f19-a655-d7000b52ba19.png"
+              alt=""
+              aria-hidden="true"
+              className="w-5 h-5"
+            />
+            Sign up with Apple
+          </Button>
 
-            <Button
-              onClick={() => setPendingProvider('google')}
-              className="w-full bg-primary-soft text-foreground hover:bg-primary-soft/70 font-medium py-3 rounded-xl text-base h-12 border border-border/60 flex items-center justify-center gap-3"
-            >
-              <img
-                src="/lovable-uploads/0e1e7537-0953-4c7c-927a-1d2fa977968a.png"
-                alt=""
-                aria-hidden="true"
-                className="w-5 h-5"
-              />
-              Sign up with Google
-            </Button>
+          <Button
+            onClick={() => setPendingProvider('google')}
+            className="w-full bg-primary-soft text-foreground hover:bg-primary-soft/70 font-medium py-3 rounded-xl text-base h-12 border border-border/60 flex items-center justify-center gap-3"
+          >
+            <img
+              src="/lovable-uploads/0e1e7537-0953-4c7c-927a-1d2fa977968a.png"
+              alt=""
+              aria-hidden="true"
+              className="w-5 h-5"
+            />
+            Sign up with Google
+          </Button>
 
-            <p className="text-xs text-muted-foreground pt-3 leading-relaxed text-center">
-              By continuing you agree to our{' '}
-              <a href="#" className="underline underline-offset-2 hover:text-foreground">Terms</a>
-              {' '}and{' '}
-              <a href="#" className="underline underline-offset-2 hover:text-foreground">Privacy Policy</a>.
-            </p>
-          </div>
+          <p className="text-xs text-muted-foreground pt-3 leading-relaxed text-center">
+            By continuing you agree to our{' '}
+            <a href="#" className="underline underline-offset-2 hover:text-foreground">Terms</a>
+            {' '}and{' '}
+            <a href="#" className="underline underline-offset-2 hover:text-foreground">Privacy Policy</a>.
+          </p>
         </div>
       </div>
 

@@ -148,19 +148,20 @@
 
   /* Bleed-beyond-phone glow: rendered behind the phone frame at viewport level.
      Auth screen toggles `data-auth-glow` on <html> to activate. */
-  html[data-auth-glow="true"]::before {
-    content: "";
-    position: fixed;
+  /* Bleed-beyond-phone glow: rendered behind the phone frame at viewport level. */
+  #phone-stage { isolation: isolate; }
+  .auth-bleed-glow {
+    position: absolute;
     inset: -10vh -10vw;
-    z-index: 0;
+    z-index: -1;
     pointer-events: none;
     background:
-      radial-gradient(40% 30% at 50% 10%, hsl(258 75% 78% / 0.55), transparent 70%),
-      radial-gradient(35% 26% at 30% 6%, hsl(280 65% 82% / 0.45), transparent 70%),
-      radial-gradient(45% 32% at 70% 8%, hsl(244 70% 84% / 0.50), transparent 70%),
-      radial-gradient(40% 30% at 50% 92%, hsl(258 75% 78% / 0.50), transparent 70%),
-      radial-gradient(35% 26% at 30% 96%, hsl(280 65% 82% / 0.42), transparent 70%),
-      radial-gradient(45% 32% at 70% 94%, hsl(244 70% 84% / 0.45), transparent 70%);
+      radial-gradient(40% 30% at 50% 10%, hsl(258 75% 78% / 0.65), transparent 70%),
+      radial-gradient(35% 26% at 30% 6%, hsl(280 65% 82% / 0.55), transparent 70%),
+      radial-gradient(45% 32% at 70% 8%, hsl(244 70% 84% / 0.60), transparent 70%),
+      radial-gradient(40% 30% at 50% 92%, hsl(258 75% 78% / 0.60), transparent 70%),
+      radial-gradient(35% 26% at 30% 96%, hsl(280 65% 82% / 0.52), transparent 70%),
+      radial-gradient(45% 32% at 70% 94%, hsl(244 70% 84% / 0.55), transparent 70%);
     filter: blur(60px);
   }
 
