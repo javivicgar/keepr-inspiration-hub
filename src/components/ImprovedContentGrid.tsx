@@ -76,15 +76,6 @@ export const ImprovedContentGrid = ({ content, onCreateKeepr }: ImprovedContentG
                   </div>
                 </div>
               </div>
-
-                  <div className="flex items-center justify-between">
-                    <p className="text-white/80 text-xs font-josefin">
-                      @{item.creatorName}
-                    </p>
-                    <ExternalLink className="h-3 w-3 text-white/60 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </div>
-                </div>
-              </div>
             </CardContent>
           </Card>
         );
@@ -92,3 +83,4 @@ export const ImprovedContentGrid = ({ content, onCreateKeepr }: ImprovedContentG
     </div>
   );
 };
+
