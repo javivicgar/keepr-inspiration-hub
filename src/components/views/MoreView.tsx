@@ -21,10 +21,8 @@ export const MoreView = ({ totalContent, totalFolders, userPreferences = [], onP
     setDarkMode(!darkMode);
     if (!darkMode) {
       document.documentElement.classList.add('dark');
-      document.body.style.backgroundColor = '#2B2737';
     } else {
       document.documentElement.classList.remove('dark');
-      document.body.style.backgroundColor = '';
     }
   };
 
