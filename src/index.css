@@ -110,9 +110,9 @@
     text-rendering: optimizeLegibility;
   }
 
-  /* Type scale */
-  h1 { @apply text-3xl md:text-4xl font-semibold tracking-tight; }
-  h2 { @apply text-2xl font-semibold tracking-tight; }
+  /* Type scale — h1/h2 use distinctive serif display face */
+  h1 { @apply font-display text-3xl md:text-4xl font-medium tracking-tight; letter-spacing: -0.02em; }
+  h2 { @apply font-display text-2xl font-medium tracking-tight; letter-spacing: -0.015em; }
   h3 { @apply text-lg font-semibold; }
 
   /* Visible non-color focus ring on every interactive element */
