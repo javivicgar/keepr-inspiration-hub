@@ -124,6 +124,25 @@
 @layer utilities {
   .safe-area-pb { padding-bottom: env(safe-area-inset-bottom); }
 
+  /* Signature brand atmosphere — soft watercolor lilac glow.
+     Used ONLY on auth + onboarding-welcome screens. */
+  .brand-glow {
+    position: relative;
+    isolation: isolate;
+  }
+  .brand-glow::before {
+    content: "";
+    position: absolute;
+    inset: -20% -10% 30% -10%;
+    z-index: -1;
+    background:
+      radial-gradient(60% 50% at 30% 25%, hsl(258 70% 82% / 0.55), transparent 70%),
+      radial-gradient(55% 45% at 75% 15%, hsl(280 60% 85% / 0.45), transparent 70%),
+      radial-gradient(70% 55% at 50% 5%, hsl(244 65% 88% / 0.50), transparent 75%);
+    filter: blur(40px);
+    pointer-events: none;
+  }
+
   /* Legacy alias: many components still use `font-josefin`.
      Remap to Geist so we don't have to touch every className. */
   .font-josefin { font-family: 'Geist', system-ui, -apple-system, sans-serif; }
