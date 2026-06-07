@@ -62,7 +62,7 @@ export const InteractiveMap = ({ content, onBack }: InteractiveMapProps) => {
           
           {/* Map Pins */}
           {locationsContent.map((item, index) => {
-            const color = categoryColors[item.category] || categoryColors['Other'];
+            const color = getCategoryMeta(item.category).pinColor;
             const x = 100 + (index * 120) % 700;
             const y = 80 + (Math.floor(index / 6) * 100) % 400;
             
