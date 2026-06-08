@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Bookmark } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -16,13 +16,6 @@ const providerCopy: Record<Provider, { domain: string }> = {
 export const AuthScreen = ({ onAuthenticate }: AuthScreenProps) => {
   const [pendingProvider, setPendingProvider] = useState<Provider | null>(null);
   const [isAuthenticating, setIsAuthenticating] = useState(false);
-
-  useEffect(() => {
-    document.body.setAttribute('data-auth-glow', 'true');
-    return () => {
-      document.body.removeAttribute('data-auth-glow');
-    };
-  }, []);
 
   const handleContinue = () => {
     setIsAuthenticating(true);
@@ -83,7 +76,7 @@ export const AuthScreen = ({ onAuthenticate }: AuthScreenProps) => {
 
   return (
     <div className="h-full w-full bg-background brand-glow overflow-hidden flex justify-center relative">
-      <div className="w-full max-w-sm px-6 flex flex-col justify-between items-center pt-[16%] pb-8">
+      <div className="relative z-10 w-full max-w-sm px-6 flex flex-col justify-between items-center pt-[16%] pb-8">
         {/* Wordmark */}
         <div className="flex flex-col items-center">
           <div className="bg-primary-soft rounded-2xl p-5 mb-6 inline-flex shadow-sm">

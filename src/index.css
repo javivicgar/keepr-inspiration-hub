@@ -133,42 +133,21 @@
   .brand-glow::before {
     content: "";
     position: absolute;
-    inset: -30% -15%;
-    z-index: -1;
-    background:
-      radial-gradient(60% 38% at 30% 6%, hsl(258 75% 80% / 0.75), transparent 70%),
-      radial-gradient(55% 34% at 75% 2%, hsl(280 65% 84% / 0.65), transparent 70%),
-      radial-gradient(72% 38% at 50% -4%, hsl(244 70% 86% / 0.70), transparent 75%),
-      radial-gradient(65% 38% at 30% 102%, hsl(258 75% 80% / 0.70), transparent 70%),
-      radial-gradient(55% 34% at 75% 100%, hsl(280 65% 84% / 0.62), transparent 70%),
-      radial-gradient(72% 38% at 50% 104%, hsl(244 70% 86% / 0.65), transparent 75%);
-    filter: blur(36px);
-    pointer-events: none;
-  }
-
-  /* Page-level glow that bleeds beyond the phone frame on top AND bottom.
-     Always rendered in main.tsx; visibility toggled by body[data-auth-glow]. */
-  .page-glow {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: min(720px, 100vw);
-    height: min(1200px, 130vh);
-    transform: translate(-50%, -50%);
+    left: -18%;
+    right: -18%;
+    top: -18%;
+    bottom: -18%;
     z-index: 0;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 400ms ease;
     background:
-      radial-gradient(50% 30% at 50% 8%, hsl(258 80% 78% / 0.85), transparent 70%),
-      radial-gradient(40% 26% at 28% 4%, hsl(280 70% 82% / 0.70), transparent 70%),
-      radial-gradient(45% 30% at 72% 6%, hsl(244 75% 84% / 0.75), transparent 70%),
-      radial-gradient(50% 30% at 50% 92%, hsl(258 80% 78% / 0.80), transparent 70%),
-      radial-gradient(40% 26% at 28% 96%, hsl(280 70% 82% / 0.68), transparent 70%),
-      radial-gradient(45% 30% at 72% 94%, hsl(244 75% 84% / 0.72), transparent 70%);
-    filter: blur(70px);
+      radial-gradient(68% 36% at 28% 1%, hsl(258 74% 79% / 0.68), transparent 72%),
+      radial-gradient(58% 32% at 77% 0%, hsl(280 64% 84% / 0.58), transparent 72%),
+      radial-gradient(76% 40% at 50% -7%, hsl(244 68% 86% / 0.62), transparent 76%),
+      radial-gradient(66% 34% at 29% 101%, hsl(258 74% 79% / 0.56), transparent 72%),
+      radial-gradient(58% 32% at 76% 100%, hsl(280 64% 84% / 0.50), transparent 72%),
+      radial-gradient(76% 40% at 50% 107%, hsl(244 68% 86% / 0.54), transparent 76%);
+    filter: blur(34px);
+    pointer-events: none;
   }
-  body[data-auth-glow="true"] .page-glow { opacity: 1; }
 
   /* Legacy alias: many components still use `font-josefin`. Remap to Inter.
      Josefin Sans is reserved exclusively for the Keepr wordmark. */
