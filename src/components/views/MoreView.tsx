@@ -38,6 +38,16 @@ export const MoreView = ({ totalContent, totalFolders, userPreferences = [], onP
     return <PrivacyDataScreen onBack={() => setShowPrivacyData(false)} />;
   }
 
+  if (showEditPreferences) {
+    return (
+      <EditPreferencesScreen
+        currentPreferences={userPreferences}
+        onBack={() => setShowEditPreferences(false)}
+        onSave={(preferences) => onPreferencesUpdate?.(preferences)}
+      />
+    );
+  }
+
   const sections: { heading: string; items: MenuItem[] }[] = [
     {
       heading: 'Account',
@@ -139,12 +149,6 @@ export const MoreView = ({ totalContent, totalFolders, userPreferences = [], onP
         <p className="text-xs text-muted-foreground font-josefin">For saving inspiration</p>
       </div>
 
-      <EditPreferencesModal
-        isOpen={showEditPreferences}
-        onClose={() => setShowEditPreferences(false)}
-        currentPreferences={userPreferences}
-        onSave={(preferences) => onPreferencesUpdate?.(preferences)}
-      />
     </div>
   );
 };
