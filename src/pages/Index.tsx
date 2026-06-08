@@ -16,7 +16,7 @@ import { SaveContentModal } from '@/components/SaveContentModal';
 import { FilterBar } from '@/components/FilterBar';
 import { SortModal } from '@/components/SortModal';
 import { AddOptionsModal } from '@/components/AddOptionsModal';
-import { ProfileModal } from '@/components/ProfileModal';
+import { ProfileScreen } from '@/components/ProfileScreen';
 import { SuggestedKeeprCarousel } from '@/components/SuggestedKeeprCarousel';
 import { CollectionsPreview } from '@/components/CollectionsPreview';
 import { RecentlyViewed } from '@/components/RecentlyViewed';
