@@ -247,7 +247,7 @@ const Index = () => {
   };
 
   return (
-    <div className="h-full overflow-y-auto bg-background pb-20">
+    <div className="relative h-full overflow-y-auto bg-background pb-20">
       {activeTab === 'home' && (
         <Header 
           onCreateKeepr={() => setShowSaveModal(true)}
