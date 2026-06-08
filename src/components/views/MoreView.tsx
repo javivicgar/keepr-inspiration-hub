@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Heart, Star, Share2, HelpCircle, Mail, Moon, Sun, Chrome, User, Shield } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
-import { EditPreferencesModal } from '@/components/EditPreferencesModal';
+import { EditPreferencesScreen } from '@/components/EditPreferencesScreen';
 import { PrivacyDataScreen } from '@/components/PrivacyDataScreen';
 
 interface MoreViewProps {
