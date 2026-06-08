@@ -16,7 +16,7 @@ import { SaveContentModal } from '@/components/SaveContentModal';
 import { FilterBar } from '@/components/FilterBar';
 import { SortModal } from '@/components/SortModal';
 import { AddOptionsModal } from '@/components/AddOptionsModal';
-import { ProfileModal } from '@/components/ProfileModal';
+import { ProfileScreen } from '@/components/ProfileScreen';
 import { SuggestedKeeprCarousel } from '@/components/SuggestedKeeprCarousel';
 import { CollectionsPreview } from '@/components/CollectionsPreview';
 import { RecentlyViewed } from '@/components/RecentlyViewed';
@@ -247,7 +247,7 @@ const Index = () => {
   };
 
   return (
-    <div className="h-full overflow-y-auto bg-background pb-20">
+    <div className="relative h-full overflow-y-auto bg-background pb-20">
       {activeTab === 'home' && (
         <Header 
           onCreateKeepr={() => setShowSaveModal(true)}
@@ -358,12 +358,13 @@ const Index = () => {
       )}
 
       {showProfileModal && (
-        <ProfileModal
-          isOpen={showProfileModal}
-          onClose={() => setShowProfileModal(false)}
-          username={username}
-          onUsernameUpdate={setUsername}
-        />
+        <div className="absolute inset-0 z-40 bg-background overflow-y-auto px-4 py-6">
+          <ProfileScreen
+            username={username}
+            onBack={() => setShowProfileModal(false)}
+            onUsernameUpdate={setUsername}
+          />
+        </div>
       )}
     </div>
   );
