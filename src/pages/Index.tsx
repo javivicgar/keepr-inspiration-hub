@@ -167,6 +167,18 @@ const Index = () => {
     return <PersonalizingScreen />;
   }
 
+  if (showProfileModal) {
+    return (
+      <div className="h-full overflow-y-auto bg-background px-4 pt-5 pb-6">
+        <ProfileScreen
+          username={username}
+          onBack={() => setShowProfileModal(false)}
+          onUsernameUpdate={setUsername}
+        />
+      </div>
+    );
+  }
+
   const renderHomeContent = () => {
     if (currentView === 'keepr-detail' && selectedKeepr) {
       return (
@@ -357,17 +369,6 @@ const Index = () => {
         />
       )}
 
-      {showProfileModal && (
-        <div className="absolute inset-0 z-40 bg-background overflow-y-auto">
-          <div className="px-4 pt-6 pb-6">
-            <ProfileScreen
-              username={username}
-              onBack={() => setShowProfileModal(false)}
-              onUsernameUpdate={setUsername}
-            />
-          </div>
-        </div>
-      )}
     </div>
   );
 };
