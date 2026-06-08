@@ -358,12 +358,14 @@ const Index = () => {
       )}
 
       {showProfileModal && (
-        <div className="absolute inset-0 z-40 bg-background overflow-y-auto px-4 py-6">
-          <ProfileScreen
-            username={username}
-            onBack={() => setShowProfileModal(false)}
-            onUsernameUpdate={setUsername}
-          />
+        <div className="absolute inset-0 z-40 bg-background overflow-y-auto">
+          <div className="px-4 pt-6 pb-6">
+            <ProfileScreen
+              username={username}
+              onBack={() => setShowProfileModal(false)}
+              onUsernameUpdate={setUsername}
+            />
+          </div>
         </div>
       )}
     </div>
