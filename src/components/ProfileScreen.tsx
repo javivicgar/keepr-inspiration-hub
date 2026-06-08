@@ -24,13 +24,13 @@ export const ProfileScreen = ({ username, onBack, onUsernameUpdate }: ProfileScr
 
   return (
     <div className="pb-24">
-      <div className="flex items-center gap-3 mb-6">
+      <div className="flex items-center gap-3 mb-6 sticky top-0 bg-background py-2 z-10">
         <button
           onClick={onBack}
           aria-label="Back"
-          className="p-2 -ml-2 rounded-full hover:bg-muted transition-colors"
+          className="p-2 -ml-2 rounded-full hover:bg-muted transition-colors flex items-center justify-center"
         >
-          <ArrowLeft className="h-5 w-5 text-foreground" />
+          <ArrowLeft className="h-6 w-6 text-foreground" />
         </button>
         <h1 className="text-xl font-semibold font-josefin">Profile Settings</h1>
       </div>
