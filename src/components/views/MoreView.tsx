@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Heart, Star, Share2, HelpCircle, Mail, Moon, Sun, Chrome, User, Shield } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
-import { EditPreferencesModal } from '@/components/EditPreferencesModal';
+import { EditPreferencesScreen } from '@/components/EditPreferencesScreen';
 import { PrivacyDataScreen } from '@/components/PrivacyDataScreen';
 
 interface MoreViewProps {
@@ -36,6 +36,16 @@ export const MoreView = ({ totalContent, totalFolders, userPreferences = [], onP
 
   if (showPrivacyData) {
     return <PrivacyDataScreen onBack={() => setShowPrivacyData(false)} />;
+  }
+
+  if (showEditPreferences) {
+    return (
+      <EditPreferencesScreen
+        currentPreferences={userPreferences}
+        onBack={() => setShowEditPreferences(false)}
+        onSave={(preferences) => onPreferencesUpdate?.(preferences)}
+      />
+    );
   }
 
   const sections: { heading: string; items: MenuItem[] }[] = [
@@ -139,12 +149,6 @@ export const MoreView = ({ totalContent, totalFolders, userPreferences = [], onP
         <p className="text-xs text-muted-foreground font-josefin">For saving inspiration</p>
       </div>
 
-      <EditPreferencesModal
-        isOpen={showEditPreferences}
-        onClose={() => setShowEditPreferences(false)}
-        currentPreferences={userPreferences}
-        onSave={(preferences) => onPreferencesUpdate?.(preferences)}
-      />
     </div>
   );
 };
