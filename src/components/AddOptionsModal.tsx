@@ -1,9 +1,9 @@
-
 import React, { useState } from 'react';
-import { X, Globe, Camera, Clipboard, Edit3, Plus } from 'lucide-react';
+import { X, Globe, Camera, Clipboard, Edit3, Plus, Image as ImageIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { PermissionPrompt } from '@/components/PermissionPrompt';
+import { usePermissionFlow } from '@/lib/permissions';
 
 interface AddOptionsModalProps {
   isOpen: boolean;
@@ -15,8 +15,8 @@ export const AddOptionsModal = ({ isOpen, onClose, onOptionSelect }: AddOptionsM
   const [showBrowser, setShowBrowser] = useState(false);
   const [showCamera, setShowCamera] = useState(false);
   const [browserUrl, setBrowserUrl] = useState('');
-  const [cameraPermissionGranted, setCameraPermissionGranted] = useState(false);
-  const [pendingPhoto, setPendingPhoto] = useState(false);
+  const cameraFlow = usePermissionFlow('camera');
+  const photosFlow = usePermissionFlow('photos');
 
   const options = [
     { id: 'browser', label: 'Browser', icon: Globe, color: 'bg-blue-50 text-blue-600' },
@@ -34,31 +34,31 @@ export const AddOptionsModal = ({ isOpen, onClose, onOptionSelect }: AddOptionsM
     }
   };
 
-  const handleCameraSelect = () => {
-    setShowCamera(true);
-  };
-
-  const handleMediaSelect = (type: 'photo' | 'video') => {
-    if (type === 'photo' && !cameraPermissionGranted) {
-      setPendingPhoto(true);
-      return;
-    }
+  const completeCameraFlow = () => {
     onOptionSelect('camera');
     setShowCamera(false);
     onClose();
   };
 
-  const completePhotoFlow = () => {
+  const completeLibraryFlow = () => {
     onOptionSelect('camera');
     setShowCamera(false);
     onClose();
+  };
+
+  const handleTakePhoto = () => {
+    cameraFlow.request(completeCameraFlow);
+  };
+
+  const handleFromLibrary = () => {
+    photosFlow.request(completeLibraryFlow);
   };
 
   if (!isOpen) return null;
 
   if (showBrowser) {
     return (
-      <div className="fixed inset-0 bg-black/50 z-50 flex items-end">
+      <div className="absolute inset-0 bg-black/50 z-50 flex items-end">
         <div className="bg-background rounded-t-3xl w-full animate-slide-up max-h-[60vh]">
           <div className="flex items-center justify-between p-6 border-b border-border">
             <h2 className="text-xl font-semibold text-foreground font-josefin">Browse Content</h2>
@@ -66,7 +66,7 @@ export const AddOptionsModal = ({ isOpen, onClose, onOptionSelect }: AddOptionsM
               <X className="h-5 w-5" />
             </Button>
           </div>
-          
+
           <div className="p-6 space-y-4">
             <div className="space-y-3">
               <label className="text-sm font-medium font-josefin">Enter URL or search term</label>
@@ -77,7 +77,7 @@ export const AddOptionsModal = ({ isOpen, onClose, onOptionSelect }: AddOptionsM
                 className="h-12 text-base rounded-2xl border-2 focus:border-primary font-josefin"
               />
             </div>
-            
+
             <Button
               onClick={handleBrowserSearch}
               className="w-full bg-primary hover:bg-primary-hover text-white font-josefin font-medium py-3 rounded-2xl"
@@ -93,7 +93,7 @@ export const AddOptionsModal = ({ isOpen, onClose, onOptionSelect }: AddOptionsM
 
   if (showCamera) {
     return (
-      <div className="fixed inset-0 bg-black/50 z-50 flex items-end">
+      <div className="absolute inset-0 bg-black/50 z-50 flex items-end">
         <div className="bg-background rounded-t-3xl w-full animate-slide-up max-h-[60vh]">
           <div className="flex items-center justify-between p-6 border-b border-border">
             <h2 className="text-xl font-semibold text-foreground font-josefin">Select Media</h2>
@@ -101,37 +101,60 @@ export const AddOptionsModal = ({ isOpen, onClose, onOptionSelect }: AddOptionsM
               <X className="h-5 w-5" />
             </Button>
           </div>
-          
+
           <div className="p-6 space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <button
                 className="flex flex-col items-center p-6 rounded-2xl border-2 border-border hover:border-primary transition-all font-josefin hover:shadow-md"
-                onClick={() => handleMediaSelect('photo')}
+                onClick={handleTakePhoto}
               >
                 <div className="p-4 rounded-full bg-green-50 text-green-600 mb-3">
                   <Camera className="h-6 w-6" />
                 </div>
                 <span className="font-medium text-sm">Take Photo</span>
+                {cameraFlow.status === 'denied' && (
+                  <span className="mt-2 text-[11px] text-primary underline font-josefin">Enable camera</span>
+                )}
               </button>
-              
+
               <button
                 className="flex flex-col items-center p-6 rounded-2xl border-2 border-border hover:border-primary transition-all font-josefin hover:shadow-md"
-                onClick={() => handleMediaSelect('video')}
+                onClick={handleFromLibrary}
               >
                 <div className="p-4 rounded-full bg-blue-50 text-blue-600 mb-3">
-                  <Plus className="h-6 w-6" />
+                  <ImageIcon className="h-6 w-6" />
                 </div>
                 <span className="font-medium text-sm">From Library</span>
+                {photosFlow.status === 'denied' && (
+                  <span className="mt-2 text-[11px] text-primary underline font-josefin">Enable photo access</span>
+                )}
               </button>
             </div>
           </div>
         </div>
+
+        {cameraFlow.pending && (
+          <PermissionPrompt
+            kind="camera"
+            feature="Taking a photo for your Keepr"
+            onAllow={() => cameraFlow.resolve(true)}
+            onDismiss={() => cameraFlow.dismiss()}
+          />
+        )}
+        {photosFlow.pending && (
+          <PermissionPrompt
+            kind="photos"
+            feature="Attaching an existing photo to your Keepr"
+            onAllow={() => photosFlow.resolve(true)}
+            onDismiss={() => photosFlow.dismiss()}
+          />
+        )}
       </div>
     );
   }
 
   return (
-    <div className="fixed inset-0 bg-black/50 z-50 flex items-end">
+    <div className="absolute inset-0 bg-black/50 z-50 flex items-end">
       <div className="bg-background rounded-t-3xl w-full animate-slide-up max-h-[60vh]">
         <div className="flex items-center justify-between p-6 border-b border-border">
           <h2 className="text-xl font-semibold text-foreground font-josefin">Import new Keepr</h2>
@@ -150,7 +173,7 @@ export const AddOptionsModal = ({ isOpen, onClose, onOptionSelect }: AddOptionsM
                   if (option.id === 'browser') {
                     setShowBrowser(true);
                   } else if (option.id === 'camera') {
-                    handleCameraSelect();
+                    setShowCamera(true);
                   } else {
                     onOptionSelect(option.id);
                     onClose();
@@ -166,19 +189,6 @@ export const AddOptionsModal = ({ isOpen, onClose, onOptionSelect }: AddOptionsM
           </div>
         </div>
       </div>
-
-      {pendingPhoto && (
-        <PermissionPrompt
-          kind="camera"
-          feature="Taking a photo for your Keepr"
-          onAllow={() => {
-            setCameraPermissionGranted(true);
-            setPendingPhoto(false);
-            completePhotoFlow();
-          }}
-          onDismiss={() => setPendingPhoto(false)}
-        />
-      )}
     </div>
   );
 };
