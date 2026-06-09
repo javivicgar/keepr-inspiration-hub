@@ -85,7 +85,7 @@ export const InteractiveMap = ({ content, onBack }: InteractiveMapProps) => {
             <Navigation className="h-8 w-8 mx-auto mb-2 text-primary" />
             <h3 className="font-semibold mb-1 font-josefin text-center">Full Screen Map</h3>
             <p className="text-xs text-gray-600 font-josefin text-center">
-              Zoom, pan, and click on pins to explore your Keeprs
+              Your saved Keeprs with a location appear here as pins.
             </p>
           </div>
         </div>
