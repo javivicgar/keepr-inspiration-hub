@@ -106,6 +106,21 @@ export const SaveContentModal = ({ isOpen, onClose, onSave, existingFolders, onO
               placeholder="Amazing rooftop café in Rome"
               required
             />
+            {liveSensitivity.tier === 'caution' && (
+              <div className="inline-flex items-center gap-2 rounded-full bg-muted px-3 py-1.5 text-xs text-muted-foreground">
+                <ShieldAlert className="h-3.5 w-3.5" />
+                <span>
+                  This save may be sensitive ({liveSensitivity.category}) —{' '}
+                  <button
+                    type="button"
+                    onClick={() => onOpenPrivacy?.()}
+                    className="underline underline-offset-2 hover:text-foreground"
+                  >
+                    review privacy?
+                  </button>
+                </span>
+              </div>
+            )}
           </div>
 
           <div className="space-y-2">
