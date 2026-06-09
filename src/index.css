@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /* Mapbox GL CSS */
-@import 'mapbox-gl/dist/mapbox-gl.css';
+@import "mapbox-gl/dist/mapbox-gl.css";
 
 /* ============================================================
    Keepr Design Tokens
@@ -13,9 +13,9 @@
 @layer base {
   :root {
     /* Neutral surfaces */
-    --page: 240 6% 92%;              /* outside the phone frame */
-    --background: 0 0% 100%;         /* app surface (inside phone) */
-    --foreground: 240 10% 12%;       /* primary text */
+    --page: 240 6% 92%; /* outside the phone frame */
+    --background: 0 0% 100%; /* app surface (inside phone) */
+    --foreground: 240 10% 12%; /* primary text */
 
     --card: 0 0% 100%;
     --card-foreground: 240 10% 12%;
@@ -32,8 +32,8 @@
     /* Restrained lavender accent (#A8A5D0) -> HSL ~ 244 27% 73% */
     --primary: 244 27% 73%;
     --primary-foreground: 0 0% 100%;
-    --primary-hover: 244 24% 64%;     /* #9895c7 */
-    --primary-soft: 244 40% 96%;      /* subtle tinted surface */
+    --primary-hover: 244 24% 64%; /* #9895c7 */
+    --primary-soft: 244 40% 96%; /* subtle tinted surface */
 
     --secondary: 240 6% 96%;
     --secondary-foreground: 240 10% 12%;
@@ -47,16 +47,16 @@
     --ring: 244 27% 60%;
 
     /* Radius scale */
-    --radius-sm: 0.5rem;     /* 8 */
-    --radius:    0.75rem;    /* 12 - default for cards/buttons/inputs */
-    --radius-lg: 1rem;       /* 16 - large cards */
-    --radius-xl: 1.25rem;    /* 20 - sheets */
+    --radius-sm: 0.5rem; /* 8 */
+    --radius: 0.75rem; /* 12 - default for cards/buttons/inputs */
+    --radius-lg: 1rem; /* 16 - large cards */
+    --radius-xl: 1.25rem; /* 20 - sheets */
 
     /* Single shadow scale */
     --shadow-sm: 0 1px 2px 0 hsl(240 10% 12% / 0.04);
-    --shadow:    0 1px 3px 0 hsl(240 10% 12% / 0.06), 0 1px 2px -1px hsl(240 10% 12% / 0.06);
+    --shadow: 0 1px 3px 0 hsl(240 10% 12% / 0.06), 0 1px 2px -1px hsl(240 10% 12% / 0.06);
     --shadow-md: 0 4px 8px -2px hsl(240 10% 12% / 0.08), 0 2px 4px -2px hsl(240 10% 12% / 0.06);
-    --shadow-lg: 0 12px 24px -8px hsl(240 10% 12% / 0.10), 0 4px 8px -4px hsl(240 10% 12% / 0.06);
+    --shadow-lg: 0 12px 24px -8px hsl(240 10% 12% / 0.1), 0 4px 8px -4px hsl(240 10% 12% / 0.06);
 
     /* Sidebar (unused by app, keep for shadcn) */
     --sidebar-background: 0 0% 99%;
@@ -70,7 +70,7 @@
   }
 
   .dark {
-    --background: 252 12% 16%;       /* #2B2737 */
+    --background: 252 12% 16%; /* #2B2737 */
     --foreground: 0 0% 98%;
     --card: 252 12% 20%;
     --card-foreground: 0 0% 98%;
@@ -100,20 +100,38 @@
   }
 
   html {
-    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    font-family:
+      "Inter",
+      system-ui,
+      -apple-system,
+      "Segoe UI",
+      sans-serif;
   }
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    font-family:
+      "Inter",
+      system-ui,
+      -apple-system,
+      "Segoe UI",
+      sans-serif;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
 
   /* Type scale — headings use Inter; only the wordmark uses Josefin Sans */
-  h1 { @apply font-sans text-3xl md:text-4xl font-semibold tracking-tight; letter-spacing: -0.02em; }
-  h2 { @apply font-sans text-2xl font-semibold tracking-tight; letter-spacing: -0.015em; }
-  h3 { @apply text-lg font-semibold; }
+  h1 {
+    @apply font-sans text-3xl md:text-4xl font-semibold tracking-tight;
+    letter-spacing: -0.02em;
+  }
+  h2 {
+    @apply font-sans text-2xl font-semibold tracking-tight;
+    letter-spacing: -0.015em;
+  }
+  h3 {
+    @apply text-lg font-semibold;
+  }
 
   /* Visible non-color focus ring on every interactive element */
   :where(a, button, [role="button"], input, select, textarea, summary, [tabindex]:not([tabindex="-1"])):focus-visible {
@@ -122,7 +140,9 @@
 }
 
 @layer utilities {
-  .safe-area-pb { padding-bottom: env(safe-area-inset-bottom); }
+  .safe-area-pb {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
 
   /* Signature brand atmosphere — soft watercolor lilac glow.
      Used ONLY on auth + onboarding-welcome screens. */
@@ -143,7 +163,7 @@
       radial-gradient(58% 32% at 77% 0%, hsl(280 64% 84% / 0.58), transparent 72%),
       radial-gradient(76% 40% at 50% -7%, hsl(244 68% 86% / 0.62), transparent 76%),
       radial-gradient(66% 34% at 29% 101%, hsl(258 74% 79% / 0.56), transparent 72%),
-      radial-gradient(58% 32% at 76% 100%, hsl(280 64% 84% / 0.50), transparent 72%),
+      radial-gradient(58% 32% at 76% 100%, hsl(280 64% 84% / 0.5), transparent 72%),
       radial-gradient(76% 40% at 50% 107%, hsl(244 68% 86% / 0.54), transparent 76%);
     filter: blur(34px);
     pointer-events: none;
@@ -151,22 +171,78 @@
 
   /* Legacy alias: many components still use `font-josefin`. Remap to Inter.
      Josefin Sans is reserved exclusively for the Keepr wordmark. */
-  .font-josefin { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
-  .font-keepr-wordmark { font-family: 'Josefin Sans', system-ui, -apple-system, sans-serif; font-weight: 600; letter-spacing: -0.01em; }
+  .font-josefin {
+    font-family:
+      "Inter",
+      system-ui,
+      -apple-system,
+      sans-serif;
+  }
+  .font-keepr-wordmark {
+    font-family:
+      "Josefin Sans",
+      system-ui,
+      -apple-system,
+      sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
 
-  .line-clamp-1 { overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; }
-  .line-clamp-2 { overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
-  .line-clamp-3 { overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
-  .line-clamp-4 { overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 4; }
+  .line-clamp-1 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+  }
+  .line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+  .line-clamp-3 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+  .line-clamp-4 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+  }
 
-  .animate-slide-up { animation: slideUp 0.3s ease-out; }
+  .animate-slide-up {
+    animation: slideUp 0.3s ease-out;
+  }
   @keyframes slideUp {
-    from { transform: translateY(100%); opacity: 0; }
-    to   { transform: translateY(0); opacity: 1; }
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
   }
-  .animate-fade-in { animation: fadeIn 0.3s ease-out; }
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-out;
+  }
   @keyframes fadeIn {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
+}
+/* Hide scrollbars app-wide while keeping scroll functionality (app-like feel) */
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* old Edge/IE */
+}
+*::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, modern Edge */
 }
