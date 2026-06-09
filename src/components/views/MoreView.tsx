@@ -26,6 +26,7 @@ export const MoreView = ({ totalContent, totalFolders, userPreferences = [], onP
   const [darkMode, setDarkMode] = useState(false);
   const [showEditPreferences, setShowEditPreferences] = useState(false);
   const [showPrivacyData, setShowPrivacyData] = useState(false);
+  const notificationsFlow = usePermissionFlow('notifications');
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
