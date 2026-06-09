@@ -1,10 +1,12 @@
 
 import React, { useState } from 'react';
-import { Heart, Star, Share2, HelpCircle, Mail, Moon, Sun, Chrome, User, Shield } from 'lucide-react';
+import { Heart, Star, Share2, HelpCircle, Mail, Moon, Sun, Chrome, User, Shield, Bell, BellOff, BellRing } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
 import { EditPreferencesScreen } from '@/components/EditPreferencesScreen';
 import { PrivacyDataScreen } from '@/components/PrivacyDataScreen';
+import { PermissionPrompt } from '@/components/PermissionPrompt';
+import { usePermissionFlow } from '@/lib/permissions';
 
 interface MoreViewProps {
   totalContent: number;
