@@ -264,6 +264,46 @@ export const SaveContentModal = ({ isOpen, onClose, onSave, existingFolders, onO
           </div>
         </form>
       </div>
+
+      {pendingSensitive && (
+        <div
+          className="absolute inset-0 z-[60] flex items-center justify-center p-6"
+          style={{ background: 'hsl(240 10% 12% / 0.35)', backdropFilter: 'blur(6px)' }}
+          role="dialog"
+          aria-modal="true"
+        >
+          <div
+            className="w-full max-w-[300px] rounded-2xl overflow-hidden p-5 text-center"
+            style={{
+              background: 'hsl(0 0% 100% / 0.92)',
+              backdropFilter: 'blur(20px) saturate(180%)',
+              boxShadow: '0 20px 50px -10px hsl(240 10% 12% / 0.25)',
+            }}
+          >
+            <h3 className="text-[15px] font-semibold text-foreground leading-snug font-josefin">
+              This looks like {pendingSensitive.category}
+            </h3>
+            <p className="text-[13px] text-muted-foreground mt-2 leading-snug">
+              Saving this means it'll be stored in your Keepr account. Only you can see it.
+            </p>
+            <div className="mt-4 flex flex-col gap-2">
+              <Button
+                onClick={() => { setPendingSensitive(null); commitSave(); }}
+                className="w-full h-10 rounded-md bg-primary hover:bg-primary/90 font-josefin"
+              >
+                Save anyway
+              </Button>
+              <Button
+                onClick={() => setPendingSensitive(null)}
+                variant="ghost"
+                className="w-full h-10 rounded-md font-josefin"
+              >
+                Cancel
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
