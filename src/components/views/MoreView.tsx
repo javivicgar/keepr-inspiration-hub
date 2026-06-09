@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Heart, Star, Share2, HelpCircle, Mail, Moon, Sun, Chrome, User, Shield, Bell, BellOff, BellRing } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
@@ -7,12 +6,14 @@ import { EditPreferencesScreen } from '@/components/EditPreferencesScreen';
 import { PrivacyDataScreen } from '@/components/PrivacyDataScreen';
 import { PermissionPrompt } from '@/components/PermissionPrompt';
 import { usePermissionFlow } from '@/lib/permissions';
+import type { SavedContent } from '@/types/SavedContent';
 
 interface MoreViewProps {
   totalContent: number;
   totalFolders: number;
   userPreferences?: string[];
   onPreferencesUpdate?: (preferences: string[]) => void;
+  content?: SavedContent[];
 }
 
 interface MenuItem {
@@ -22,7 +23,7 @@ interface MenuItem {
   hasSwitch?: boolean;
 }
 
-export const MoreView = ({ totalContent, totalFolders, userPreferences = [], onPreferencesUpdate }: MoreViewProps) => {
+export const MoreView = ({ totalContent, totalFolders, userPreferences = [], onPreferencesUpdate, content = [] }: MoreViewProps) => {
   const [darkMode, setDarkMode] = useState(false);
   const [showEditPreferences, setShowEditPreferences] = useState(false);
   const [showPrivacyData, setShowPrivacyData] = useState(false);
@@ -38,7 +39,7 @@ export const MoreView = ({ totalContent, totalFolders, userPreferences = [], onP
   };
 
   if (showPrivacyData) {
-    return <PrivacyDataScreen onBack={() => setShowPrivacyData(false)} />;
+    return <PrivacyDataScreen onBack={() => setShowPrivacyData(false)} content={content} />;
   }
 
   if (showEditPreferences) {
