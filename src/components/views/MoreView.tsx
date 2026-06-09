@@ -165,6 +165,14 @@ export const MoreView = ({ totalContent, totalFolders, userPreferences = [], onP
         <p className="text-xs text-muted-foreground font-josefin">For saving inspiration</p>
       </div>
 
+      {notificationsFlow.pending && (
+        <PermissionPrompt
+          kind="notifications"
+          feature="Reminders to revisit your saves"
+          onAllow={() => notificationsFlow.resolve(true)}
+          onDismiss={() => notificationsFlow.dismiss()}
+        />
+      )}
     </div>
   );
 };
