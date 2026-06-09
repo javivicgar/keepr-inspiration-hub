@@ -60,6 +60,9 @@ export const SaveMethodScreen = ({
         <p className="text-muted-foreground text-base">
           This helps us make Keepr more seamless for you.
         </p>
+        <p className="text-muted-foreground/80 text-xs mt-2">
+          These preferences personalize your suggestions. You can change them anytime in Privacy & Data.
+        </p>
       </div>
 
       <div className="flex-1 overflow-y-auto min-h-0 mb-4">
