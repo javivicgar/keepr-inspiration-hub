@@ -17,7 +17,7 @@ interface SaveContentModalProps {
   onOpenPrivacy?: () => void;
 }
 
-export const SaveContentModal = ({ isOpen, onClose, onSave, existingFolders }: SaveContentModalProps) => {
+export const SaveContentModal = ({ isOpen, onClose, onSave, existingFolders, onOpenPrivacy }: SaveContentModalProps) => {
   const [formData, setFormData] = useState({
     title: '',
     creatorName: '',
@@ -29,19 +29,15 @@ export const SaveContentModal = ({ isOpen, onClose, onSave, existingFolders }: S
     tags: '',
     folder: ''
   });
+  const [pendingSensitive, setPendingSensitive] = useState<SensitivityResult | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  // Live classification for the inline caution pill under the Title field.
+  const liveSensitivity = useMemo(
+    () => classifySensitivity({ title: formData.title, link: formData.link, note: formData.note }),
+    [formData.title, formData.link, formData.note]
+  );
 
-    if (!formData.title || !formData.link || !formData.folder) {
-      return;
-    }
-
-    onSave({
-      ...formData,
-      tags: formData.tags.split(',').map(tag => tag.trim()).filter(Boolean)
-    });
-
+  const resetForm = () => {
     setFormData({
       title: '',
       creatorName: '',
@@ -53,6 +49,35 @@ export const SaveContentModal = ({ isOpen, onClose, onSave, existingFolders }: S
       tags: '',
       folder: ''
     });
+  };
+
+  const commitSave = () => {
+    onSave({
+      ...formData,
+      tags: formData.tags.split(',').map(tag => tag.trim()).filter(Boolean)
+    });
+    resetForm();
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!formData.title || !formData.link || !formData.folder) {
+      return;
+    }
+
+    const result = classifySensitivity({
+      title: formData.title,
+      link: formData.link,
+      note: formData.note,
+    });
+
+    if (result.tier === 'sensitive') {
+      setPendingSensitive(result);
+      return;
+    }
+
+    commitSave();
   };
 
   if (!isOpen) return null;
