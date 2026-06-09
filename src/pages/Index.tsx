@@ -336,6 +336,7 @@ const Index = () => {
               totalFolders={Array.from(new Set(content.map(item => item.folder))).length}
               userPreferences={userPreferences}
               onPreferencesUpdate={setUserPreferences}
+              content={content}
             />
           </div>
         )}
