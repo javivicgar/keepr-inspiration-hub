@@ -1,8 +1,8 @@
 
 import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
 import { WelcomeScreen } from './WelcomeScreen';
 import { UsernameScreen } from './UsernameScreen';
+import { DataHandlingScreen } from './DataHandlingScreen';
 import { ContentPreferencesScreen } from './ContentPreferencesScreen';
 import { SaveMethodScreen } from './SaveMethodScreen';
 import { ReadyScreen } from './ReadyScreen';
@@ -20,7 +20,7 @@ export const OnboardingFlow = ({ onComplete, onStartPersonalizing }: OnboardingF
 
   const screens = [
     <WelcomeScreen key="welcome" onNext={() => setCurrentScreen(1)} />,
-    <UsernameScreen 
+    <UsernameScreen
       key="username"
       onNext={(selectedUsername) => {
         setUsername(selectedUsername);
@@ -28,24 +28,29 @@ export const OnboardingFlow = ({ onComplete, onStartPersonalizing }: OnboardingF
       }}
       onBack={() => setCurrentScreen(0)}
     />,
-    <ContentPreferencesScreen 
-      key="content" 
-      selectedPreferences={contentPreferences}
-      onPreferencesChange={setContentPreferences}
-      onNext={() => setCurrentScreen(3)} 
+    <DataHandlingScreen
+      key="data-handling"
+      onNext={() => setCurrentScreen(3)}
       onBack={() => setCurrentScreen(1)}
     />,
-    <SaveMethodScreen 
-      key="method" 
-      selectedMethods={saveMethods}
-      onMethodsChange={setSaveMethods}
-      onNext={() => setCurrentScreen(4)} 
+    <ContentPreferencesScreen
+      key="content"
+      selectedPreferences={contentPreferences}
+      onPreferencesChange={setContentPreferences}
+      onNext={() => setCurrentScreen(4)}
       onBack={() => setCurrentScreen(2)}
     />,
-    <ReadyScreen 
-      key="ready" 
-      onComplete={() => onComplete(contentPreferences, username)} 
+    <SaveMethodScreen
+      key="method"
+      selectedMethods={saveMethods}
+      onMethodsChange={setSaveMethods}
+      onNext={() => setCurrentScreen(5)}
       onBack={() => setCurrentScreen(3)}
+    />,
+    <ReadyScreen
+      key="ready"
+      onComplete={() => onComplete(contentPreferences, username)}
+      onBack={() => setCurrentScreen(4)}
       onStartPersonalizing={onStartPersonalizing}
     />
   ];

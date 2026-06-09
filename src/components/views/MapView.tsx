@@ -3,6 +3,7 @@ import { MapPin, ExternalLink, Navigation } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { InteractiveMap } from '@/components/InteractiveMap';
+import { PermissionPrompt } from '@/components/PermissionPrompt';
 import type { SavedContent } from '@/types/SavedContent';
 import { getCategoryMeta } from '@/lib/categories';
 
@@ -17,6 +18,16 @@ export const MapView = ({ content }: MapViewProps) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedKeepr, setSelectedKeepr] = useState<SavedContent | null>(null);
   const [showFullMap, setShowFullMap] = useState(false);
+  const [locationGranted, setLocationGranted] = useState(false);
+  const [pendingFullMap, setPendingFullMap] = useState(false);
+
+  const requestFullMap = () => {
+    if (locationGranted) {
+      setShowFullMap(true);
+    } else {
+      setPendingFullMap(true);
+    }
+  };
 
   const locationsContent = content.filter(item => item.location);
   
@@ -81,7 +92,7 @@ export const MapView = ({ content }: MapViewProps) => {
           {/* Map Container */}
           <div 
             className="w-full h-full bg-gradient-to-br from-blue-50 to-green-50 rounded-2xl overflow-hidden shadow-lg relative cursor-pointer hover:shadow-xl transition-shadow"
-            onClick={() => setShowFullMap(true)}
+            onClick={requestFullMap}
           >
             {/* World Map Background */}
             <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwMCIgaGVpZ2h0PSI1MDAiIHZpZXdCb3g9IjAgMCAxMDAwIDUwMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEwMCAxMDBIMjAwVjIwMEgxMDBWMTAwWiIgZmlsbD0iIzk4OTVjNyIgZmlsbC1vcGFjaXR5PSIwLjEiLz4KPHN0cm9rZSBkPSJNMCAwaDEwMDB2NTAwSDBWMCIgc3Ryb2tlPSIjYThhNWQwIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1kYXNoYXJyYXk9IjUgNSIgZmlsbD0ibm9uZSIvPgo8L3N2Zz4K')] opacity-20 bg-center bg-cover"></div>
@@ -121,7 +132,7 @@ export const MapView = ({ content }: MapViewProps) => {
                   className="bg-primary hover:bg-primary-hover text-white font-josefin"
                   onClick={(e) => {
                     e.stopPropagation();
-                    setShowFullMap(true);
+                    requestFullMap();
                   }}
                 >
                   Open Full Map
@@ -211,6 +222,19 @@ export const MapView = ({ content }: MapViewProps) => {
           </div>
         )}
       </div>
+
+      {pendingFullMap && (
+        <PermissionPrompt
+          kind="location"
+          feature="Showing nearby Keeprs on the map"
+          onAllow={() => {
+            setLocationGranted(true);
+            setPendingFullMap(false);
+            setShowFullMap(true);
+          }}
+          onDismiss={() => setPendingFullMap(false)}
+        />
+      )}
     </div>
   );
 };

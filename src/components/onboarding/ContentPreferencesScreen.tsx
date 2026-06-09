@@ -52,6 +52,9 @@ export const ContentPreferencesScreen = ({
         <p className="text-muted-foreground text-base">
           We'll tailor Keepr to your needs.
         </p>
+        <p className="text-muted-foreground/80 text-xs mt-2">
+          These preferences personalize your suggestions. You can change them anytime in Privacy & Data.
+        </p>
       </div>
 
       <div className="flex-1 overflow-y-auto min-h-0 mb-4">

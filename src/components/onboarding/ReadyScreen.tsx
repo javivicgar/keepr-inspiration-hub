@@ -30,11 +30,11 @@ export const ReadyScreen = ({ onComplete, onBack, onStartPersonalizing }: ReadyS
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
           }`}
         >
-          <h2 className="text-2xl md:text-3xl font-semibold text-foreground mb-2 tracking-tight leading-tight">
-            Keepr is ready for you
+          <h2 className="text-2xl md:text-3xl font-semibold text-foreground mb-3 tracking-tight leading-tight">
+            You're all set.
           </h2>
-          <p className="text-muted-foreground text-base">
-            Let's start adding your first Keeprs.
+          <p className="text-muted-foreground text-base leading-relaxed">
+            Your saves are private by default. You can change every setting anytime in Privacy & Data.
           </p>
         </div>
       </div>
