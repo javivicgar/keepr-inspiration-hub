@@ -166,6 +166,19 @@ export const AddOptionsModal = ({ isOpen, onClose, onOptionSelect }: AddOptionsM
           </div>
         </div>
       </div>
+
+      {pendingPhoto && (
+        <PermissionPrompt
+          kind="camera"
+          feature="Taking a photo for your Keepr"
+          onAllow={() => {
+            setCameraPermissionGranted(true);
+            setPendingPhoto(false);
+            completePhotoFlow();
+          }}
+          onDismiss={() => setPendingPhoto(false)}
+        />
+      )}
     </div>
   );
 };
