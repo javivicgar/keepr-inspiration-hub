@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { X, Globe, Camera, Clipboard, Edit3, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { PermissionPrompt } from '@/components/PermissionPrompt';
 
 interface AddOptionsModalProps {
   isOpen: boolean;
@@ -14,6 +15,8 @@ export const AddOptionsModal = ({ isOpen, onClose, onOptionSelect }: AddOptionsM
   const [showBrowser, setShowBrowser] = useState(false);
   const [showCamera, setShowCamera] = useState(false);
   const [browserUrl, setBrowserUrl] = useState('');
+  const [cameraPermissionGranted, setCameraPermissionGranted] = useState(false);
+  const [pendingPhoto, setPendingPhoto] = useState(false);
 
   const options = [
     { id: 'browser', label: 'Browser', icon: Globe, color: 'bg-blue-50 text-blue-600' },
@@ -36,6 +39,16 @@ export const AddOptionsModal = ({ isOpen, onClose, onOptionSelect }: AddOptionsM
   };
 
   const handleMediaSelect = (type: 'photo' | 'video') => {
+    if (type === 'photo' && !cameraPermissionGranted) {
+      setPendingPhoto(true);
+      return;
+    }
+    onOptionSelect('camera');
+    setShowCamera(false);
+    onClose();
+  };
+
+  const completePhotoFlow = () => {
     onOptionSelect('camera');
     setShowCamera(false);
     onClose();

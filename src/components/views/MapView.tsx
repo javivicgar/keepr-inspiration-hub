@@ -222,6 +222,19 @@ export const MapView = ({ content }: MapViewProps) => {
           </div>
         )}
       </div>
+
+      {pendingFullMap && (
+        <PermissionPrompt
+          kind="location"
+          feature="Showing nearby Keeprs on the map"
+          onAllow={() => {
+            setLocationGranted(true);
+            setPendingFullMap(false);
+            setShowFullMap(true);
+          }}
+          onDismiss={() => setPendingFullMap(false)}
+        />
+      )}
     </div>
   );
 };
