@@ -349,6 +349,7 @@ const Index = () => {
           onClose={() => setShowSaveModal(false)}
           onSave={handleAddContent}
           existingFolders={Array.from(new Set(content.map(item => item.folder)))}
+          onOpenPrivacy={() => { setShowSaveModal(false); setActiveTab('more'); }}
         />
       )}
 

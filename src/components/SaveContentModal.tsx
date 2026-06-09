@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { ArrowLeft, MapPin, Link, User, Folder, Tag } from 'lucide-react';
+import React, { useMemo, useState } from 'react';
+import { ArrowLeft, MapPin, Link, User, Folder, Tag, ShieldAlert } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -7,15 +7,17 @@ import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import type { SavedContent } from '@/types/SavedContent';
+import { classifySensitivity, type SensitivityResult } from '@/lib/sensitivity';
 
 interface SaveContentModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSave: (content: Omit<SavedContent, 'id' | 'createdAt'>) => void;
   existingFolders: string[];
+  onOpenPrivacy?: () => void;
 }
 
-export const SaveContentModal = ({ isOpen, onClose, onSave, existingFolders }: SaveContentModalProps) => {
+export const SaveContentModal = ({ isOpen, onClose, onSave, existingFolders, onOpenPrivacy }: SaveContentModalProps) => {
   const [formData, setFormData] = useState({
     title: '',
     creatorName: '',
@@ -27,19 +29,15 @@ export const SaveContentModal = ({ isOpen, onClose, onSave, existingFolders }: S
     tags: '',
     folder: ''
   });
+  const [pendingSensitive, setPendingSensitive] = useState<SensitivityResult | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  // Live classification for the inline caution pill under the Title field.
+  const liveSensitivity = useMemo(
+    () => classifySensitivity({ title: formData.title, link: formData.link, note: formData.note }),
+    [formData.title, formData.link, formData.note]
+  );
 
-    if (!formData.title || !formData.link || !formData.folder) {
-      return;
-    }
-
-    onSave({
-      ...formData,
-      tags: formData.tags.split(',').map(tag => tag.trim()).filter(Boolean)
-    });
-
+  const resetForm = () => {
     setFormData({
       title: '',
       creatorName: '',
@@ -51,6 +49,35 @@ export const SaveContentModal = ({ isOpen, onClose, onSave, existingFolders }: S
       tags: '',
       folder: ''
     });
+  };
+
+  const commitSave = () => {
+    onSave({
+      ...formData,
+      tags: formData.tags.split(',').map(tag => tag.trim()).filter(Boolean)
+    });
+    resetForm();
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!formData.title || !formData.link || !formData.folder) {
+      return;
+    }
+
+    const result = classifySensitivity({
+      title: formData.title,
+      link: formData.link,
+      note: formData.note,
+    });
+
+    if (result.tier === 'sensitive') {
+      setPendingSensitive(result);
+      return;
+    }
+
+    commitSave();
   };
 
   if (!isOpen) return null;
@@ -79,6 +106,21 @@ export const SaveContentModal = ({ isOpen, onClose, onSave, existingFolders }: S
               placeholder="Amazing rooftop café in Rome"
               required
             />
+            {liveSensitivity.tier === 'caution' && (
+              <div className="inline-flex items-center gap-2 rounded-full bg-muted px-3 py-1.5 text-xs text-muted-foreground">
+                <ShieldAlert className="h-3.5 w-3.5" />
+                <span>
+                  This save may be sensitive ({liveSensitivity.category}) —{' '}
+                  <button
+                    type="button"
+                    onClick={() => onOpenPrivacy?.()}
+                    className="underline underline-offset-2 hover:text-foreground"
+                  >
+                    review privacy?
+                  </button>
+                </span>
+              </div>
+            )}
           </div>
 
           <div className="space-y-2">
@@ -222,6 +264,46 @@ export const SaveContentModal = ({ isOpen, onClose, onSave, existingFolders }: S
           </div>
         </form>
       </div>
+
+      {pendingSensitive && (
+        <div
+          className="absolute inset-0 z-[60] flex items-center justify-center p-6"
+          style={{ background: 'hsl(240 10% 12% / 0.35)', backdropFilter: 'blur(6px)' }}
+          role="dialog"
+          aria-modal="true"
+        >
+          <div
+            className="w-full max-w-[300px] rounded-2xl overflow-hidden p-5 text-center"
+            style={{
+              background: 'hsl(0 0% 100% / 0.92)',
+              backdropFilter: 'blur(20px) saturate(180%)',
+              boxShadow: '0 20px 50px -10px hsl(240 10% 12% / 0.25)',
+            }}
+          >
+            <h3 className="text-[15px] font-semibold text-foreground leading-snug font-josefin">
+              This looks like {pendingSensitive.category}
+            </h3>
+            <p className="text-[13px] text-muted-foreground mt-2 leading-snug">
+              Saving this means it'll be stored in your Keepr account. Only you can see it.
+            </p>
+            <div className="mt-4 flex flex-col gap-2">
+              <Button
+                onClick={() => { setPendingSensitive(null); commitSave(); }}
+                className="w-full h-10 rounded-md bg-primary hover:bg-primary/90 font-josefin"
+              >
+                Save anyway
+              </Button>
+              <Button
+                onClick={() => setPendingSensitive(null)}
+                variant="ghost"
+                className="w-full h-10 rounded-md font-josefin"
+              >
+                Cancel
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
