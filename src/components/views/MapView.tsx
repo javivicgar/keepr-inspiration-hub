@@ -19,15 +19,10 @@ export const MapView = ({ content }: MapViewProps) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedKeepr, setSelectedKeepr] = useState<SavedContent | null>(null);
   const [showFullMap, setShowFullMap] = useState(false);
-  const [locationGranted, setLocationGranted] = useState(false);
-  const [pendingFullMap, setPendingFullMap] = useState(false);
+  const locationFlow = usePermissionFlow('location');
 
   const requestFullMap = () => {
-    if (locationGranted) {
-      setShowFullMap(true);
-    } else {
-      setPendingFullMap(true);
-    }
+    locationFlow.request(() => setShowFullMap(true));
   };
 
   const locationsContent = content.filter(item => item.location);
