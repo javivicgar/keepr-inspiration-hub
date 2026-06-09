@@ -4,6 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { InteractiveMap } from '@/components/InteractiveMap';
 import { PermissionPrompt } from '@/components/PermissionPrompt';
+import { usePermissionFlow } from '@/lib/permissions';
 import type { SavedContent } from '@/types/SavedContent';
 import { getCategoryMeta } from '@/lib/categories';
 
