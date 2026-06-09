@@ -80,6 +80,14 @@ export const MapView = ({ content }: MapViewProps) => {
             </Button>
           ))}
         </div>
+        {locationFlow.status === 'denied' && (
+          <button
+            onClick={requestFullMap}
+            className="mt-2 inline-flex items-center gap-1 text-xs font-josefin text-primary border border-primary/40 rounded-full px-3 py-1 hover:bg-primary/10 transition-colors"
+          >
+            <MapPin className="h-3 w-3" /> Enable location
+          </button>
+        )}
       </div>
 
       {/* Interactive Map Area */}
