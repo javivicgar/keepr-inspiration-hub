@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { ArrowLeft, MapPin, Link, User, Folder, Tag } from 'lucide-react';
+import React, { useMemo, useState } from 'react';
+import { ArrowLeft, MapPin, Link, User, Folder, Tag, ShieldAlert } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -7,12 +7,14 @@ import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import type { SavedContent } from '@/types/SavedContent';
+import { classifySensitivity, type SensitivityResult } from '@/lib/sensitivity';
 
 interface SaveContentModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSave: (content: Omit<SavedContent, 'id' | 'createdAt'>) => void;
   existingFolders: string[];
+  onOpenPrivacy?: () => void;
 }
 
 export const SaveContentModal = ({ isOpen, onClose, onSave, existingFolders }: SaveContentModalProps) => {
