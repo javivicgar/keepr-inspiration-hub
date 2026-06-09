@@ -3,6 +3,7 @@ import { Search, Bookmark } from 'lucide-react';
 import { SavedContent } from '@/types/SavedContent';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { AiBadge } from '@/components/AiBadge';
 
 interface SuggestedKeeprCarouselProps {
   userPreferences: string[];
@@ -94,7 +95,15 @@ export const SuggestedKeeprCarousel = ({ userPreferences, onSaveKeepr }: Suggest
 
   return (
     <div className="mb-6">
-      <h2 className="text-lg font-semibold mb-4">Suggested Keeprs</h2>
+      <div className="mb-4">
+        <div className="flex items-center gap-2">
+          <h2 className="text-lg font-semibold">Suggested Keeprs</h2>
+          <AiBadge />
+        </div>
+        <p className="text-xs text-muted-foreground font-josefin mt-1">
+          AI-generated suggestions based on your preferences.
+        </p>
+      </div>
       <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
         {suggestedKeeprs.map((keepr, index) => (
           <div
@@ -108,6 +117,9 @@ export const SuggestedKeeprCarousel = ({ userPreferences, onSaveKeepr }: Suggest
                   alt={keepr.title}
                   className="w-full h-32 object-cover"
                 />
+                <div className="absolute top-2 left-2">
+                  <AiBadge className="bg-white/90 backdrop-blur-sm" />
+                </div>
                 <div className="absolute top-2 right-2">
                   <Button
                     size="sm"
