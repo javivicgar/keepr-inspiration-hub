@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, MapPin, Link, User, Folder, Tag, ChevronDown } from 'lucide-react';
+import { ArrowLeft, MapPin, Link, User, Folder, Tag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -30,7 +30,7 @@ export const SaveContentModal = ({ isOpen, onClose, onSave, existingFolders }: S
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!formData.title || !formData.link || !formData.folder) {
       return;
     }
@@ -40,7 +40,6 @@ export const SaveContentModal = ({ isOpen, onClose, onSave, existingFolders }: S
       tags: formData.tags.split(',').map(tag => tag.trim()).filter(Boolean)
     });
 
-    // Reset form
     setFormData({
       title: '',
       creatorName: '',
@@ -57,18 +56,22 @@ export const SaveContentModal = ({ isOpen, onClose, onSave, existingFolders }: S
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-      <div className="bg-card rounded-lg shadow-lg w-full max-w-md max-h-[90vh] overflow-y-auto">
-        <div className="flex items-center justify-between p-4 border-b border-border">
-          <h2 className="text-lg font-semibold text-foreground">Save Content</h2>
-          <Button variant="ghost" size="sm" onClick={onClose}>
-            <X className="h-4 w-4" />
-          </Button>
+    <div className="absolute inset-0 z-50 bg-background overflow-y-auto">
+      <div className="px-4 pt-5 pb-24">
+        <div className="flex items-center gap-3 mb-6 sticky top-0 bg-background py-2 z-10">
+          <button
+            onClick={onClose}
+            aria-label="Back"
+            className="p-2 -ml-2 rounded-full hover:bg-muted transition-colors flex items-center justify-center"
+          >
+            <ArrowLeft className="h-6 w-6 text-foreground" />
+          </button>
+          <h1 className="text-xl font-semibold font-josefin">Save Content</h1>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-4 space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="title">Title *</Label>
+            <Label htmlFor="title" className="font-josefin">Title *</Label>
             <Input
               id="title"
               value={formData.title}
@@ -79,7 +82,7 @@ export const SaveContentModal = ({ isOpen, onClose, onSave, existingFolders }: S
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="link">Link *</Label>
+            <Label htmlFor="link" className="font-josefin">Link *</Label>
             <div className="relative">
               <Link className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
@@ -94,7 +97,7 @@ export const SaveContentModal = ({ isOpen, onClose, onSave, existingFolders }: S
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="creator">Creator</Label>
+            <Label htmlFor="creator" className="font-josefin">Creator</Label>
             <div className="relative">
               <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
@@ -108,7 +111,7 @@ export const SaveContentModal = ({ isOpen, onClose, onSave, existingFolders }: S
           </div>
 
           <div className="space-y-3">
-            <Label>Category</Label>
+            <Label className="font-josefin">Category</Label>
             <RadioGroup
               value={formData.category}
               onValueChange={(value) => setFormData(prev => ({ ...prev, category: value as SavedContent['category'] }))}
@@ -117,7 +120,7 @@ export const SaveContentModal = ({ isOpen, onClose, onSave, existingFolders }: S
               {['Food Spots', 'Locations', 'Fashion', 'Useful Apps', 'Tutorials', 'Outdoor', 'Music', 'Home', 'Other'].map((category) => (
                 <div key={category} className="flex items-center space-x-2 p-2 border border-border rounded-md">
                   <RadioGroupItem value={category} id={category} />
-                  <Label htmlFor={category} className="text-sm">{category}</Label>
+                  <Label htmlFor={category} className="text-sm font-josefin">{category}</Label>
                 </div>
               ))}
             </RadioGroup>
@@ -126,7 +129,7 @@ export const SaveContentModal = ({ isOpen, onClose, onSave, existingFolders }: S
           {(formData.category === 'Food Spots' || formData.category === 'Locations') && (
             <>
               <div className="space-y-2">
-                <Label htmlFor="location">Location</Label>
+                <Label htmlFor="location" className="font-josefin">Location</Label>
                 <div className="relative">
                   <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   <Input
@@ -140,7 +143,7 @@ export const SaveContentModal = ({ isOpen, onClose, onSave, existingFolders }: S
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="mapLink">Map Link</Label>
+                <Label htmlFor="mapLink" className="font-josefin">Map Link</Label>
                 <Input
                   id="mapLink"
                   value={formData.mapLink}
@@ -152,11 +155,11 @@ export const SaveContentModal = ({ isOpen, onClose, onSave, existingFolders }: S
           )}
 
           <div className="space-y-2">
-            <Label htmlFor="folder">Folder *</Label>
+            <Label htmlFor="folder" className="font-josefin">Folder *</Label>
             <div className="space-y-2">
               {existingFolders.length > 0 && (
                 <div className="space-y-2">
-                  <Label className="text-sm text-muted-foreground">Select existing folder:</Label>
+                  <Label className="text-sm text-muted-foreground font-josefin">Select existing folder:</Label>
                   <Select value={formData.folder} onValueChange={(value) => setFormData(prev => ({ ...prev, folder: value }))}>
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="Choose folder" />
@@ -167,7 +170,7 @@ export const SaveContentModal = ({ isOpen, onClose, onSave, existingFolders }: S
                       ))}
                     </SelectContent>
                   </Select>
-                  <Label className="text-sm text-muted-foreground">Or create new folder:</Label>
+                  <Label className="text-sm text-muted-foreground font-josefin">Or create new folder:</Label>
                 </div>
               )}
               <div className="relative">
@@ -185,7 +188,7 @@ export const SaveContentModal = ({ isOpen, onClose, onSave, existingFolders }: S
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="tags">Tags</Label>
+            <Label htmlFor="tags" className="font-josefin">Tags</Label>
             <div className="relative">
               <Tag className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
@@ -199,7 +202,7 @@ export const SaveContentModal = ({ isOpen, onClose, onSave, existingFolders }: S
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="note">Note</Label>
+            <Label htmlFor="note" className="font-josefin">Note</Label>
             <Textarea
               id="note"
               value={formData.note}
@@ -210,10 +213,10 @@ export const SaveContentModal = ({ isOpen, onClose, onSave, existingFolders }: S
           </div>
 
           <div className="flex space-x-3 pt-4">
-            <Button type="button" variant="outline" onClick={onClose} className="flex-1">
+            <Button type="button" variant="outline" onClick={onClose} className="flex-1 font-josefin">
               Cancel
             </Button>
-            <Button type="submit" className="flex-1 bg-primary hover:bg-primary/90">
+            <Button type="submit" className="flex-1 bg-primary hover:bg-primary/90 font-josefin">
               Save
             </Button>
           </div>
