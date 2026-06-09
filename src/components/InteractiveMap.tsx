@@ -1,51 +1,45 @@
-import React, { useState } from 'react';
-import { ArrowLeft, MapPin, ExternalLink, Navigation } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import type { SavedContent } from '@/types/SavedContent';
-import { getCategoryMeta } from '@/lib/categories';
+import React, { useState } from "react";
+import { ArrowLeft, MapPin, ExternalLink, Navigation } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import type { SavedContent } from "@/types/SavedContent";
+import { getCategoryMeta } from "@/lib/categories";
 
 interface InteractiveMapProps {
   content: SavedContent[];
   onBack: () => void;
 }
 
-
 export const InteractiveMap = ({ content, onBack }: InteractiveMapProps) => {
   const [selectedKeepr, setSelectedKeepr] = useState<SavedContent | null>(null);
   const [zoomLevel, setZoomLevel] = useState(1);
 
-  const locationsContent = content.filter(item => item.location);
+  const locationsContent = content.filter((item) => item.location);
 
   const handleGetDirections = (location: string) => {
     const query = encodeURIComponent(location);
     const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    
+
     if (isMobile && /iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-      window.open(`maps://maps.google.com/maps?q=${query}`, '_blank');
+      window.open(`maps://maps.google.com/maps?q=${query}`, "_blank");
     } else {
-      window.open(`https://maps.google.com/maps?q=${query}`, '_blank');
+      window.open(`https://maps.google.com/maps?q=${query}`, "_blank");
     }
   };
 
   const handleZoomIn = () => {
-    setZoomLevel(prev => Math.min(prev + 0.2, 2));
+    setZoomLevel((prev) => Math.min(prev + 0.2, 2));
   };
 
   const handleZoomOut = () => {
-    setZoomLevel(prev => Math.max(prev - 0.2, 0.5));
+    setZoomLevel((prev) => Math.max(prev - 0.2, 0.5));
   };
 
   return (
     <div className="fixed inset-0 bg-background z-50 flex flex-col">
       {/* Header */}
       <div className="bg-white border-b border-border p-4 flex items-center gap-4 z-10">
-        <Button 
-          onClick={onBack}
-          variant="ghost" 
-          size="sm"
-          className="rounded-full p-2"
-        >
+        <Button onClick={onBack} variant="ghost" size="sm" className="rounded-full p-2">
           <ArrowLeft className="h-5 w-5" />
         </Button>
         <h1 className="text-xl font-bold font-josefin">Interactive Map</h1>
@@ -53,19 +47,19 @@ export const InteractiveMap = ({ content, onBack }: InteractiveMapProps) => {
 
       {/* Map Container */}
       <div className="flex-1 relative overflow-hidden">
-        <div 
+        <div
           className="w-full h-full bg-gradient-to-br from-blue-50 to-green-50 relative cursor-move transition-transform duration-300"
           style={{ transform: `scale(${zoomLevel})` }}
         >
           {/* World Map Background */}
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwMCIgaGVpZ2h0PSI1MDAiIHZpZXdCb3g9IjAgMCAxMDAwIDUwMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHN0cm9rZSBkPSJNMCAwaDEwMDB2NTAwSDBWMCIgc3Ryb2tlPSIjYThhNWQwIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1kYXNoYXJyYXk9IjUgNSIgZmlsbD0ibm9uZSIvPgo8L3N2Zz4K')] opacity-20 bg-center bg-cover"></div>
-          
+
           {/* Map Pins */}
           {locationsContent.map((item, index) => {
             const color = getCategoryMeta(item.category).pinColor;
-            const x = 100 + (index * 120) % 700;
-            const y = 80 + (Math.floor(index / 6) * 100) % 400;
-            
+            const x = 100 + ((index * 120) % 700);
+            const y = 80 + ((Math.floor(index / 6) * 100) % 400);
+
             return (
               <div
                 key={item.id}
@@ -73,7 +67,7 @@ export const InteractiveMap = ({ content, onBack }: InteractiveMapProps) => {
                 style={{ left: `${x}px`, top: `${y}px` }}
                 onClick={() => setSelectedKeepr(item)}
               >
-                <div 
+                <div
                   className="w-8 h-8 rounded-full border-3 border-white shadow-lg flex items-center justify-center hover:shadow-xl"
                   style={{ backgroundColor: color }}
                 >
@@ -87,7 +81,7 @@ export const InteractiveMap = ({ content, onBack }: InteractiveMapProps) => {
           })}
 
           {/* Interactive Map Instructions */}
-          <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm p-4 rounded-2xl shadow-lg max-w-sm">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white/90 backdrop-blur-sm p-4 rounded-2xl shadow-lg max-w-sm w-[calc(100%-2rem)]">
             <Navigation className="h-8 w-8 mx-auto mb-2 text-primary" />
             <h3 className="font-semibold mb-1 font-josefin text-center">Full Screen Map</h3>
             <p className="text-xs text-gray-600 font-josefin text-center">
@@ -121,9 +115,9 @@ export const InteractiveMap = ({ content, onBack }: InteractiveMapProps) => {
               <CardContent className="p-6">
                 <div className="flex justify-between items-start mb-3">
                   <h3 className="font-bold font-josefin text-lg">{selectedKeepr.title}</h3>
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
+                  <Button
+                    variant="ghost"
+                    size="sm"
                     onClick={() => setSelectedKeepr(null)}
                     className="h-8 w-8 p-0 rounded-full"
                   >
@@ -136,17 +130,17 @@ export const InteractiveMap = ({ content, onBack }: InteractiveMapProps) => {
                 </div>
                 <p className="text-sm text-gray-500 font-josefin mb-4">by @{selectedKeepr.creatorName}</p>
                 <div className="flex gap-3">
-                  <Button 
+                  <Button
                     className="bg-primary hover:bg-primary-hover text-white flex-1"
                     onClick={() => handleGetDirections(selectedKeepr.location!)}
                   >
                     <MapPin className="h-4 w-4 mr-2" />
                     Get Directions
                   </Button>
-                  <Button 
-                    variant="outline" 
+                  <Button
+                    variant="outline"
                     className="flex-1"
-                    onClick={() => window.open(selectedKeepr.link, '_blank')}
+                    onClick={() => window.open(selectedKeepr.link, "_blank")}
                   >
                     <ExternalLink className="h-4 w-4 mr-2" />
                     View Keepr
