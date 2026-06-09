@@ -63,6 +63,19 @@ export const MoreView = ({ totalContent, totalFolders, userPreferences = [], onP
       heading: 'App',
       items: [
         { icon: darkMode ? Sun : Moon, label: 'Dark Mode', action: toggleDarkMode, hasSwitch: true },
+        {
+          icon: notificationsFlow.status === 'granted' ? BellRing : notificationsFlow.status === 'denied' ? BellOff : Bell,
+          label:
+            notificationsFlow.status === 'granted'
+              ? 'Notifications enabled'
+              : notificationsFlow.status === 'denied'
+              ? 'Enable notifications'
+              : 'Turn on notifications',
+          action: () => {
+            if (notificationsFlow.status === 'granted') return;
+            notificationsFlow.request();
+          },
+        },
         { icon: HelpCircle, label: 'Help & Support', action: () => console.log('Help') },
         { icon: Mail, label: 'Send Feedback', action: () => window.open('mailto:support@keepr.app', '_blank') },
       ],
