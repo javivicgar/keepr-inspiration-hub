@@ -4,6 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { InteractiveMap } from '@/components/InteractiveMap';
 import { PermissionPrompt } from '@/components/PermissionPrompt';
+import { usePermissionFlow } from '@/lib/permissions';
 import type { SavedContent } from '@/types/SavedContent';
 import { getCategoryMeta } from '@/lib/categories';
 
@@ -18,15 +19,10 @@ export const MapView = ({ content }: MapViewProps) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedKeepr, setSelectedKeepr] = useState<SavedContent | null>(null);
   const [showFullMap, setShowFullMap] = useState(false);
-  const [locationGranted, setLocationGranted] = useState(false);
-  const [pendingFullMap, setPendingFullMap] = useState(false);
+  const locationFlow = usePermissionFlow('location');
 
   const requestFullMap = () => {
-    if (locationGranted) {
-      setShowFullMap(true);
-    } else {
-      setPendingFullMap(true);
-    }
+    locationFlow.request(() => setShowFullMap(true));
   };
 
   const locationsContent = content.filter(item => item.location);
@@ -84,6 +80,14 @@ export const MapView = ({ content }: MapViewProps) => {
             </Button>
           ))}
         </div>
+        {locationFlow.status === 'denied' && (
+          <button
+            onClick={requestFullMap}
+            className="mt-2 inline-flex items-center gap-1 text-xs font-josefin text-primary border border-primary/40 rounded-full px-3 py-1 hover:bg-primary/10 transition-colors"
+          >
+            <MapPin className="h-3 w-3" /> Enable location
+          </button>
+        )}
       </div>
 
       {/* Interactive Map Area */}
@@ -223,16 +227,12 @@ export const MapView = ({ content }: MapViewProps) => {
         )}
       </div>
 
-      {pendingFullMap && (
+      {locationFlow.pending && (
         <PermissionPrompt
           kind="location"
           feature="Showing nearby Keeprs on the map"
-          onAllow={() => {
-            setLocationGranted(true);
-            setPendingFullMap(false);
-            setShowFullMap(true);
-          }}
-          onDismiss={() => setPendingFullMap(false)}
+          onAllow={() => locationFlow.resolve(true)}
+          onDismiss={() => locationFlow.dismiss()}
         />
       )}
     </div>

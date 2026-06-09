@@ -1,10 +1,12 @@
 
 import React, { useState } from 'react';
-import { Heart, Star, Share2, HelpCircle, Mail, Moon, Sun, Chrome, User, Shield } from 'lucide-react';
+import { Heart, Star, Share2, HelpCircle, Mail, Moon, Sun, Chrome, User, Shield, Bell, BellOff, BellRing } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
 import { EditPreferencesScreen } from '@/components/EditPreferencesScreen';
 import { PrivacyDataScreen } from '@/components/PrivacyDataScreen';
+import { PermissionPrompt } from '@/components/PermissionPrompt';
+import { usePermissionFlow } from '@/lib/permissions';
 
 interface MoreViewProps {
   totalContent: number;
@@ -24,6 +26,7 @@ export const MoreView = ({ totalContent, totalFolders, userPreferences = [], onP
   const [darkMode, setDarkMode] = useState(false);
   const [showEditPreferences, setShowEditPreferences] = useState(false);
   const [showPrivacyData, setShowPrivacyData] = useState(false);
+  const notificationsFlow = usePermissionFlow('notifications');
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
@@ -60,6 +63,19 @@ export const MoreView = ({ totalContent, totalFolders, userPreferences = [], onP
       heading: 'App',
       items: [
         { icon: darkMode ? Sun : Moon, label: 'Dark Mode', action: toggleDarkMode, hasSwitch: true },
+        {
+          icon: notificationsFlow.status === 'granted' ? BellRing : notificationsFlow.status === 'denied' ? BellOff : Bell,
+          label:
+            notificationsFlow.status === 'granted'
+              ? 'Notifications enabled'
+              : notificationsFlow.status === 'denied'
+              ? 'Enable notifications'
+              : 'Turn on notifications',
+          action: () => {
+            if (notificationsFlow.status === 'granted') return;
+            notificationsFlow.request();
+          },
+        },
         { icon: HelpCircle, label: 'Help & Support', action: () => console.log('Help') },
         { icon: Mail, label: 'Send Feedback', action: () => window.open('mailto:support@keepr.app', '_blank') },
       ],
@@ -149,6 +165,14 @@ export const MoreView = ({ totalContent, totalFolders, userPreferences = [], onP
         <p className="text-xs text-muted-foreground font-josefin">For saving inspiration</p>
       </div>
 
+      {notificationsFlow.pending && (
+        <PermissionPrompt
+          kind="notifications"
+          feature="Reminders to revisit your saves"
+          onAllow={() => notificationsFlow.resolve(true)}
+          onDismiss={() => notificationsFlow.dismiss()}
+        />
+      )}
     </div>
   );
 };
