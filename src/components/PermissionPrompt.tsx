@@ -97,7 +97,7 @@ export const PermissionPrompt = ({ kind, feature, onAllow, onDismiss }: Permissi
 
   if (stage === 'os') {
     const { title, body, options } = meta.os;
-    const isStacked = options.length > 2;
+    const isStacked = true;
     return (
       <div
         className="absolute inset-0 z-[60] flex items-center justify-center p-6"
