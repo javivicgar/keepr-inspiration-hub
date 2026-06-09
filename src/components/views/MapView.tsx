@@ -219,16 +219,12 @@ export const MapView = ({ content }: MapViewProps) => {
         )}
       </div>
 
-      {pendingFullMap && (
+      {locationFlow.pending && (
         <PermissionPrompt
           kind="location"
           feature="Showing nearby Keeprs on the map"
-          onAllow={() => {
-            setLocationGranted(true);
-            setPendingFullMap(false);
-            setShowFullMap(true);
-          }}
-          onDismiss={() => setPendingFullMap(false)}
+          onAllow={() => locationFlow.resolve(true)}
+          onDismiss={() => locationFlow.dismiss()}
         />
       )}
     </div>
