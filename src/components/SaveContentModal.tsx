@@ -267,7 +267,7 @@ export const SaveContentModal = ({ isOpen, onClose, onSave, existingFolders, onO
 
       {pendingSensitive && (
         <div
-          className="absolute inset-0 z-[60] flex items-center justify-center p-6"
+          className="fixed inset-0 z-[60] flex items-center justify-center p-6"
           style={{ background: 'hsl(240 10% 12% / 0.35)', backdropFilter: 'blur(6px)' }}
           role="dialog"
           aria-modal="true"
