@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import { Bookmark } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import React, { useState } from "react";
+import { Bookmark } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface AuthScreenProps {
   onAuthenticate: () => void;
 }
 
-type Provider = 'apple' | 'google';
+type Provider = "apple" | "google";
 
 const providerCopy: Record<Provider, { domain: string }> = {
-  apple: { domain: 'appleid.apple.com' },
-  google: { domain: 'accounts.google.com' },
+  apple: { domain: "appleid.apple.com" },
+  google: { domain: "accounts.google.com" },
 };
 
 export const AuthScreen = ({ onAuthenticate }: AuthScreenProps) => {
@@ -34,16 +34,16 @@ export const AuthScreen = ({ onAuthenticate }: AuthScreenProps) => {
   const IOSAuthDialog = ({ provider }: { provider: Provider }) => (
     <div
       className="absolute inset-0 z-50 flex items-center justify-center p-6"
-      style={{ background: 'hsl(240 10% 12% / 0.35)', backdropFilter: 'blur(6px)' }}
+      style={{ background: "hsl(240 10% 12% / 0.35)", backdropFilter: "blur(6px)" }}
       role="dialog"
       aria-modal="true"
     >
       <div
         className="w-full max-w-[280px] rounded-2xl overflow-hidden text-center"
         style={{
-          background: 'hsl(0 0% 100% / 0.92)',
-          backdropFilter: 'blur(20px) saturate(180%)',
-          boxShadow: '0 20px 50px -10px hsl(240 10% 12% / 0.25)',
+          background: "hsl(0 0% 100% / 0.92)",
+          backdropFilter: "blur(20px) saturate(180%)",
+          boxShadow: "0 20px 50px -10px hsl(240 10% 12% / 0.25)",
         }}
       >
         <div className="px-5 pt-5 pb-4">
@@ -67,7 +67,7 @@ export const AuthScreen = ({ onAuthenticate }: AuthScreenProps) => {
             disabled={isAuthenticating}
             className="py-3 text-[15px] font-semibold text-primary hover:bg-muted/50 transition-colors"
           >
-            {isAuthenticating ? 'Signing in…' : 'Continue'}
+            {isAuthenticating ? "Signing in…" : "Continue"}
           </button>
         </div>
       </div>
@@ -75,7 +75,7 @@ export const AuthScreen = ({ onAuthenticate }: AuthScreenProps) => {
   );
 
   return (
-    <div className="h-full w-full bg-background brand-glow overflow-hidden flex justify-center relative sm:rounded-[44px]">
+    <div className="h-full w-full bg-background brand-glow overflow-hidden flex justify-center relative">
       <div className="relative z-10 w-full max-w-sm px-6 flex flex-col justify-between items-center pt-[16%] pb-8">
         {/* Wordmark */}
         <div className="flex flex-col items-center">
@@ -91,7 +91,7 @@ export const AuthScreen = ({ onAuthenticate }: AuthScreenProps) => {
         {/* CTAs + legal */}
         <div className="w-full space-y-3">
           <Button
-            onClick={() => setPendingProvider('apple')}
+            onClick={() => setPendingProvider("apple")}
             className="w-full bg-foreground text-background hover:bg-foreground/90 font-medium py-3 rounded-xl text-base h-12 flex items-center justify-center gap-3"
           >
             <img
@@ -104,7 +104,7 @@ export const AuthScreen = ({ onAuthenticate }: AuthScreenProps) => {
           </Button>
 
           <Button
-            onClick={() => setPendingProvider('google')}
+            onClick={() => setPendingProvider("google")}
             className="w-full bg-primary-soft text-foreground hover:bg-primary-soft/70 font-medium py-3 rounded-xl text-base h-12 border border-border/60 flex items-center justify-center gap-3"
           >
             <img
@@ -117,10 +117,15 @@ export const AuthScreen = ({ onAuthenticate }: AuthScreenProps) => {
           </Button>
 
           <p className="text-xs text-muted-foreground pt-3 leading-relaxed text-center">
-            By continuing you agree to our{' '}
-            <a href="#" className="underline underline-offset-2 hover:text-foreground">Terms</a>
-            {' '}and{' '}
-            <a href="#" className="underline underline-offset-2 hover:text-foreground">Privacy Policy</a>.
+            By continuing you agree to our{" "}
+            <a href="#" className="underline underline-offset-2 hover:text-foreground">
+              Terms
+            </a>{" "}
+            and{" "}
+            <a href="#" className="underline underline-offset-2 hover:text-foreground">
+              Privacy Policy
+            </a>
+            .
           </p>
         </div>
       </div>
