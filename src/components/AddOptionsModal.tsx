@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Globe, Camera, Clipboard, Edit3, Plus, Image as ImageIcon } from 'lucide-react';
+import { X, Globe, Camera, Edit3, Image as ImageIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { PermissionPrompt } from '@/components/PermissionPrompt';
@@ -18,11 +18,14 @@ export const AddOptionsModal = ({ isOpen, onClose, onOptionSelect }: AddOptionsM
   const cameraFlow = usePermissionFlow('camera');
   const photosFlow = usePermissionFlow('photos');
 
+  // Three entry methods distinguished by content SOURCE, not redundant manual variants.
+  // 'Paste a link' is the AI-assisted path (prefill from URL); 'Add manually' is the
+  // lightweight fallback form. (Resolves interviewee note that Paste vs Write-from-scratch
+  // were effectively the same.)
   const options = [
-    { id: 'browser', label: 'Browser', icon: Globe, color: 'bg-blue-50 text-blue-600' },
-    { id: 'camera', label: 'Camera', icon: Camera, color: 'bg-green-50 text-green-600' },
-    { id: 'paste', label: 'Paste Content', icon: Clipboard, color: 'bg-purple-50 text-purple-600' },
-    { id: 'scratch', label: 'Write from scratch', icon: Edit3, color: 'bg-orange-50 text-orange-600' },
+    { id: 'browser', label: 'Paste a link', sub: 'We fill in the details for you', icon: Globe, color: 'bg-blue-50 text-blue-600' },
+    { id: 'camera', label: 'Camera or photo', sub: 'Capture or attach an image', icon: Camera, color: 'bg-green-50 text-green-600' },
+    { id: 'scratch', label: 'Add manually', sub: 'Type it in yourself', icon: Edit3, color: 'bg-orange-50 text-orange-600' },
   ];
 
   const handleBrowserSearch = () => {
@@ -163,30 +166,31 @@ export const AddOptionsModal = ({ isOpen, onClose, onOptionSelect }: AddOptionsM
           </Button>
         </div>
 
-        <div className="p-6 space-y-4">
-          <div className="grid grid-cols-2 gap-4">
-            {options.map((option) => (
-              <button
-                key={option.id}
-                className="flex flex-col items-center p-6 rounded-2xl border-2 border-border hover:border-primary transition-all font-josefin hover:shadow-md"
-                onClick={() => {
-                  if (option.id === 'browser') {
-                    setShowBrowser(true);
-                  } else if (option.id === 'camera') {
-                    setShowCamera(true);
-                  } else {
-                    onOptionSelect(option.id);
-                    onClose();
-                  }
-                }}
-              >
-                <div className={`p-4 rounded-full ${option.color} mb-3`}>
-                  <option.icon className="h-6 w-6" />
-                </div>
-                <span className="font-medium text-sm">{option.label}</span>
-              </button>
-            ))}
-          </div>
+        <div className="p-6 space-y-3">
+          {options.map((option) => (
+            <button
+              key={option.id}
+              className="flex items-center gap-4 w-full p-4 rounded-2xl border border-border hover:border-primary transition-all font-josefin text-left hover:shadow-sm"
+              onClick={() => {
+                if (option.id === 'browser') {
+                  setShowBrowser(true);
+                } else if (option.id === 'camera') {
+                  setShowCamera(true);
+                } else {
+                  onOptionSelect(option.id);
+                  onClose();
+                }
+              }}
+            >
+              <div className={`p-3 rounded-full ${option.color} flex-shrink-0`}>
+                <option.icon className="h-5 w-5" />
+              </div>
+              <div>
+                <div className="font-medium text-sm">{option.label}</div>
+                <div className="text-xs text-muted-foreground">{option.sub}</div>
+              </div>
+            </button>
+          ))}
         </div>
       </div>
     </div>

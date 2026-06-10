@@ -12,7 +12,7 @@ interface MapViewProps {
   content: SavedContent[];
 }
 
-const categories = ['all', 'Food Spots', 'Locations', 'Outdoor', 'Sports', 'Travel Spots'];
+const categories = ['all', 'Places', 'Fitness & Workouts', 'Home & Living'];
 
 
 export const MapView = ({ content }: MapViewProps) => {

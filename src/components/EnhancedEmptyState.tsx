@@ -13,13 +13,13 @@ export const EnhancedEmptyState = ({ onCreateKeepr }: EnhancedEmptyStateProps) =
       title: "Amazing Coffee Shop Downtown",
       creatorName: "Coffee Lover",
       image: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=300&h=200&fit=crop",
-      category: "Food Spots"
+      category: "Places"
     },
     {
       title: "Weekend Hiking Trail",
       creatorName: "Nature Explorer",
       image: "https://images.unsplash.com/photo-1551632811-561732d1e306?w=300&h=200&fit=crop",
-      category: "Outdoor"
+      category: "Fitness & Workouts"
     },
     {
       title: "Vintage Thrift Find",

@@ -1,56 +1,36 @@
-import {
-  UtensilsCrossed,
-  MapPin,
-  Plane,
-  Shirt,
-  Smartphone,
-  BookOpen,
-  Mountain,
-  Music,
-  Home,
-  Trophy,
-  Tag,
-  type LucideIcon,
-} from 'lucide-react';
+/**
+ * Canonical category taxonomy for Keepr.
+ *
+ * Revised per Chapter 4 findings: 'Food Spots' + 'Locations' merged into
+ * 'Places'; 'Outdoor' -> 'Fitness & Workouts'; 'Home' -> 'Home & Living';
+ * 'Recipes' added. Users may also define their own custom categories, which
+ * persist and become selectable — so SavedContent.category is a free string,
+ * with these as the built-in defaults.
+ */
+export const CATEGORIES = [
+  'Places',
+  'Recipes',
+  'Fitness & Workouts',
+  'Fashion',
+  'Useful Apps',
+  'Tutorials',
+  'Music',
+  'Home & Living',
+] as const;
 
-export type CategoryName =
-  | 'Food Spots'
-  | 'Locations'
-  | 'Travel Spots'
-  | 'Fashion'
-  | 'Useful Apps'
-  | 'Tutorials'
-  | 'Outdoor'
-  | 'Music'
-  | 'Home'
-  | 'Sports'
-  | 'Other';
+export type KnownCategory = (typeof CATEGORIES)[number];
 
-export interface CategoryMeta {
-  icon: LucideIcon;
-  /** Tailwind text class for the category accent color. */
-  tone: string;
-  /** Tailwind bg class for soft category accent surface. */
-  toneBg: string;
-  /** Hex value used by map-pin renderers (data, not theme). */
-  pinColor: string;
-}
-
-// Category accent palette. Colors live here as data for non-theme surfaces
-// (map pins, swatches). Components never reference hex directly.
-export const categoryMeta: Record<CategoryName, CategoryMeta> = {
-  'Food Spots':  { icon: UtensilsCrossed, tone: 'text-orange-700',  toneBg: 'bg-orange-50',  pinColor: '#F4D6BC' },
-  'Locations':   { icon: MapPin,          tone: 'text-amber-700',   toneBg: 'bg-amber-50',   pinColor: '#EBD9B4' },
-  'Travel Spots':{ icon: Plane,           tone: 'text-sky-700',     toneBg: 'bg-sky-50',     pinColor: '#C9DEEB' },
-  'Fashion':     { icon: Shirt,           tone: 'text-rose-700',    toneBg: 'bg-rose-50',    pinColor: '#EBC9D3' },
-  'Useful Apps': { icon: Smartphone,      tone: 'text-slate-700',   toneBg: 'bg-slate-100',  pinColor: '#CFD6DF' },
-  'Tutorials':   { icon: BookOpen,        tone: 'text-amber-700',   toneBg: 'bg-amber-50',   pinColor: '#F0DDB6' },
-  'Outdoor':     { icon: Mountain,        tone: 'text-emerald-700', toneBg: 'bg-emerald-50', pinColor: '#C4DDC9' },
-  'Music':       { icon: Music,           tone: 'text-violet-700',  toneBg: 'bg-violet-50',  pinColor: '#D7CFEB' },
-  'Home':        { icon: Home,            tone: 'text-yellow-800',  toneBg: 'bg-yellow-50',  pinColor: '#EFE4C2' },
-  'Sports':      { icon: Trophy,          tone: 'text-red-700',     toneBg: 'bg-red-50',     pinColor: '#EBC4C0' },
-  'Other':       { icon: Tag,             tone: 'text-primary',     toneBg: 'bg-primary/10', pinColor: '#A19DCA' },
+/** Tailwind chip colors per known category (fallback for custom = neutral). */
+export const CATEGORY_COLORS: Record<string, string> = {
+  'Places': 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
+  'Recipes': 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200',
+  'Fitness & Workouts': 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200',
+  'Fashion': 'bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-200',
+  'Useful Apps': 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200',
+  'Tutorials': 'bg-violet-100 text-violet-800 dark:bg-violet-900 dark:text-violet-200',
+  'Music': 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200',
+  'Home & Living': 'bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200',
 };
 
-export const getCategoryMeta = (name: string): CategoryMeta =>
-  (categoryMeta as Record<string, CategoryMeta>)[name] ?? categoryMeta.Other;
+export const getCategoryColor = (category: string): string =>
+  CATEGORY_COLORS[category] ?? 'bg-muted text-muted-foreground';

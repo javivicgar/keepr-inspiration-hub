@@ -31,6 +31,7 @@ const Index = () => {
   const [username, setUsername] = useState('');
   const [activeTab, setActiveTab] = useState('home');
   const [showSaveModal, setShowSaveModal] = useState(false);
+  const [customCategories, setCustomCategories] = useState<string[]>([]);
   const [showAddOptions, setShowAddOptions] = useState(false);
   const [showProfileModal, setShowProfileModal] = useState(false);
   const [content, setContent] = useState<SavedContent[]>([]);
@@ -351,6 +352,8 @@ const Index = () => {
           onSave={handleAddContent}
           existingFolders={Array.from(new Set(content.map(item => item.folder)))}
           onOpenPrivacy={() => { setShowSaveModal(false); setActiveTab('more'); }}
+          customCategories={customCategories}
+          onAddCustomCategory={(name) => setCustomCategories((prev) => prev.includes(name) ? prev : [...prev, name])}
         />
       )}
 

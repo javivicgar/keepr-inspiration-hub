@@ -31,8 +31,8 @@ export const CommunityView = () => {
 
   // Keeprs that connections have shared directly with this user.
   const [sharedWithYou, setSharedWithYou] = useState<SharedKeepr[]>([
-    { id: 1, title: 'Best Coffee Shop Downtown', category: 'Food Spots', sharedBy: '@sarah_kim', timeAgo: '2h ago' },
-    { id: 2, title: 'Cool Art Exhibition', category: 'Locations', sharedBy: '@mike_chen', timeAgo: '1d ago' },
+    { id: 1, title: 'Best Coffee Shop Downtown', category: 'Places', sharedBy: '@sarah_kim', timeAgo: '2h ago' },
+    { id: 2, title: 'Cool Art Exhibition', category: 'Places', sharedBy: '@mike_chen', timeAgo: '1d ago' },
   ]);
 
   const handleSendRequest = () => {

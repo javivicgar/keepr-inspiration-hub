@@ -1,10 +1,10 @@
-
 export interface SavedContent {
   id: string;
   title: string;
   creatorName: string;
   link: string;
-  category: 'Food Spots' | 'Locations' | 'Fashion' | 'Useful Apps' | 'Tutorials' | 'Outdoor' | 'Music' | 'Home' | 'Sports' | 'Other';
+  // Known categories live in CATEGORIES (see lib/categories). Custom user categories are allowed, so this is a string.
+  category: string;
   location?: string;
   mapLink?: string;
   note: string;
