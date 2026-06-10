@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, ArrowRight } from 'lucide-react';
+import { ChevronLeft, ArrowRight, Check } from 'lucide-react';
 
 interface ReadyScreenProps {
   onComplete: () => void;
@@ -24,17 +24,23 @@ export const ReadyScreen = ({ onComplete, onBack, onStartPersonalizing }: ReadyS
         </Button>
       </div>
 
-      <div className="flex-1 flex flex-col justify-center">
+      {/* Centered confirmation block */}
+      <div className="flex-1 flex flex-col justify-center items-center text-center px-2">
         <div
-          className={`transition-all duration-700 ${
+          className={`flex flex-col items-center transition-all duration-700 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
           }`}
         >
+          <div className="bg-primary-soft rounded-full p-4 mb-6 inline-flex">
+            <div className="bg-primary rounded-full p-3 flex items-center justify-center">
+              <Check className="h-7 w-7 text-primary-foreground" strokeWidth={3} aria-hidden="true" />
+            </div>
+          </div>
           <h2 className="text-2xl md:text-3xl font-semibold text-foreground mb-3 tracking-tight leading-tight">
             You're all set.
           </h2>
-          <p className="text-muted-foreground text-base leading-relaxed">
-            Your saves are private by default. You can change every setting anytime in Privacy & Data.
+          <p className="text-muted-foreground text-base leading-relaxed max-w-xs">
+            Your saves are private by default. You can change every setting anytime in Privacy &amp; Data.
           </p>
         </div>
       </div>
