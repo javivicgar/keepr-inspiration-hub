@@ -97,10 +97,9 @@ export const PermissionPrompt = ({ kind, feature, onAllow, onDismiss }: Permissi
 
   if (stage === 'os') {
     const { title, body, options } = meta.os;
-    const isStacked = true;
     return (
       <div
-        className="absolute inset-0 z-[60] flex items-center justify-center p-6"
+        className="fixed inset-0 z-[60] flex items-center justify-center p-6"
         style={{ background: 'hsl(240 10% 12% / 0.35)', backdropFilter: 'blur(6px)' }}
         role="dialog"
         aria-modal="true"
@@ -117,42 +116,26 @@ export const PermissionPrompt = ({ kind, feature, onAllow, onDismiss }: Permissi
             <h3 className="text-[15px] font-semibold text-foreground leading-snug">{title}</h3>
             <p className="text-[13px] text-muted-foreground mt-2 leading-snug">{body}</p>
           </div>
-          {isStacked ? (
-            <div className="border-t border-border/70 flex flex-col">
-              {options.map((opt, i) => (
-                <button
-                  key={opt.label}
-                  onClick={() => (opt.granted ? onAllow() : onDismiss())}
-                  className={`py-3 text-[15px] hover:bg-muted/50 transition-colors ${
-                    i > 0 ? 'border-t border-border/70' : ''
-                  } ${opt.emphasized ? 'font-semibold text-primary' : 'text-foreground'}`}
-                >
-                  {opt.label}
-                </button>
-              ))}
-            </div>
-          ) : (
-            <div className="border-t border-border/70 grid grid-cols-2">
-              {options.map((opt, i) => (
-                <button
-                  key={opt.label}
-                  onClick={() => (opt.granted ? onAllow() : onDismiss())}
-                  className={`py-3 text-[15px] hover:bg-muted/50 transition-colors ${
-                    i === 0 ? 'border-r border-border/70' : ''
-                  } ${opt.emphasized ? 'font-semibold text-primary' : 'text-foreground'}`}
-                >
-                  {opt.label}
-                </button>
-              ))}
-            </div>
-          )}
+          <div className="border-t border-border/70 flex flex-col">
+            {options.map((opt, i) => (
+              <button
+                key={opt.label}
+                onClick={() => (opt.granted ? onAllow() : onDismiss())}
+                className={`py-3 text-[15px] hover:bg-muted/50 transition-colors ${
+                  i > 0 ? 'border-t border-border/70' : ''
+                } ${opt.emphasized ? 'font-semibold text-primary' : 'text-foreground'}`}
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="absolute inset-0 z-[60] flex items-center justify-center bg-black/50 p-6">
+    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 p-6">
       <div className="bg-background rounded-2xl shadow-xl w-full max-w-sm p-6 animate-fade-in">
         <div className={`h-12 w-12 rounded-full ${meta.toneBg} flex items-center justify-center mb-4`}>
           <Icon className={`h-6 w-6 ${meta.tone}`} />
