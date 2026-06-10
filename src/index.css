@@ -159,9 +159,9 @@
     bottom: -18%;
     z-index: 0;
     background:
-      radial-gradient(68% 36% at 28% 1%, hsl(258 74% 79% / 0.68), transparent 72%),
-      radial-gradient(58% 32% at 77% 0%, hsl(280 64% 84% / 0.58), transparent 72%),
-      radial-gradient(76% 40% at 50% -7%, hsl(244 68% 86% / 0.62), transparent 76%),
+      radial-gradient(85% 48% at 28% 2%, hsl(258 74% 76% / 0.85), transparent 74%),
+      radial-gradient(72% 42% at 77% 1%, hsl(280 64% 82% / 0.72), transparent 74%),
+      radial-gradient(95% 52% at 50% -5%, hsl(244 68% 84% / 0.78), transparent 78%),
       radial-gradient(66% 34% at 29% 101%, hsl(258 74% 79% / 0.56), transparent 72%),
       radial-gradient(58% 32% at 76% 100%, hsl(280 64% 84% / 0.5), transparent 72%),
       radial-gradient(76% 40% at 50% 107%, hsl(244 68% 86% / 0.54), transparent 76%);
